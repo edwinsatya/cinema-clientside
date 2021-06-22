@@ -121,78 +121,6 @@ export default function Introduction() {
 
   const currentTheme = useRecoilValue(theme);
 
-  // const listContentCard = [
-  //   {
-  //     firstContent: {
-  //       type: "text",
-  //       content: {
-  //         title: "Enjoy on your TV.",
-  //         subTitle:
-  //           "Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.",
-  //       },
-  //     },
-  //     secondContent: {
-  //       type: "video",
-  //       content: {
-  //         isFirst: false,
-  //         url: "https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-tv-0819.m4v",
-  //       },
-  //     },
-  //   },
-  //   {
-  //     firstContent: {
-  //       type: "image",
-  //       content: {
-  //         isFirst: true,
-  //         url: BatmanImg,
-  //       },
-  //     },
-  //     secondContent: {
-  //       type: "text",
-  //       content: {
-  //         darkMode: true,
-  //         title: "Don't be afraid of the night, Include the dark mode.",
-  //         subTitle:
-  //           "Don't worry this website include the dark mode for good experience for the night stream, just click in navbar menu or you can try in here.",
-  //       },
-  //     },
-  //   },
-  //   {
-  //     firstContent: {
-  //       type: "text",
-  //       content: {
-  //         title: "Watch everywhere.",
-  //         subTitle:
-  //           "Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.",
-  //       },
-  //     },
-  //     secondContent: {
-  //       type: "video",
-  //       content: {
-  //         isFirst: false,
-  //         url: "https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-devices-id.m4v",
-  //       },
-  //     },
-  //   },
-  //   {
-  //     firstContent: {
-  //       type: "image",
-  //       content: {
-  //         isFirst: true,
-  //         url: BabyImg,
-  //       },
-  //     },
-  //     secondContent: {
-  //       type: "text",
-  //       content: {
-  //         title: "Create profiles for kids.",
-  //         subTitle:
-  //           "Send kids on adventures with their favorite characters in a space made just for them—free with your account.",
-  //       },
-  //     },
-  //   },
-  // ];
-
   const handleChangeShow = (e) => {
     const copyArr = anq.arr.concat();
     const newArr = copyArr.map((data, index) => {
@@ -297,7 +225,12 @@ export default function Introduction() {
             );
           })}
         </div>
-        <div></div>
+        <div className="mt-10">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-center">
+            Ready to watch? Enter your email to create or restart your
+            membership.
+          </h2>
+        </div>
       </div>
     </Layout>
   );
