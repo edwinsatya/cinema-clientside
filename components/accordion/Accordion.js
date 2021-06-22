@@ -6,15 +6,15 @@ export default function Accordion(props) {
   return (
     <div className="w-full relative my-3">
       <div
+        onClick={() => props.onHandleChangeShow(props.idx)}
         className={`rounded ${
           props.anq.show ? "rounded-b-none" : ""
-        } shadow-xl py-5 px-8 flex items-center justify-between text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-black dark:text-white bg-white dark:bg-gray-900 border border-black dark:border-gray-500`}
+        } cursor-pointer shadow-xl py-5 px-8 flex items-center justify-between text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-black dark:text-white bg-white dark:bg-gray-900 border ${
+          props.anq.show ? "border-b-3" : ""
+        } border-black dark:border-gray-500`}
       >
         <h2>{props.anq.ask}</h2>
-        <button
-          onClick={() => props.onHandleChangeShow(props.idx)}
-          className="focus:outline-none"
-        >
+        <button className="focus:outline-none">
           {props.anq.show ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,10 +50,14 @@ export default function Accordion(props) {
       </div>
       <div
         className={`${
-          props.anq.show ? "flex opacity-100" : "hidden opacity-0"
-        } rounded-b py-5 px-8 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-black dark:text-white bg-white dark:bg-gray-900 border border-t-0 border-black dark:border-gray-500 transition-opacity duration-300`}
+          props.anq.show
+            ? "flex opacity-100 py-5 px-8"
+            : "visible opacity-0 p-0"
+        } rounded-b text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-black dark:text-white bg-white dark:bg-gray-900 border border-t-0 border-black dark:border-gray-500 transition-all duration-200`}
       >
-        <h2>{props.anq.answer}</h2>
+        <h2 className={`${!props.anq.show ? "h-0" : ""}`}>
+          {props.anq.answer}
+        </h2>
       </div>
     </div>
   );
