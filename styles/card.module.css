@@ -1,0 +1,16 @@
+.wrapper {
+  transition: transform 1s linear, height 1.5s ease, width 1.3s ease;
+}
+
+.imageContent {
+  transition: height 1.5s ease;
+}
+
+.wrapper:hover {
+  height: 380px;
+  width: 270px;
+}
+
+.imageContent:hover {
+  height: 330px;
+}
