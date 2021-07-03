@@ -7,7 +7,7 @@ import SpidermanImg from "../public/images/spider-man.png";
 import BabyImg from "../public/images/baby.png";
 import Card from "../components/introduction/card/Card";
 import Accordion from "../components/accordion/Accordion";
-import { IntroNavigation } from "../components/navigation/Navigation";
+import { MainNavigation } from "../components/navigation/Navigation";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { theme } from "../store";
@@ -155,7 +155,7 @@ export default function Introduction() {
   return (
     <Layout title="Introduction">
       <header>
-        <IntroNavigation />
+        <MainNavigation />
         <div className="relative w-full" style={{ height: "90vh" }}>
           <Image
             className="bg-fixed top-0 z-0"

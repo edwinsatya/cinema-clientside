@@ -46,7 +46,7 @@ export default function Footer() {
     },
   ];
   return (
-    <div className="px-5 py-10 bg-gray-100 dark:bg-black text-black dark:text-white">
+    <div className="w-full px-5 py-10 bg-gray-100 dark:bg-black text-black dark:text-white">
       <div className="max-w-4xl mx-auto">
         <div className="font-medium text-lg">
           Questions? Call 0813-3208-3207
