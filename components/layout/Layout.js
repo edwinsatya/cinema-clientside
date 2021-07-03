@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Footer from "../footer/Footer";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { changeDark, changeLight } from "../../store";
@@ -30,6 +31,8 @@ export default function Layout(props) {
       </Head>
 
       <div>{props.children}</div>
+
+      <Footer />
     </>
   );
 }

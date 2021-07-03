@@ -18,7 +18,7 @@ function IntroNavigation() {
     <nav className="bg-transparent absolute z-50 w-full">
       <div className="p-4 md:px-8 lg:px-12 flex justify-between items-center">
         <div className="w-2/12">
-          <LogoText />
+          <LogoText className="text-2xl sm:text-4xl lg:text-6xl" />
         </div>
         <div className="flex items-center justify-center">
           <DarkMode className="mr-5 md:mr-14" />
