@@ -7,7 +7,7 @@ import SpidermanImg from "../public/images/spider-man.png";
 import BabyImg from "../public/images/baby.png";
 import Card from "../components/introduction/card/Card";
 import Accordion from "../components/accordion/Accordion";
-import { IntroNavigation } from "../components/navigation/Navigation";
+import { MainNavigation } from "../components/navigation/Navigation";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { theme } from "../store";
@@ -155,7 +155,7 @@ export default function Introduction() {
   return (
     <Layout title="Introduction">
       <header>
-        <IntroNavigation />
+        <MainNavigation />
         <div className="relative w-full" style={{ height: "90vh" }}>
           <Image
             className="bg-fixed top-0 z-0"
@@ -230,8 +230,20 @@ export default function Introduction() {
             Ready to watch? Enter your email to create or restart your
             membership.
           </h2>
+
+          <div className="flex flex-col justify-center lg:flex-row lg:items-center mt-6 mb-16">
+            <input
+              className="lg:w-10/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-3 sm:py-4"
+              type="text"
+            />
+
+            <MainButton className="w-4/12 px-2 py-3 sm:py-4 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0">
+              Sign Up
+            </MainButton>
+          </div>
         </div>
       </div>
+      <hr className="border-b-4 border-gray-500 shadow-2xl" />
     </Layout>
   );
 }

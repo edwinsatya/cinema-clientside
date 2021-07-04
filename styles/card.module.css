@@ -1,0 +1,25 @@
+.card {
+  transition: height 1s ease, width 0.8s ease;
+}
+
+.cardWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.cardWrapper {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* .imageContent {
+  transition: height 1.5s ease;
+} */
+
+.card:hover {
+  height: 380px;
+  width: 270px;
+}
+
+/* .card:hover .imageContent {
+  height: 330px;
+} */
