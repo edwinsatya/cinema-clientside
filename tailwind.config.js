@@ -30,6 +30,7 @@ module.exports = {
     extend: {
       animation: ["hover", "focus"],
       width: ["responsive", "hover", "focus"],
+      flex: ["hover", "focus"],
     },
   },
   plugins: [],

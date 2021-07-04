@@ -1,57 +1,101 @@
+import { cinemaAPI } from "../../services/api";
 import Layout from "../../components/layout/Layout";
-import Image from "next/image";
 import cardStyle from "../../styles/card.module.css";
+import Card from "../../components/listContent/card/Card";
 import { MainNavigation } from "../../components/navigation/Navigation";
 import { useEffect, useState } from "react";
 
-export default function Home() {
+export async function getStaticProps() {
+  const [listMovieDay, listTvDay, listMovieWeek, listTvWeek] =
+    await Promise.all([
+      cinemaAPI.get(`/home/trending/movie/day`),
+      cinemaAPI.get(`/home/trending/tv/day`),
+      cinemaAPI.get(`/home/trending/movie/week`),
+      cinemaAPI.get(`/home/trending/tv/week`),
+    ]);
+
+  return {
+    props: {
+      trendingMoviesDay: listMovieDay.data.data.results,
+      trendingTvShowsDay: listTvDay.data.data.results,
+      trendingMoviesWeek: listMovieWeek.data.data.results,
+      trendingTvShowsWeek: listTvWeek.data.data.results,
+    },
+    revalidate: 3600,
+  };
+}
+
+export default function Home(props) {
+  const {
+    trendingMoviesDay,
+    trendingTvShowsDay,
+    trendingMoviesWeek,
+    trendingTvShowsWeek,
+  } = props;
+
   const btnActive =
     "bg-gradient-to-br rounded-sm shadow transform from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 text-white focus:outline-none focus:ring focus:ring-blue-400";
   const btnNonActive =
     "focus:outline-none rounded-sm border border-gray-600 focus:ring focus:ring-gray-500";
 
   const [filter, setFilter] = useState("day");
-  const [cardHover, setCardHover] = useState(null);
+  const [listTrendingMovie, setListTrendingMovie] = useState({
+    arr: trendingMoviesDay,
+  });
 
-  const listVid = [
-    {
-      poster:
-        "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-      back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-    },
-    {
-      poster:
-        "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-      back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-    },
-    {
-      poster:
-        "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-      back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-    },
-    {
-      poster:
-        "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-      back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-    },
-    {
-      poster:
-        "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-      back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-    },
-    {
-      poster:
-        "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-      back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-    },
-  ];
+  //   const listVid = [
+  //     {
+  //       poster:
+  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
+  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
+  //       title: "A Quiet Place Part II",
+  //     },
+  //     {
+  //       poster:
+  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
+  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
+  //       title: "A Quiet Place Part a",
+  //     },
+  //     {
+  //       poster:
+  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
+  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
+  //       title: "A Quiet Place Part b",
+  //     },
+  //     {
+  //       poster:
+  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
+  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
+  //       title: "A Quiet Place Part c",
+  //     },
+  //     {
+  //       poster:
+  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
+  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
+  //       title: "A Quiet Place Part d",
+  //     },
+  //     {
+  //       poster:
+  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
+  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
+  //       title: "A Quiet Place Part e",
+  //     },
+  //   ];
 
   const goFilterTrending = (e) => {
     setFilter(e.target.name);
   };
 
   useEffect(() => {
-    console.log(filter);
+    if (filter === "day") {
+      setListTrendingMovie({
+        arr: trendingMoviesDay,
+      });
+    } else {
+      setListTrendingMovie({
+        arr: trendingMoviesWeek,
+      });
+    }
   }, [filter]);
 
   return (
@@ -97,7 +141,7 @@ export default function Home() {
             <div>
               {/* button control trending */}
               <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
-                Trending
+                Trending of the :
               </h3>
             </div>
             <div className="w-1/2 my-4">
@@ -132,38 +176,16 @@ export default function Home() {
                 Movies
               </h3>
             </div>
-            <div className="p-4 flex items-center overflow-x-auto overflow-y-hidden">
-              {listVid.map((vid, index) => {
-                return (
-                  <div
-                    key={index}
-                    onMouseOver={() => setCardHover(index)}
-                    onMouseOut={() => setCardHover(null)}
-                    className={`${
-                      cardStyle.wrapper
-                    } w-80 h-48 rounded-lg shadow-lg drop-shadow-lg mx-3 my-2 ring-4 ring-black transform ${
-                      index % 2 == 0 ? "rotate-3" : "-rotate-3"
-                    } hover:rotate-0  dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
-                  >
-                    <div
-                      className={`${cardStyle.imageContent} relative w-full h-48`}
-                    >
-                      <Image
-                        src={cardHover == index ? vid.poster : vid.back}
-                        layout={"fill"}
-                        objectFit={"fill"}
-                        quality={100}
-                        alt="list"
-                      />
-                    </div>
-                    <div className="h-full">
-                      <span>title</span>
-                      <span>title</span>
-                      <span>title</span>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="p-4 shadow-inner">
+              <div
+                className={`${cardStyle.cardWrapper} flex items-center overflow-x-auto overflow-y-hidden`}
+              >
+                {listTrendingMovie.arr.map((vid, index) => {
+                  return (
+                    <Card key={index} dataContent={vid} indexContent={index} />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
