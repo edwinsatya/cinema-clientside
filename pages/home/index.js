@@ -1,25 +1,39 @@
-import { cinemaAPI } from "../../services/api";
 import Layout from "../../components/layout/Layout";
 import cardStyle from "../../styles/card.module.css";
 import Card from "../../components/listContent/card/Card";
+import CardPerson from "../../components/listContent/card/CardPerson";
+import IconPeople from "../../components/icons/IconPeople";
+import IconMovie from "../../components/icons/IconMovie";
+import IconTv from "../../components/icons/IconTv";
+import { cinemaAPI } from "../../services/api";
 import { MainNavigation } from "../../components/navigation/Navigation";
 import { useEffect, useState } from "react";
 
 export async function getStaticProps() {
-  const [listMovieDay, listTvDay, listMovieWeek, listTvWeek] =
-    await Promise.all([
-      cinemaAPI.get(`/home/trending/movie/day`),
-      cinemaAPI.get(`/home/trending/tv/day`),
-      cinemaAPI.get(`/home/trending/movie/week`),
-      cinemaAPI.get(`/home/trending/tv/week`),
-    ]);
+  const [
+    listMovieDay,
+    listTvDay,
+    listPersonDay,
+    listMovieWeek,
+    listTvWeek,
+    listPersonWeek,
+  ] = await Promise.all([
+    cinemaAPI.get(`/home/trending/movie/day`),
+    cinemaAPI.get(`/home/trending/tv/day`),
+    cinemaAPI.get(`/home/trending/person/day`),
+    cinemaAPI.get(`/home/trending/movie/week`),
+    cinemaAPI.get(`/home/trending/tv/week`),
+    cinemaAPI.get(`/home/trending/person/week`),
+  ]);
 
   return {
     props: {
       trendingMoviesDay: listMovieDay.data.data.results,
       trendingTvShowsDay: listTvDay.data.data.results,
+      trendingPersonsDay: listPersonDay.data.data.results,
       trendingMoviesWeek: listMovieWeek.data.data.results,
       trendingTvShowsWeek: listTvWeek.data.data.results,
+      trendingPersonsWeek: listPersonWeek.data.data.results,
     },
     revalidate: 3600,
   };
@@ -29,8 +43,10 @@ export default function Home(props) {
   const {
     trendingMoviesDay,
     trendingTvShowsDay,
+    trendingPersonsDay,
     trendingMoviesWeek,
     trendingTvShowsWeek,
+    trendingPersonsWeek,
   } = props;
 
   const btnActive =
@@ -39,8 +55,10 @@ export default function Home(props) {
     "focus:outline-none rounded-sm border border-gray-600 focus:ring focus:ring-gray-500";
 
   const [filter, setFilter] = useState("day");
-  const [listTrendingMovie, setListTrendingMovie] = useState({
-    arr: trendingMoviesDay,
+  const [listTrending, setListTrending] = useState({
+    movie: trendingMoviesDay,
+    tv: trendingTvShowsDay,
+    person: trendingPersonsDay,
   });
 
   //   const listVid = [
@@ -88,12 +106,16 @@ export default function Home(props) {
 
   useEffect(() => {
     if (filter === "day") {
-      setListTrendingMovie({
-        arr: trendingMoviesDay,
+      setListTrending({
+        movie: trendingMoviesDay,
+        tv: trendingTvShowsDay,
+        person: trendingPersonsDay,
       });
     } else {
-      setListTrendingMovie({
-        arr: trendingMoviesWeek,
+      setListTrending({
+        movie: trendingMoviesWeek,
+        tv: trendingTvShowsWeek,
+        person: trendingPersonsWeek,
       });
     }
   }, [filter]);
@@ -133,63 +155,117 @@ export default function Home(props) {
             </div>
           </div>
         </div>
+      </header>
 
-        <hr className="border-b-4 border-gray-500 shadow-2xl" />
+      <hr className="border-b-4 border-gray-500 shadow-2xl" />
 
-        <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
+      <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
+        <div>
           <div>
-            <div>
-              {/* button control trending */}
-              <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
-                Trending of the :
-              </h3>
-            </div>
-            <div className="w-1/2 my-4">
-              {/* 
+            {/* button control trending */}
+            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
+              Trending of the :
+            </h3>
+          </div>
+          <div className="w-1/2 my-4">
+            {/* 
                 w-4/12 px-2 py-3 sm:py-4 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0
                 */}
-              <button
-                onClick={goFilterTrending}
-                name="day"
-                className={`${
-                  filter === "day" ? btnActive : btnNonActive
-                } p-1 w-1/2 text-center text-sm sm:text-md md:text-lg lg:text-xl`}
-              >
-                Day
-              </button>
-              <button
-                onClick={goFilterTrending}
-                name="week"
-                className={`${
-                  filter === "week" ? btnActive : btnNonActive
-                } w-1/2 p-1 text-center text-sm sm:text-md md:text-lg lg:text-xl`}
-              >
-                Week
-              </button>
+            <button
+              onClick={goFilterTrending}
+              name="day"
+              className={`${
+                filter === "day" ? btnActive : btnNonActive
+              } p-1 w-1/2 text-center text-sm sm:text-md md:text-lg lg:text-xl`}
+            >
+              Day
+            </button>
+            <button
+              onClick={goFilterTrending}
+              name="week"
+              className={`${
+                filter === "week" ? btnActive : btnNonActive
+              } w-1/2 p-1 text-center text-sm sm:text-md md:text-lg lg:text-xl`}
+            >
+              Week
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <div className="flex items-center">
+            {/* trending movies */}
+            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
+              Movies
+            </h3>
+            <div className="ml-3">
+              <IconMovie />
             </div>
           </div>
-
-          <div>
-            <div>
-              {/* button control trending */}
-              <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
-                Movies
-              </h3>
-            </div>
-            <div className="p-4 shadow-inner">
-              <div
-                className={`${cardStyle.cardWrapper} flex items-center overflow-x-auto overflow-y-hidden`}
-              >
-                {listTrendingMovie.arr.map((vid, index) => {
-                  return (
-                    <Card key={index} dataContent={vid} indexContent={index} />
-                  );
-                })}
-              </div>
+          <div className="p-4 shadow-inner">
+            <div
+              className={`${cardStyle.cardWrapper} flex items-center overflow-x-auto overflow-y-hidden`}
+            >
+              {listTrending.movie.map((vid, index) => {
+                return (
+                  <Card key={index} dataContent={vid} indexContent={index} />
+                );
+              })}
             </div>
           </div>
         </div>
-      </header>
+
+        <div>
+          <div className="flex items-center">
+            {/* trending tv show */}
+            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
+              Tv Shows
+            </h3>
+            <div className="ml-3">
+              <IconTv />
+            </div>
+          </div>
+          <div className="p-4 shadow-inner">
+            <div
+              className={`${cardStyle.cardWrapper} flex items-center overflow-x-auto overflow-y-hidden`}
+            >
+              {listTrending.tv.map((vid, index) => {
+                return (
+                  <Card key={index} dataContent={vid} indexContent={index} />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="flex items-center">
+            {/* trending person */}
+            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
+              Person
+            </h3>
+            <div className="ml-3">
+              <IconPeople />
+            </div>
+          </div>
+          <div className="p-4 shadow-inner">
+            <div
+              className={`${cardStyle.cardWrapper} flex items-center overflow-x-auto overflow-y-hidden`}
+            >
+              {listTrending.person.map((person, index) => {
+                return (
+                  <CardPerson
+                    key={index}
+                    dataContent={person}
+                    indexContent={index}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr className="border-b-4 border-gray-500 shadow-2xl" />
     </Layout>
   );
 }

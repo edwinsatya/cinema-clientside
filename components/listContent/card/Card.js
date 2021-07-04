@@ -64,7 +64,9 @@ export default function Card(props) {
       <div className="absolute bottom-0 w-full h-10">
         <div className="bg-white dark:bg-black w-full h-full opacity-60 absolute"></div>
         <div className="absolute flex justify-around items-center h-full py-2 w-full text-center">
-          <span>{dataContent.original_title}</span>
+          <span>
+            {dataContent.original_title ? dataContent.title : dataContent.name}
+          </span>
           <span className="flex">
             {countRating(dataContent.vote_average).map((fire, index) => {
               return (
