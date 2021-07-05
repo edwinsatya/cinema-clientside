@@ -1,10 +1,10 @@
 import Layout from "../../components/layout/Layout";
-import cardStyle from "../../styles/card.module.css";
 import Card from "../../components/listContent/card/Card";
 import CardPerson from "../../components/listContent/card/CardPerson";
 import IconPeople from "../../components/icons/IconPeople";
 import IconMovie from "../../components/icons/IconMovie";
 import IconTv from "../../components/icons/IconTv";
+import ContentBox from "../../components/listContent/content/ContentBox";
 import { cinemaAPI } from "../../services/api";
 import { MainNavigation } from "../../components/navigation/Navigation";
 import { useEffect, useState } from "react";
@@ -50,7 +50,7 @@ export default function Home(props) {
   } = props;
 
   const btnActive =
-    "bg-gradient-to-br rounded-sm shadow transform from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 text-white focus:outline-none focus:ring focus:ring-blue-400";
+    "bg-gradient-to-br rounded-sm shadow transform from-sky-400 to-primary";
   const btnNonActive =
     "focus:outline-none rounded-sm border border-gray-600 focus:ring focus:ring-gray-500";
 
@@ -61,47 +61,33 @@ export default function Home(props) {
     person: trendingPersonsDay,
   });
 
-  //   const listVid = [
-  //     {
-  //       poster:
-  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-  //       title: "A Quiet Place Part II",
-  //     },
-  //     {
-  //       poster:
-  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-  //       title: "A Quiet Place Part a",
-  //     },
-  //     {
-  //       poster:
-  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-  //       title: "A Quiet Place Part b",
-  //     },
-  //     {
-  //       poster:
-  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-  //       title: "A Quiet Place Part c",
-  //     },
-  //     {
-  //       poster:
-  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-  //       title: "A Quiet Place Part d",
-  //     },
-  //     {
-  //       poster:
-  //         "https://image.tmdb.org/t/p/original/jTswp6KyDYKtvC52GbHagrZbGvD.jpg",
-  //       back: "https://image.tmdb.org/t/p/original/uAQrHntCccFpvxp75XdQgqexlJd.jpg",
-  //       title: "A Quiet Place Part e",
-  //     },
-  //   ];
+  const listContent = [
+    {
+      title: "Movies",
+      icon: <IconMovie />,
+      data: listTrending.movie,
+      isPerson: false,
+    },
+    {
+      title: "Tv Shows",
+      icon: <IconTv />,
+      data: listTrending.tv,
+      isPerson: false,
+    },
+    {
+      title: "Persons",
+      icon: <IconPeople />,
+      data: listTrending.person,
+      isPerson: true,
+    },
+  ];
 
   const goFilterTrending = (e) => {
     setFilter(e.target.name);
+  };
+
+  const goDetail = (e) => {
+    console.log("detail", e);
   };
 
   useEffect(() => {
@@ -176,7 +162,7 @@ export default function Home(props) {
               name="day"
               className={`${
                 filter === "day" ? btnActive : btnNonActive
-              } p-1 w-1/2 text-center text-sm sm:text-md md:text-lg lg:text-xl`}
+              } p-1 w-1/2 text-center text-sm sm:text-md md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 text-white focus:outline-none focus:ring focus:ring-blue-400`}
             >
               Day
             </button>
@@ -185,85 +171,44 @@ export default function Home(props) {
               name="week"
               className={`${
                 filter === "week" ? btnActive : btnNonActive
-              } w-1/2 p-1 text-center text-sm sm:text-md md:text-lg lg:text-xl`}
+              } w-1/2 p-1 text-center text-sm sm:text-md md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 text-white focus:outline-none focus:ring focus:ring-blue-400`}
             >
               Week
             </button>
           </div>
         </div>
 
-        <div>
-          <div className="flex items-center">
-            {/* trending movies */}
-            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
-              Movies
-            </h3>
-            <div className="ml-3">
-              <IconMovie />
-            </div>
-          </div>
-          <div className="p-4 shadow-inner">
-            <div
-              className={`${cardStyle.cardWrapper} flex items-center overflow-x-auto overflow-y-hidden`}
+        {listContent.map((content, idxContent) => {
+          return (
+            <ContentBox
+              key={idxContent}
+              title={content.title}
+              icon={content.icon}
             >
-              {listTrending.movie.map((vid, index) => {
-                return (
-                  <Card key={index} dataContent={vid} indexContent={index} />
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div className="flex items-center">
-            {/* trending tv show */}
-            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
-              Tv Shows
-            </h3>
-            <div className="ml-3">
-              <IconTv />
-            </div>
-          </div>
-          <div className="p-4 shadow-inner">
-            <div
-              className={`${cardStyle.cardWrapper} flex items-center overflow-x-auto overflow-y-hidden`}
-            >
-              {listTrending.tv.map((vid, index) => {
-                return (
-                  <Card key={index} dataContent={vid} indexContent={index} />
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div className="flex items-center">
-            {/* trending person */}
-            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
-              Person
-            </h3>
-            <div className="ml-3">
-              <IconPeople />
-            </div>
-          </div>
-          <div className="p-4 shadow-inner">
-            <div
-              className={`${cardStyle.cardWrapper} flex items-center overflow-x-auto overflow-y-hidden`}
-            >
-              {listTrending.person.map((person, index) => {
-                return (
-                  <CardPerson
-                    key={index}
-                    dataContent={person}
-                    indexContent={index}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
+              {!content.isPerson
+                ? content.data.map((vid, index) => {
+                    return (
+                      <Card
+                        onHandleClick={(e) => goDetail(e)}
+                        key={index}
+                        dataContent={vid}
+                        indexContent={index}
+                      />
+                    );
+                  })
+                : content.data.map((vid, index) => {
+                    return (
+                      <CardPerson
+                        onHandleClick={(e) => goDetail(e)}
+                        key={index}
+                        dataContent={vid}
+                        indexContent={index}
+                      />
+                    );
+                  })}
+            </ContentBox>
+          );
+        })}
       </div>
       <hr className="border-b-4 border-gray-500 shadow-2xl" />
     </Layout>

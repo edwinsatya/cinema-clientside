@@ -4,7 +4,7 @@ import cardStyle from "../../../styles/card.module.css";
 import { useState } from "react";
 
 export default function Card(props) {
-  const { dataContent, indexContent } = props;
+  const { dataContent, indexContent, onHandleClick } = props;
   const countRating = (e) => {
     const rating = Math.round(e);
     const arr = [];
@@ -46,6 +46,7 @@ export default function Card(props) {
     <div
       onMouseOver={() => setCardHover(indexContent)}
       onMouseOut={() => setCardHover(null)}
+      onClick={() => onHandleClick(dataContent)}
       className={`${cardStyle.card} cursor-pointer relative w-80 h-48 rounded-lg shadow-xl drop-shadow-lg mx-3 my-2 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
     >
       <div className={`${cardStyle.imageContent} relative w-full h-full`}>

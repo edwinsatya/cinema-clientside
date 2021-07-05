@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function CardPerson(props) {
-  const { dataContent, indexContent } = props;
+  const { dataContent, indexContent, onHandleClick } = props;
 
   const [cardHover, setCardHover] = useState(null);
 
@@ -11,6 +11,7 @@ export default function CardPerson(props) {
       <div
         onMouseOver={() => setCardHover(indexContent)}
         onMouseOut={() => setCardHover(null)}
+        onClick={() => onHandleClick(dataContent)}
         className={`transition-all duration-300 ${
           indexContent % 2 == 0 ? "rotate-6" : "-rotate-6"
         } hover:rotate-0 cursor-pointer relative w-64 h-80 rounded-lg shadow-xl drop-shadow-lg mx-3 my-2 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
@@ -30,7 +31,7 @@ export default function CardPerson(props) {
           cardHover === indexContent ? "h-16" : "h-0"
         } text-center ${
           cardHover === indexContent
-            ? "flex justify-center items-center border-b-2 rounded-b-md border-primary shadow-lg"
+            ? "flex justify-center items-center border-b-2 rounded-b-md border-primary"
             : "visible opacity-0"
         }`}
       >
