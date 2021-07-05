@@ -7,6 +7,7 @@ export default function DarkMode(props) {
 
   const changeTheme = (value) => {
     const html = document.querySelector("html");
+    localStorage.setItem("theme", value);
     html.classList.add(value);
     if (value === "dark") {
       changeThemeToDark();

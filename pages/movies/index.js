@@ -119,15 +119,3 @@ export default function MoviesPage(props) {
     </Layout>
   );
 }
-
-// export async function getStaticProps() {
-//   const host = process.env.HOST;
-//   const response = await fetch(`${host}/api/movies`);
-//   const movies = await response.json();
-
-//   return {
-//     props: {
-//       movies: movies.data.results,
-//     },
-//   };
-// }
