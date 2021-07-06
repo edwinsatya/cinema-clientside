@@ -180,13 +180,17 @@ export default function Introduction() {
               </h2>
               <div className="flex flex-col justify-center lg:flex-row lg:items-center">
                 <input
-                  className="lg:w-10/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-3 sm:py-4"
+                  className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-3 sm:py-3"
                   type="text"
                 />
-
-                <MainButton className="w-4/12 px-2 py-3 sm:py-4 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0">
-                  Sign Up
-                </MainButton>
+                <div className="w-full lg:w-4/12">
+                  <MainButton
+                    className="px-2 py-3 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+      to-primary hover:from-sky-400 hover:to-sky-500"
+                  >
+                    Sign Up
+                  </MainButton>
+                </div>
               </div>
             </div>
           </div>
@@ -233,13 +237,17 @@ export default function Introduction() {
 
           <div className="flex flex-col justify-center lg:flex-row lg:items-center mt-6 mb-16">
             <input
-              className="lg:w-10/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-3 sm:py-4"
+              className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-3 sm:py-3"
               type="text"
             />
-
-            <MainButton className="w-4/12 px-2 py-3 sm:py-4 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0">
-              Sign Up
-            </MainButton>
+            <div className="w-full lg:w-4/12">
+              <MainButton
+                className="px-2 py-3 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+      to-primary hover:from-sky-400 hover:to-sky-500"
+              >
+                Sign Up
+              </MainButton>
+            </div>
           </div>
         </div>
       </div>

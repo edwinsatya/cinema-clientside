@@ -83,7 +83,10 @@ function MainNavigation() {
                   <DarkMode className="mr-5 md:mr-14" />
                 </li>
                 <li className="hidden lg:flex">
-                  <MainButton className="p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-md">
+                  <MainButton
+                    className="p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-md bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+      to-primary hover:from-sky-400 hover:to-sky-500"
+                  >
                     Sign In
                   </MainButton>
                 </li>
@@ -123,6 +126,14 @@ function MainNavigation() {
                     </li>
                   );
                 })}
+                <li className="bg-red-500 w-full mt-10">
+                  <MainButton
+                    className="p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-md bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+      to-primary hover:from-sky-400 hover:to-sky-500"
+                  >
+                    Sign Out
+                  </MainButton>
+                </li>
               </ul>
             </div>
           </div>

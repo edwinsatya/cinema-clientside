@@ -1,6 +1,5 @@
 import Layout from "../../components/layout/Layout";
 import Card from "../../components/listContent/card/Card";
-import Image from "next/image";
 import IconMovie from "../../components/icons/IconMovie";
 import Header from "../../components/header/Header";
 import ContentBox from "../../components/listContent/content/ContentBox";
@@ -70,35 +69,18 @@ export default function MoviesPage(props) {
     },
   ];
 
-  const getImgHeader = () => {
-    if (
-      listDiscover[Math.floor(Math.random() * listDiscover.length)]
-        .backdrop_path !== "https://i.ibb.co/9spxhL0/2588754.jpg"
-    ) {
-      return listDiscover[Math.floor(Math.random() * listDiscover.length)]
-        .backdrop_path;
-    } else {
-      getImgHeader();
-    }
-  };
-
   const goDetail = (e) => {
     console.log("detail", e);
   };
 
   return (
     <Layout title="Movies">
-      <Header>
-        <Image
-          className="bg-fixed top-0 z-0"
-          src={`${getImgHeader()}`}
-          alt="bg-intro"
-          layout={"fill"}
-          objectFit={"cover"}
-          quality={100}
-          priority={true}
-        />
-      </Header>
+      <Header
+        dataHeader={
+          listDiscover[Math.floor(Math.random() * listDiscover.length - 1)]
+        }
+        onGoDetail={goDetail}
+      ></Header>
 
       <hr className="border-b-4 border-gray-500 shadow-2xl" />
 

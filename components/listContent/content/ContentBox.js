@@ -9,7 +9,7 @@ export default function ContentBox(props) {
         </h3>
         <div className="ml-3">{props.icon}</div>
       </div>
-      <div className="px-4 py-10 shadow-inner">
+      <div className="px-4 py-10">
         <div
           className={`${cardStyle.cardWrapper} flex items-center overflow-x-auto overflow-y-hidden`}
         >
