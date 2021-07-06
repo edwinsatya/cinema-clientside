@@ -65,6 +65,18 @@ export default function TvShowsPage(props) {
     },
   ];
 
+  const getImgHeader = () => {
+    if (
+      listDiscover[Math.floor(Math.random() * listDiscover.length)]
+        .backdrop_path !== "https://i.ibb.co/9spxhL0/2588754.jpg"
+    ) {
+      return listDiscover[Math.floor(Math.random() * listDiscover.length)]
+        .backdrop_path;
+    } else {
+      getImgHeader();
+    }
+  };
+
   const goDetail = (e) => {
     console.log("detail", e);
   };
@@ -74,10 +86,7 @@ export default function TvShowsPage(props) {
       <Header>
         <Image
           className="bg-fixed top-0 z-0"
-          src={`${
-            listDiscover[Math.floor(Math.random() * listDiscover.length)]
-              .backdrop_path
-          }`}
+          src={`${getImgHeader()}`}
           alt="bg-intro"
           layout={"fill"}
           objectFit={"cover"}

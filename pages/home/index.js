@@ -50,9 +50,9 @@ export default function Home(props) {
   } = props;
 
   const btnActive =
-    "bg-gradient-to-br rounded-sm shadow transform from-sky-400 to-primary";
+    "bg-gradient-to-br rounded-sm shadow transform from-sky-400 to-primary text-white";
   const btnNonActive =
-    "focus:outline-none rounded-sm border border-gray-600 focus:ring focus:ring-gray-500";
+    "focus:outline-none rounded-sm border border-gray-600 focus:ring focus:ring-gray-500 text-black dark:text-white";
 
   const [filter, setFilter] = useState("day");
   const [listTrending, setListTrending] = useState({
@@ -162,7 +162,7 @@ export default function Home(props) {
               name="day"
               className={`${
                 filter === "day" ? btnActive : btnNonActive
-              } p-1 w-1/2 text-center text-sm sm:text-md md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 text-white focus:outline-none focus:ring focus:ring-blue-400`}
+              } p-1 w-1/2 text-center text-sm sm:text-md md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 focus:outline-none focus:ring focus:ring-blue-400`}
             >
               Day
             </button>
@@ -171,7 +171,7 @@ export default function Home(props) {
               name="week"
               className={`${
                 filter === "week" ? btnActive : btnNonActive
-              } w-1/2 p-1 text-center text-sm sm:text-md md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 text-white focus:outline-none focus:ring focus:ring-blue-400`}
+              } w-1/2 p-1 text-center text-sm sm:text-md md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 focus:outline-none focus:ring focus:ring-blue-400`}
             >
               Week
             </button>

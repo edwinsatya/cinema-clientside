@@ -1,11 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: [
-      "image.tmdb.org",
-      "wallpaperaccess.com",
-      "d1csarkz8obe9u.cloudfront.net",
-    ],
+    domains: ["image.tmdb.org", "i.ibb.co"],
   },
   async rewrites() {
     return [

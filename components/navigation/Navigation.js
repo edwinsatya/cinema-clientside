@@ -83,7 +83,7 @@ function MainNavigation() {
                   <DarkMode className="mr-5 md:mr-14" />
                 </li>
                 <li className="hidden lg:flex">
-                  <MainButton className="p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg">
+                  <MainButton className="p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-md">
                     Sign In
                   </MainButton>
                 </li>
