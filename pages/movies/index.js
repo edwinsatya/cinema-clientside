@@ -30,7 +30,7 @@ export async function getStaticProps() {
       listTopRated: listTopRated.data.data.results,
       listUpcoming: listUpcoming.data.data.results,
     },
-    revalidate: 3600,
+    revalidate: 86400,
   };
 }
 

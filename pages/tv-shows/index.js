@@ -25,7 +25,7 @@ export async function getStaticProps() {
       listAiringToday: listAiringToday.data.data.results,
       listOnAir: listOnAir.data.data.results,
     },
-    revalidate: 3600,
+    revalidate: 86400,
   };
 }
 

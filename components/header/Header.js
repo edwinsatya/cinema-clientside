@@ -45,7 +45,7 @@ export default function Header(props) {
             <h1 className="text-2xl text-primary sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4">
               {dataHeader.title || dataHeader.name}
             </h1>
-            <h2 className="text-lg text-gray-200 dark:text-white font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
+            <h2 className="text-lg text-gray-300 dark:text-white font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
               {dataHeader.overview.length > 233
                 ? dataHeader.overview.substr(0, 233) + "..."
                 : dataHeader.overview}

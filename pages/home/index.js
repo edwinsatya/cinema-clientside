@@ -9,6 +9,7 @@ import headerStyle from "../../styles/header.module.css";
 import { cinemaAPI } from "../../services/api";
 import { MainNavigation } from "../../components/navigation/Navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export async function getStaticProps() {
   const [
@@ -36,7 +37,7 @@ export async function getStaticProps() {
       trendingTvShowsWeek: listTvWeek.data.data.results,
       trendingPersonsWeek: listPersonWeek.data.data.results,
     },
-    revalidate: 3600,
+    revalidate: 86400,
   };
 }
 
@@ -49,6 +50,8 @@ export default function Home(props) {
     trendingTvShowsWeek,
     trendingPersonsWeek,
   } = props;
+
+  const router = useRouter();
 
   const btnActive =
     "bg-gradient-to-br rounded-sm shadow transform from-sky-400 to-primary text-white";
@@ -88,7 +91,17 @@ export default function Home(props) {
   };
 
   const goDetail = (e) => {
-    // console.log("detail", e);
+    switch (e.media_type) {
+      case "movie":
+        router.push(`/movies/${e.id}`);
+        break;
+      case "tv":
+        router.push(`/tv-shows/${e.id}`);
+        break;
+      default:
+        router.push(`/home`);
+        break;
+    }
   };
 
   useEffect(() => {
@@ -130,7 +143,7 @@ export default function Home(props) {
               style={{ height: "100%", width: "100%", objectFit: "initial" }}
             ></iframe> */}
           </div>
-          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-gray-300 dark:from-black via-transparent dark:via-transparent to-gray-300 dark:to-black opacity-30 duration-500"></div>
+          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-gray-300 dark:from-black via-transparent dark:via-transparent to-gray-300 dark:to-black opacity-20 duration-500"></div>
           <div className="absolute h-full text-center text-black dark:text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
             <div className="max-w-xl relative h-auto">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold mb-4">
