@@ -4,6 +4,8 @@ import IconMovie from "../../components/icons/IconMovie";
 import Header from "../../components/header/Header";
 import ContentBox from "../../components/listContent/content/ContentBox";
 import { cinemaAPI } from "../../services/api";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export async function getStaticProps() {
   const [
@@ -41,6 +43,17 @@ export default function MoviesPage(props) {
     listUpcoming,
   } = props;
 
+  const router = useRouter();
+
+  const [dataHeader, setDataHeader] = useState({
+    data: {
+      backdrop_path: "",
+      title: "",
+      name: "",
+      overview: "",
+    },
+  });
+
   const listContent = [
     {
       title: "Discover",
@@ -70,17 +83,18 @@ export default function MoviesPage(props) {
   ];
 
   const goDetail = (e) => {
-    console.log("detail", e);
+    router.push(`/movies/${e.id}`);
   };
+
+  useEffect(() => {
+    setDataHeader({
+      data: listDiscover[Math.floor(Math.random() * listDiscover.length - 1)],
+    });
+  }, []);
 
   return (
     <Layout title="Movies">
-      <Header
-        dataHeader={
-          listDiscover[Math.floor(Math.random() * listDiscover.length - 1)]
-        }
-        onGoDetail={goDetail}
-      ></Header>
+      <Header dataHeader={dataHeader.data} onGoDetail={goDetail}></Header>
 
       <hr className="border-b-4 border-gray-500 shadow-2xl" />
 

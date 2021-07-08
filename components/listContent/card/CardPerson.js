@@ -18,7 +18,12 @@ export default function CardPerson(props) {
       >
         <div className={`relative w-full h-full`}>
           <Image
-            src={dataContent.profile_path}
+            src={`${
+              dataContent.profile_path
+                ? "https://image.tmdb.org/t/p/original" +
+                  dataContent.profile_path
+                : "https://i.ibb.co/6HwNvXv/coming-soon-reopening-event-retail-sale-design-template-79543bc1062ebb6f9eb55d1bb7994d49-screen.jpg"
+            }`}
             layout={"fill"}
             objectFit={"fill"}
             quality={100}

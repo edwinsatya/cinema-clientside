@@ -4,6 +4,8 @@ import IconTv from "../../components/icons/IconTv";
 import Header from "../../components/header/Header";
 import ContentBox from "../../components/listContent/content/ContentBox";
 import { cinemaAPI } from "../../services/api";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export async function getStaticProps() {
   const [listDiscover, listTopRated, listPopular, listAiringToday, listOnAir] =
@@ -36,6 +38,17 @@ export default function TvShowsPage(props) {
     listOnAir,
   } = props;
 
+  const router = useRouter();
+
+  const [dataHeader, setDataHeader] = useState({
+    data: {
+      backdrop_path: "",
+      title: "",
+      name: "",
+      overview: "",
+    },
+  });
+
   const listContent = [
     {
       title: "Discover",
@@ -65,17 +78,18 @@ export default function TvShowsPage(props) {
   ];
 
   const goDetail = (e) => {
-    console.log("detail", e);
+    router.push(`/tv-shows/${e.id}`);
   };
+
+  useEffect(() => {
+    setDataHeader({
+      data: listDiscover[Math.floor(Math.random() * listDiscover.length - 1)],
+    });
+  }, []);
 
   return (
     <Layout title="Tv-Shows">
-      <Header
-        dataHeader={
-          listDiscover[Math.floor(Math.random() * listDiscover.length - 1)]
-        }
-        onGoDetail={goDetail}
-      ></Header>
+      <Header dataHeader={dataHeader.data} onGoDetail={goDetail}></Header>
 
       <hr className="border-b-4 border-gray-500 shadow-2xl" />
 

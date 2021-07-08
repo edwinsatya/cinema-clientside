@@ -1,3 +1,7 @@
 body {
   @apply antialiased font-serif;
 }
+
+html {
+  scroll-behavior: smooth;
+}

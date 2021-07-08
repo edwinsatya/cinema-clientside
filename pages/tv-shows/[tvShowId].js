@@ -1,56 +1,64 @@
-import Image from "next/image";
+import Layout from "../../components/layout/Layout";
+import DetailHeader from "../../components/header/DetailHeader";
+import ContentBox from "../../components/listContent/content/ContentBox";
+import CardAnyTrailer from "../../components/listContent/card/CardAnyTrailer";
+import CardNoTrailer from "../../components/listContent/card/CardNoTrailer";
+import { cinemaAPI } from "../../services/api";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
-export default function DetailTvShow() {
-  const { tv } = props;
-  return (
-    <div>
-      <h2>DETAIL TV</h2>
-      {/* <div className=" w-20 h-20 bg-red-500"></div>
-      <div className="relative w-52 h-96  rounded-lg overflow-hidden transform hover:scale-150 transition-transform delay-100">
-        <Image
-          src={tv.backdrop_path}
-          width={1000}
-          height={600}
-          quality={100}
-          priority={true}
-          sizes={500}
-          alt="detail tv"
-        />
-      </div>
+export async function getServerSideProps(context) {
+  const tvShowId = context.params.tvShowId;
+  const tv = await cinemaAPI.get(`/tv/${tvShowId}`);
 
-      <span>{tv.title}</span> */}
-    </div>
-  );
+  return {
+    props: {
+      detailTv: tv.data.data,
+    },
+  };
 }
 
-// export async function getStaticPaths() {
-//   const host = process.env.HOST;
-//   const response = await fetch(`${host}/api/tv`);
-//   const movies = await response.json();
+export default function DetailTvShow(props) {
+  const { detailTv } = props;
+  console.log(detailTv);
+  const [indexTrailer, setIndexTrailer] = useState(null);
+  const router = useRouter();
 
-//   const paths = movies.data.results.map((movie) => {
-//     return {
-//       params: {
-//         movieId: String(movie.id),
-//       },
-//     };
-//   });
+  const selectedTrailer = (index) => {
+    window.scrollTo(0, 0);
+    setIndexTrailer(index);
+  };
 
-//   return {
-//     paths,
-//     fallback: true,
-//   };
-// }
+  return (
+    <Layout title="Detail Tv Show">
+      <DetailHeader
+        dataHeader={detailTv}
+        indexTrailer={indexTrailer}
+        onCloseTrailer={() => setIndexTrailer(null)}
+      ></DetailHeader>
 
-// export async function getStaticProps(context) {
-//   const movieId = context.params.movieId;
-//   const host = process.env.HOST;
-//   const response = await fetch(`${host}/api/movies/${movieId}`);
-//   const movie = await response.json();
+      <hr className="border-b-4 border-gray-500 shadow-2xl" />
 
-//   return {
-//     props: {
-//       movie: movie.data,
-//     },
-//   };
-// }
+      <section id="list-content">
+        <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
+          <ContentBox title={"List Trailer :"}>
+            {detailTv.video.length > 0 ? (
+              detailTv.video.map((vid, index) => {
+                return (
+                  <CardAnyTrailer
+                    key={index}
+                    indexTrailer={index}
+                    videoKey={vid.key}
+                    onClick={(e) => selectedTrailer(e)}
+                  />
+                );
+              })
+            ) : (
+              <CardNoTrailer />
+            )}
+          </ContentBox>
+        </div>
+      </section>
+    </Layout>
+  );
+}

@@ -7,6 +7,7 @@ import SpidermanImg from "../public/images/spider-man.png";
 import BabyImg from "../public/images/baby.png";
 import Card from "../components/introduction/card/Card";
 import Accordion from "../components/accordion/Accordion";
+import headerStyle from "../styles/header.module.css";
 import { MainNavigation } from "../components/navigation/Navigation";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
@@ -156,7 +157,7 @@ export default function Introduction() {
     <Layout title="Introduction">
       <header>
         <MainNavigation />
-        <div className="relative w-full" style={{ height: "90vh" }}>
+        <div className={`relative w-full ${headerStyle.headerContainer}`}>
           <Image
             className="bg-fixed top-0 z-0"
             src={ImgBg}
@@ -169,23 +170,23 @@ export default function Introduction() {
           <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-br  from-black via-sky-200 dark:via-gray-900 to-black opacity-70 duration-500"></div>
           <div className="absolute h-full text-center text-black dark:text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
             <div className="max-w-xl relative h-auto">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold mb-4">
                 Unlimited Trailer movies, TV shows, and more.
               </h1>
-              <h2 className="text-2xl font-medium sm:text-3xl lg:text-4xl mb-3 mt-3">
+              <h2 className="text-lg font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
                 Watch anywhere. Watch anytime.
               </h2>
-              <h2 className="text-xl font-light sm:text-3xl mb-3 mt-5">
+              <h2 className="text-md font-light sm:text-xl mb-3 mt-5">
                 Ready to watch? Enter your email to register your account.
               </h2>
               <div className="flex flex-col justify-center lg:flex-row lg:items-center">
                 <input
-                  className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-3 sm:py-3"
+                  className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
                   type="text"
                 />
                 <div className="w-full lg:w-4/12">
                   <MainButton
-                    className="px-2 py-3 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+                    className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
       to-primary hover:from-sky-400 hover:to-sky-500"
                   >
                     Sign Up
@@ -237,12 +238,12 @@ export default function Introduction() {
 
           <div className="flex flex-col justify-center lg:flex-row lg:items-center mt-6 mb-16">
             <input
-              className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-3 sm:py-3"
+              className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
               type="text"
             />
             <div className="w-full lg:w-4/12">
               <MainButton
-                className="px-2 py-3 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+                className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
       to-primary hover:from-sky-400 hover:to-sky-500"
               >
                 Sign Up

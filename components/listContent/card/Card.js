@@ -53,8 +53,18 @@ export default function Card(props) {
         <Image
           src={
             cardHover == indexContent
-              ? dataContent.poster_path
-              : dataContent.backdrop_path
+              ? `${
+                  dataContent.poster_path
+                    ? "https://image.tmdb.org/t/p/original" +
+                      dataContent.poster_path
+                    : "https://i.ibb.co/6HwNvXv/coming-soon-reopening-event-retail-sale-design-template-79543bc1062ebb6f9eb55d1bb7994d49-screen.jpg"
+                }`
+              : `${
+                  dataContent.backdrop_path
+                    ? "https://image.tmdb.org/t/p/original" +
+                      dataContent.backdrop_path
+                    : "https://i.ibb.co/9spxhL0/2588754.jpg"
+                }`
           }
           layout={"fill"}
           objectFit={"fill"}

@@ -1,38 +1,51 @@
 import { MainNavigation } from "../../components/navigation/Navigation";
+import headerStyle from "../../styles/header.module.css";
 import Image from "next/image";
 import MainButton from "../buttons/MainButton";
 
 export default function Header(props) {
   const { dataHeader, onGoDetail } = props;
+
   return (
     <header>
       <MainNavigation />
-      <div className="relative" style={{ height: "90vh" }}>
-        <div className="absolute w-full" style={{ height: "90vh" }}>
-          <Image
-            className="bg-fixed top-0 z-0"
-            src={`${
-              dataHeader.backdrop_path
-                ? dataHeader.backdrop_path
-                : "https://i.ibb.co/9spxhL0/2588754.jpg"
-            }`}
-            alt="bg-intro"
-            layout={"fill"}
-            objectFit={"cover"}
-            quality={100}
-            priority={true}
-          />
+      <div className={`relative ${headerStyle.headerContainer}`}>
+        <div className="absolute w-full h-full">
+          {dataHeader.backdrop_path !== undefined ? (
+            <Image
+              className="bg-fixed top-0 z-0"
+              src={`${
+                dataHeader.backdrop_path
+                  ? `https://image.tmdb.org/t/p/original${dataHeader.backdrop_path}`
+                  : "https://i.ibb.co/9spxhL0/2588754.jpg"
+              }`}
+              alt="bg-intro"
+              layout={"fill"}
+              objectFit={"cover"}
+              quality={100}
+              priority={true}
+            />
+          ) : (
+            <Image
+              className="bg-fixed top-0 z-0"
+              src="https://i.ibb.co/9spxhL0/2588754.jpg"
+              alt="bg-intro"
+              layout={"fill"}
+              objectFit={"cover"}
+              quality={100}
+              priority={true}
+            />
+          )}
         </div>
         <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-gray-300 dark:from-black via-transparent dark:via-transparent to-gray-300 dark:to-black opacity-30 duration-500"></div>
         <div
-          style={{ height: "90vh" }}
-          className="relative text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full"
+          className={`relative text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full ${headerStyle.headerContainer}`}
         >
           <div className="max-w-xl px-2 absolute text-center md:px-0 md:bottom-12 md:left-12 md:text-left">
             <h1 className="text-2xl text-primary sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4">
               {dataHeader.title || dataHeader.name}
             </h1>
-            <h2 className="text-lg font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
+            <h2 className="text-lg text-gray-200 dark:text-white font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
               {dataHeader.overview.length > 233
                 ? dataHeader.overview.substr(0, 233) + "..."
                 : dataHeader.overview}
