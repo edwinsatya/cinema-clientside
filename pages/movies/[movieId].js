@@ -2,10 +2,12 @@ import Layout from "../../components/layout/Layout";
 import DetailHeader from "../../components/header/DetailHeader";
 import ContentBox from "../../components/listContent/content/ContentBox";
 import CardAnyTrailer from "../../components/listContent/card/CardAnyTrailer";
+import Card from "../../components/listContent/card/Card";
 import CardNoTrailer from "../../components/listContent/card/CardNoTrailer";
+import IconMovie from "../../components/icons/IconMovie";
 import { cinemaAPI } from "../../services/api";
-import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 // export async function getStaticPaths() {
 //   const [
@@ -68,8 +70,26 @@ export async function getServerSideProps(context) {
 
 export default function DetailMoviePage(props) {
   const { detailMovie } = props;
-  const [indexTrailer, setIndexTrailer] = useState(null);
   const router = useRouter();
+
+  const [indexTrailer, setIndexTrailer] = useState(null);
+
+  const listContent = [
+    {
+      title: "Recommended Movies",
+      icon: <IconMovie />,
+      data: detailMovie.recommendations,
+    },
+    {
+      title: "Similar Movies",
+      icon: <IconMovie />,
+      data: detailMovie.similar,
+    },
+  ];
+
+  const goDetail = (e) => {
+    router.push(`/movies/${e.id}`);
+  };
 
   const selectedTrailer = (index) => {
     window.scrollTo(0, 0);
@@ -101,9 +121,34 @@ export default function DetailMoviePage(props) {
                 );
               })
             ) : (
-              <CardNoTrailer />
+              <CardNoTrailer title={"Trailer Coming Soon"} />
             )}
           </ContentBox>
+
+          {listContent.map((content, idxContent) => {
+            return (
+              <ContentBox
+                key={idxContent}
+                title={content.title}
+                icon={content.icon}
+              >
+                {content.data.length > 0 ? (
+                  content.data.map((vid, index) => {
+                    return (
+                      <Card
+                        onHandleClick={(e) => goDetail(e)}
+                        key={index}
+                        dataContent={vid}
+                        indexContent={index}
+                      />
+                    );
+                  })
+                ) : (
+                  <CardNoTrailer title={"Not Available"} />
+                )}
+              </ContentBox>
+            );
+          })}
         </div>
       </section>
     </Layout>

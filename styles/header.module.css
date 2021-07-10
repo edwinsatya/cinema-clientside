@@ -4,7 +4,7 @@
 
 .detailHeaderContainer {
   height: auto;
-  min-height: 200vh;
+  min-height: 225vh;
   overflow: hidden;
 }
 
@@ -12,9 +12,18 @@
   height: 70vh;
 }
 
+@media (min-width: 640px) {
+  .detailHeaderContainer {
+    min-height: 138vh;
+  }
+}
+
 @media (min-width: 768px) {
   .headerContainer {
     height: 85vh;
+  }
+  .detailHeaderContainer {
+    min-height: 132vh;
   }
   .detailHeaderIframe {
     height: 85vh;
@@ -24,6 +33,9 @@
 @media (min-width: 1024px) {
   .headerContainer {
     height: 100vh;
+  }
+  .detailHeaderContainer {
+    min-height: 128vh;
   }
   .detailHeaderIframe {
     height: 100vh;

@@ -3,6 +3,7 @@ import IconClose from "../icons/IconClose";
 import Image from "next/image";
 import RatingStar from "../listContent/ratingStar/RatingStar";
 import DetailBox from "../listContent/content/DetailBox";
+import getDateStr from "../../utils/function/getDateStr";
 import { MainNavigation } from "../../components/navigation/Navigation";
 import { useEffect, useState } from "react";
 
@@ -67,7 +68,9 @@ export default function DetailHeader(props) {
                   {dataHeader.title || dataHeader.name}
                 </h2>
                 <span className="text-md sm:text-lg md:text-xl font-base">
-                  {dataHeader.release_date || dataHeader.first_air_date}
+                  {dataHeader.release_date
+                    ? `${getDateStr(dataHeader.release_date)}`
+                    : `${getDateStr(dataHeader.first_air_date)}`}
                 </span>
               </div>
 
@@ -85,6 +88,7 @@ export default function DetailHeader(props) {
                     alt="bg-poster"
                     layout={"fill"}
                     objectFit={"fill"}
+                    priority={true}
                     quality={100}
                   />
                 </div>
@@ -123,6 +127,7 @@ export default function DetailHeader(props) {
             //       : dataHeader.overview}
             //   </h2>
             // </div>
+
             <div className="absolute w-full h-full pt-20 lg:pt-24 px-12 pb-6 ring-4">
               <div className="h-full w-full ring-4 ring-black dark:ring-gray-900 rounded-lg">
                 <div

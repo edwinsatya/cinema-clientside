@@ -47,7 +47,7 @@ export default function MoviesPage(props) {
 
   const [dataHeader, setDataHeader] = useState({
     data: {
-      backdrop_path: "",
+      backdrop_path: "https://i.ibb.co/9spxhL0/2588754.jpg",
       title: "",
       name: "",
       overview: "",
@@ -86,15 +86,28 @@ export default function MoviesPage(props) {
     router.push(`/movies/${e.id}`);
   };
 
-  useEffect(() => {
-    setDataHeader({
-      data: listDiscover[Math.floor(Math.random() * listDiscover.length - 1)],
-    });
-  }, []);
+  // useEffect(() => {
+  //   setDataHeader({
+  //     data: listDiscover[Math.floor(Math.random() * listDiscover.length - 1)],
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!dataHeader.data) {
+  //     console.log(dataHeader);
+  //     router.replace(router.asPath);
+  //   }
+  // }, [dataHeader]);
 
   return (
     <Layout title="Movies">
-      <Header dataHeader={dataHeader.data} onGoDetail={goDetail}></Header>
+      {/* <Header dataHeader={dataHeader.data} onGoDetail={goDetail}></Header> */}
+      <Header
+        dataHeader={
+          listDiscover[Math.floor(Math.random() * listDiscover.length)]
+        }
+        onGoDetail={goDetail}
+      ></Header>
 
       <hr className="border-b-4 border-gray-500 shadow-2xl" />
 
