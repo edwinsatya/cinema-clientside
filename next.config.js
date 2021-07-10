@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["image.tmdb.org", "i.ibb.co"],
+    domains: ["image.tmdb.org", "i.ibb.co", "secure.gravatar.com"],
   },
   async rewrites() {
     return [

@@ -1,10 +1,13 @@
 import Layout from "../../components/layout/Layout";
 import DetailHeader from "../../components/header/DetailHeader";
 import ContentBox from "../../components/listContent/content/ContentBox";
+import ContentBoxReview from "../../components/listContent/content/ContentBoxReview";
 import CardAnyTrailer from "../../components/listContent/card/CardAnyTrailer";
 import Card from "../../components/listContent/card/Card";
+import CardReview from "../../components/listContent/card/CardReview";
 import CardNoTrailer from "../../components/listContent/card/CardNoTrailer";
 import IconMovie from "../../components/icons/IconMovie";
+import IconComment from "../../components/icons/IconComment";
 import { cinemaAPI } from "../../services/api";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -124,6 +127,64 @@ export default function DetailMoviePage(props) {
               <CardNoTrailer title={"Trailer Coming Soon"} />
             )}
           </ContentBox>
+
+          <ContentBoxReview title={"Reviews"} icon={<IconComment />}>
+            {detailMovie.reviews.length > 0 ? (
+              detailMovie.reviews.map((review, index) => {
+                return (
+                  <CardReview
+                    key={index}
+                    review={review}
+                    reviewLength={detailMovie.reviews.length}
+                    indexContent={index}
+                  />
+                  // <>
+                  //   <div
+                  //     key={index}
+                  //     className="my-2 text-xs sm:text-sm lg:text-lg flex flex-col lg:flex-row lg:items-center"
+                  //   >
+                  //     <div className="hidden mb-2 sm:flex sm:items-center lg:flex-col lg:w-2/12">
+                  //       <div className="relative mr-2 lg:mr-0 lg:mb-3 h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14 rounded-md overflow-hidden">
+                  //         <Image
+                  //           src={`${
+                  //             review.author_details.avatar_path.substr(0, 4) ==
+                  //             "/htt"
+                  //               ? review.author_details.avatar_path.substr(1)
+                  //               : review.author_details.avatar_path.substr(
+                  //                   0,
+                  //                   4
+                  //                 ) == "http"
+                  //               ? review.author_details.avatar_path
+                  //               : `https://image.tmdb.org/t/p/original` +
+                  //                 review.author_details.avatar_path
+                  //           }`}
+                  //           layout={"fill"}
+                  //           objectFit={"fill"}
+                  //           quality={100}
+                  //           alt="list"
+                  //         />
+                  //       </div>
+                  //       <span>{review.author}</span>
+                  //     </div>
+
+                  //     <div
+                  //       className={`bg-white dark:bg-gray-900  p-2 whitespace-normal overflow-y-scroll h-10 sm:h-16 lg:h-20 rounded-md lg:w-9/12`}
+                  //     >
+                  //       {review.content}
+                  //     </div>
+                  //   </div>
+                  //   {index + 1 != detailMovie.reviews.length && (
+                  //     <hr className="border-b my-1 sm:my-4 lg:my-6 w-full border-white dark:border-gray-900 shadow-2xl" />
+                  //   )}
+                  // </CardReview>
+                );
+              })
+            ) : (
+              <div>
+                <span>No Have Review</span>
+              </div>
+            )}
+          </ContentBoxReview>
 
           {listContent.map((content, idxContent) => {
             return (
