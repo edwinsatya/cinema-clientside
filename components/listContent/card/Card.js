@@ -1,5 +1,5 @@
 import Image from "next/image";
-import IconFire from "../../icons/IconFire";
+import RatingStar from "../ratingStar/RatingStar";
 import cardStyle from "../../../styles/card.module.css";
 import { useState } from "react";
 
@@ -7,37 +7,6 @@ export default function Card(props) {
   const { dataContent, indexContent, onHandleClick } = props;
 
   const [cardHover, setCardHover] = useState(null);
-
-  const countRating = (e) => {
-    const rating = Math.floor(e);
-    const arr = [false, false, false, false, false];
-    switch (rating) {
-      case 1:
-      case 2:
-        arr.fill(true, 0, 1);
-        break;
-      case 3:
-      case 4:
-        arr.fill(true, 0, 2);
-        break;
-      case 5:
-      case 6:
-        arr.fill(true, 0, 3);
-        break;
-      case 7:
-      case 8:
-        arr.fill(true, 0, 4);
-        break;
-      case 9:
-      case 10:
-        arr.fill(true, 0, 5);
-        break;
-      default:
-        arr.fill(true, 0, 0);
-        break;
-    }
-    return arr;
-  };
 
   return (
     <div
@@ -86,16 +55,7 @@ export default function Card(props) {
               cardHover == indexContent ? "flex" : "hidden"
             } w-full items-center justify-around`}
           >
-            <span className="flex">
-              {countRating(dataContent.vote_average).map((fire, index) => {
-                return (
-                  <IconFire
-                    key={index}
-                    className={`${fire ? "text-yellow-300" : "text-gray-500"}`}
-                  />
-                );
-              })}
-            </span>
+            <RatingStar className="flex" voteAvg={dataContent.vote_average} />
             <span className="font-bold text-base">
               {dataContent.vote_average}
             </span>

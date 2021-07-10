@@ -1,7 +1,8 @@
 import headerStyle from "../../styles/header.module.css";
 import IconClose from "../icons/IconClose";
 import Image from "next/image";
-import IconFire from "../icons/IconFire";
+import RatingStar from "../listContent/ratingStar/RatingStar";
+import DetailBox from "../listContent/content/DetailBox";
 import { MainNavigation } from "../../components/navigation/Navigation";
 import { useEffect, useState } from "react";
 
@@ -13,37 +14,6 @@ export default function DetailHeader(props) {
   const closeTrailer = () => {
     setShowTrailer(false);
     onCloseTrailer();
-  };
-
-  const countRating = (e) => {
-    const rating = Math.floor(e);
-    const arr = [false, false, false, false, false];
-    switch (rating) {
-      case 1:
-      case 2:
-        arr.fill(true, 0, 1);
-        break;
-      case 3:
-      case 4:
-        arr.fill(true, 0, 2);
-        break;
-      case 5:
-      case 6:
-        arr.fill(true, 0, 3);
-        break;
-      case 7:
-      case 8:
-        arr.fill(true, 0, 4);
-        break;
-      case 9:
-      case 10:
-        arr.fill(true, 0, 5);
-        break;
-      default:
-        arr.fill(true, 0, 0);
-        break;
-    }
-    return arr;
   };
 
   useEffect(() => {
@@ -129,20 +99,10 @@ export default function DetailHeader(props) {
                     <div className="rounded-md  bg-gray-400 dark:bg-gray-900 p-2 text-center">
                       Rating {dataHeader.vote_average}
                     </div>
-                    <div className="flex justify-center my-2">
-                      {countRating(dataHeader.vote_average).map(
-                        (fire, index) => {
-                          return (
-                            <IconFire
-                              key={index}
-                              className={`${
-                                fire ? "text-yellow-300" : "text-gray-500"
-                              }`}
-                            />
-                          );
-                        }
-                      )}
-                    </div>
+                    <RatingStar
+                      className="flex justify-center my-2"
+                      voteAvg={dataHeader.vote_average}
+                    />
                     <div className="text-center">
                       Popularity {dataHeader.popularity}
                     </div>
@@ -150,34 +110,7 @@ export default function DetailHeader(props) {
                 </div>
               </div>
 
-              <div className="flex flex-col bg-gray-200 rounded-lg ring ring-black dark:bg-gray-900 dark:ring-gray-800 p-2 sm:p-4 lg:p-6">
-                <div className="flex">
-                  <span className=" sm:w-2/12">Title</span>
-                  <span>:</span>
-                  <span className="sm:ml-2 sm:w-7/12 uppercase">
-                    {dataHeader.title || dataHeader.name}
-                  </span>
-                </div>
-                <div className="flex">
-                  <span className=" sm:w-2/12">Original Title</span>
-                  <span>:</span>
-                  <span className="sm:ml-2 sm:w-7/12 uppercase">
-                    {dataHeader.original_title || dataHeader.original_name}
-                  </span>
-                </div>
-                <div className="flex">
-                  <span className=" sm:w-2/12">Genres</span>
-                  <span>:</span>
-                  <span className="sm:ml-2 sm:w-7/12 text-gray-500">
-                    {dataHeader.genres.map((genre) => genre.name).join(", ")}
-                  </span>
-                </div>
-                <div className="flex">
-                  <span className=" sm:w-2/12">Realease On</span>
-                  <span>:</span>
-                  <span className="sm:ml-2 sm:w-7/12">Scarlet Nexus</span>
-                </div>
-              </div>
+              <DetailBox detail={dataHeader} />
             </div>
           ) : (
             // <div className="max-w-xl px-2 absolute text-center md:px-0 md:bottom-12 md:left-12 md:text-left">
