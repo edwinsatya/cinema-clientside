@@ -25,7 +25,7 @@ export default function DarkMode(props) {
         className="mr-2 rounded-lg focus:outline-none focus:ring focus:ring-sky-800"
       >
         <svg
-          className="text-gray-300 transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle"
+          className="text-gray-600 dark:text-white transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           stroke="currentColor"

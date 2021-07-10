@@ -40,7 +40,11 @@ export default function CardPerson(props) {
             : "visible opacity-0"
         }`}
       >
-        <span className={`${cardHover === indexContent ? "" : "h-0"}`}>
+        <span
+          className={`${
+            cardHover === indexContent ? "" : "h-0"
+          } font-bold text-base`}
+        >
           {dataContent.name}
         </span>
       </div>

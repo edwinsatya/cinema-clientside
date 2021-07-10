@@ -2,14 +2,30 @@
   height: 70vh;
 }
 
+.detailHeaderContainer {
+  height: auto;
+  min-height: 200vh;
+  overflow: hidden;
+}
+
+.detailHeaderIframe {
+  height: 70vh;
+}
+
 @media (min-width: 768px) {
   .headerContainer {
+    height: 85vh;
+  }
+  .detailHeaderIframe {
     height: 85vh;
   }
 }
 
 @media (min-width: 1024px) {
   .headerContainer {
+    height: 100vh;
+  }
+  .detailHeaderIframe {
     height: 100vh;
   }
 }

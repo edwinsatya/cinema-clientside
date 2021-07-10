@@ -5,42 +5,39 @@ import { useState } from "react";
 
 export default function Card(props) {
   const { dataContent, indexContent, onHandleClick } = props;
+
+  const [cardHover, setCardHover] = useState(null);
+
   const countRating = (e) => {
-    const rating = Math.round(e);
-    const arr = [];
+    const rating = Math.floor(e);
+    const arr = [false, false, false, false, false];
     switch (rating) {
-      case 1 || 2:
-        for (let i = 0; i < 1; i++) {
-          arr.push({});
-        }
+      case 1:
+      case 2:
+        arr.fill(true, 0, 1);
         break;
-      case 3 || 4:
-        for (let i = 0; i < 2; i++) {
-          arr.push({});
-        }
+      case 3:
+      case 4:
+        arr.fill(true, 0, 2);
         break;
-      case 5 || 6:
-        for (let i = 0; i < 3; i++) {
-          arr.push({});
-        }
+      case 5:
+      case 6:
+        arr.fill(true, 0, 3);
         break;
-      case 7 || 8:
-        for (let i = 0; i < 4; i++) {
-          arr.push({});
-        }
+      case 7:
+      case 8:
+        arr.fill(true, 0, 4);
         break;
-      case 9 || 10:
-        for (let i = 0; i < 5; i++) {
-          arr.push({});
-        }
+      case 9:
+      case 10:
+        arr.fill(true, 0, 5);
         break;
       default:
-        arr.push({});
+        arr.fill(true, 0, 0);
         break;
     }
     return arr;
   };
-  const [cardHover, setCardHover] = useState(null);
 
   return (
     <div
@@ -72,34 +69,37 @@ export default function Card(props) {
           alt="list"
         />
       </div>
-      <div className="absolute bottom-0 w-full h-10">
+      <div
+        className={`absolute bottom-0 w-full ${
+          cardHover != indexContent ? "h-10" : "h-20"
+        }`}
+      >
         <div className="bg-white dark:bg-black w-full h-full opacity-60 absolute"></div>
-        <div className="absolute flex justify-around items-center h-full py-2 w-full text-center">
-          <span>
-            {dataContent.original_title ? dataContent.title : dataContent.name}
-          </span>
-          <span className="flex">
-            {countRating(dataContent.vote_average).map((fire, index) => {
-              return (
-                <IconFire
-                  key={index}
-                  className={`${
-                    countRating(dataContent.vote_average).length == 1
-                      ? "text-red-500"
-                      : countRating(dataContent.vote_average).length == 2
-                      ? "text-green-500"
-                      : countRating(dataContent.vote_average).length == 3
-                      ? "text-blue-500"
-                      : countRating(dataContent.vote_average).length == 4
-                      ? "text-yellow-300"
-                      : countRating(dataContent.vote_average).length == 5
-                      ? "text-yellow-700"
-                      : "text-black"
-                  }`}
-                />
-              );
-            })}
-          </span>
+        <div className="absolute flex flex-col justify-center items-center h-full py-2 w-full text-center">
+          <div>
+            <span className="font-bold text-base">
+              {dataContent.title ? dataContent.title : dataContent.name}
+            </span>
+          </div>
+          <div
+            className={`${
+              cardHover == indexContent ? "flex" : "hidden"
+            } w-full items-center justify-around`}
+          >
+            <span className="flex">
+              {countRating(dataContent.vote_average).map((fire, index) => {
+                return (
+                  <IconFire
+                    key={index}
+                    className={`${fire ? "text-yellow-300" : "text-gray-500"}`}
+                  />
+                );
+              })}
+            </span>
+            <span className="font-bold text-base">
+              {dataContent.vote_average}
+            </span>
+          </div>
         </div>
       </div>
     </div>
