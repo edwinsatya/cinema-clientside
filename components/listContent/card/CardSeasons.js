@@ -11,7 +11,7 @@ export default function CardSeasons(props) {
       onMouseOver={() => setCardHover(indexContent)}
       onMouseOut={() => setCardHover(null)}
       onClick={() => onHandleClick(dataContent)}
-      className={`cursor-pointer relative w-52 h-72 rounded-lg shadow-xl drop-shadow-lg mx-3 my-2 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
+      className={`cursor-pointer hover:scale-105 transition-all duration-300 relative w-52 h-72 rounded-lg shadow-xl drop-shadow-lg mx-3 my-3 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
     >
       <div className={`relative w-full h-full`}>
         <Image
@@ -31,7 +31,7 @@ export default function CardSeasons(props) {
           cardHover == indexContent ? "flex" : "hidden"
         }`}
       >
-        <div className="bg-white dark:bg-black w-full h-full opacity-60 absolute"></div>
+        <div className="bg-white dark:bg-black w-full h-full opacity-100 absolute"></div>
         <div className="absolute flex flex-col justify-center items-center h-full py-2 w-full text-center">
           <div>
             <span
