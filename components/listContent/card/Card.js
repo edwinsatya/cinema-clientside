@@ -8,6 +8,14 @@ export default function Card(props) {
 
   const [cardHover, setCardHover] = useState(null);
 
+  const getMinimTitle = (title) => {
+    const lengthTitle = title.length;
+    if (lengthTitle > 28) {
+      return `${title.substr(0, 28)}...`;
+    }
+    return title;
+  };
+
   return (
     <div
       onMouseOver={() => setCardHover(indexContent)}
@@ -51,7 +59,9 @@ export default function Card(props) {
         <div className="absolute flex flex-col justify-center items-center h-full py-2 w-full text-center">
           <div>
             <span className="font-bold text-base">
-              {dataContent.title ? dataContent.title : dataContent.name}
+              {dataContent.title
+                ? getMinimTitle(dataContent.title)
+                : getMinimTitle(dataContent.name)}
             </span>
           </div>
           <div

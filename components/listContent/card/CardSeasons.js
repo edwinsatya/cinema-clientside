@@ -6,6 +6,14 @@ export default function CardSeasons(props) {
 
   const [cardHover, setCardHover] = useState(null);
 
+  const getMinimTitle = (title) => {
+    const lengthTitle = title.length;
+    if (lengthTitle > 28) {
+      return `${title.substr(0, 28)}...`;
+    }
+    return title;
+  };
+
   return (
     <div
       onMouseOver={() => setCardHover(indexContent)}
@@ -41,7 +49,9 @@ export default function CardSeasons(props) {
                   : "text-primary"
               }`}
             >
-              {dataContent.title ? dataContent.title : dataContent.name}
+              {dataContent.title
+                ? getMinimTitle(dataContent.title)
+                : getMinimTitle(dataContent.name)}
             </span>
           </div>
           <div className={`flex w-full items-center justify-around`}>
