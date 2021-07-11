@@ -77,6 +77,8 @@ export default function DetailMoviePage(props) {
 
   const [indexTrailer, setIndexTrailer] = useState(null);
 
+  const [showReviews, setShowReviews] = useState(false);
+
   const listContent = [
     {
       title: "Recommended Movies",
@@ -92,6 +94,7 @@ export default function DetailMoviePage(props) {
 
   const goDetail = (e) => {
     router.push(`/movies/${e.id}`);
+    setShowReviews(false);
   };
 
   const selectedTrailer = (index) => {
@@ -129,60 +132,37 @@ export default function DetailMoviePage(props) {
           </ContentBox>
 
           <ContentBoxReview title={"Reviews"} icon={<IconComment />}>
-            {detailMovie.reviews.length > 0 ? (
-              detailMovie.reviews.map((review, index) => {
-                return (
-                  <CardReview
-                    key={index}
-                    review={review}
-                    reviewLength={detailMovie.reviews.length}
-                    indexContent={index}
-                  />
-                  // <>
-                  //   <div
-                  //     key={index}
-                  //     className="my-2 text-xs sm:text-sm lg:text-lg flex flex-col lg:flex-row lg:items-center"
-                  //   >
-                  //     <div className="hidden mb-2 sm:flex sm:items-center lg:flex-col lg:w-2/12">
-                  //       <div className="relative mr-2 lg:mr-0 lg:mb-3 h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14 rounded-md overflow-hidden">
-                  //         <Image
-                  //           src={`${
-                  //             review.author_details.avatar_path.substr(0, 4) ==
-                  //             "/htt"
-                  //               ? review.author_details.avatar_path.substr(1)
-                  //               : review.author_details.avatar_path.substr(
-                  //                   0,
-                  //                   4
-                  //                 ) == "http"
-                  //               ? review.author_details.avatar_path
-                  //               : `https://image.tmdb.org/t/p/original` +
-                  //                 review.author_details.avatar_path
-                  //           }`}
-                  //           layout={"fill"}
-                  //           objectFit={"fill"}
-                  //           quality={100}
-                  //           alt="list"
-                  //         />
-                  //       </div>
-                  //       <span>{review.author}</span>
-                  //     </div>
-
-                  //     <div
-                  //       className={`bg-white dark:bg-gray-900  p-2 whitespace-normal overflow-y-scroll h-10 sm:h-16 lg:h-20 rounded-md lg:w-9/12`}
-                  //     >
-                  //       {review.content}
-                  //     </div>
-                  //   </div>
-                  //   {index + 1 != detailMovie.reviews.length && (
-                  //     <hr className="border-b my-1 sm:my-4 lg:my-6 w-full border-white dark:border-gray-900 shadow-2xl" />
-                  //   )}
-                  // </CardReview>
-                );
-              })
+            <div
+              className={`flex justify-center text-xs sm:text-sm md:text-base lg:text-lg ${
+                showReviews ? "mb-3" : "mb-0"
+              }`}
+            >
+              <button
+                onClick={() => setShowReviews(!showReviews)}
+                className="bg-gray-700 text-white hover:bg-gray-500 dark:bg-white dark:text-black dark:hover:bg-gray-500 rounded-md p-2 focus:outline-none"
+              >
+                <span>{!showReviews ? "Show Reviews" : "Hide Reviews"}</span>
+              </button>
+            </div>
+            {showReviews ? (
+              detailMovie.reviews.length > 0 ? (
+                detailMovie.reviews.map((review, index) => {
+                  return (
+                    <CardReview
+                      key={index}
+                      review={review}
+                      reviewLength={detailMovie.reviews.length}
+                      indexContent={index}
+                    />
+                  );
+                })
+              ) : (
+                <div className="flex justify-center text-xs sm:text-sm md:text-base lg:text-xl font-bold">
+                  <span>No Have Review</span>
+                </div>
+              )
             ) : (
-              <div>
-                <span>No Have Review</span>
-              </div>
+              ""
             )}
           </ContentBoxReview>
 

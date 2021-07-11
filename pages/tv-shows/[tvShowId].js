@@ -1,11 +1,14 @@
 import Layout from "../../components/layout/Layout";
 import DetailHeader from "../../components/header/DetailHeader";
 import ContentBox from "../../components/listContent/content/ContentBox";
+import ContentBoxReview from "../../components/listContent/content/ContentBoxReview";
 import Card from "../../components/listContent/card/Card";
+import CardReview from "../../components/listContent/card/CardReview";
 import CardSeasons from "../../components/listContent/card/CardSeasons";
 import CardAnyTrailer from "../../components/listContent/card/CardAnyTrailer";
 import CardNoTrailer from "../../components/listContent/card/CardNoTrailer";
 import IconTv from "../../components/icons/IconTv";
+import IconComment from "../../components/icons/IconComment";
 import { cinemaAPI } from "../../services/api";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -27,6 +30,8 @@ export default function DetailTvShow(props) {
 
   const [indexTrailer, setIndexTrailer] = useState(null);
 
+  const [showReviews, setShowReviews] = useState(false);
+
   const listContent = [
     {
       title: "Recommended Tv Shows",
@@ -42,6 +47,7 @@ export default function DetailTvShow(props) {
 
   const goDetail = (e) => {
     router.push(`/tv-shows/${e.id}`);
+    setShowReviews(false);
   };
 
   const selectedTrailer = (index) => {
@@ -94,6 +100,41 @@ export default function DetailTvShow(props) {
               <CardNoTrailer title={"Not Available"} />
             )}
           </ContentBox>
+
+          <ContentBoxReview title={"Reviews"} icon={<IconComment />}>
+            <div
+              className={`flex justify-center text-xs sm:text-sm md:text-base lg:text-lg ${
+                showReviews ? "mb-1 sm:mb-3 lg:mb-4" : "mb-0"
+              }`}
+            >
+              <button
+                onClick={() => setShowReviews(!showReviews)}
+                className="bg-gray-700 text-white hover:bg-gray-500 dark:bg-white dark:text-black dark:hover:bg-gray-500 rounded-md p-2 focus:outline-none"
+              >
+                <span>{!showReviews ? "Show Reviews" : "Hide Reviews"}</span>
+              </button>
+            </div>
+            {showReviews ? (
+              detailTv.reviews.length > 0 ? (
+                detailTv.reviews.map((review, index) => {
+                  return (
+                    <CardReview
+                      key={index}
+                      review={review}
+                      reviewLength={detailTv.reviews.length}
+                      indexContent={index}
+                    />
+                  );
+                })
+              ) : (
+                <div className="flex justify-center text-xs sm:text-sm md:text-base lg:text-xl font-bold">
+                  <span>No Have Review</span>
+                </div>
+              )
+            ) : (
+              ""
+            )}
+          </ContentBoxReview>
 
           {listContent.map((content, idxContent) => {
             return (

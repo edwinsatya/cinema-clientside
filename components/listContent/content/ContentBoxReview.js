@@ -1,3 +1,5 @@
+import boxReviewStyle from "../../../styles/card.module.css";
+
 export default function ContentBoxReview(props) {
   return (
     <div>
@@ -7,9 +9,11 @@ export default function ContentBoxReview(props) {
         </h3>
         <div className="ml-3">{props.icon}</div>
       </div>
-      <div className="p-3 lg:p-8">
-        <div className="px-4 py-5 rounded-lg bg-gray-300 dark:bg-gray-800">
-          <div className={`flex flex-col items-center`}>{props.children}</div>
+      <div className="p-2 sm:p-4 lg:p-8">
+        <div
+          className={`${boxReviewStyle.contentBoxReview} overflow-y-scroll px-4 py-5 sm:px-6 rounded-lg bg-gray-300 dark:bg-gray-800`}
+        >
+          <div className={`flex flex-col w-full`}>{props.children}</div>
         </div>
       </div>
     </div>
