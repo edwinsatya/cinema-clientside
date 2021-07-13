@@ -4,6 +4,8 @@ import IconBurger from "../icons/IconBurger";
 import IconClose from "../icons/IconClose";
 import ButtonLogo from "../buttons/ButtonLogo";
 import Link from "next/link";
+import { useRecoilState } from "recoil";
+import { currentUser as currentUserAtom } from "../../store";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -31,11 +33,25 @@ function MainNavigation() {
       url: "/discussions",
     },
   ];
+
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
+
   const [dropDown, setDropDown] = useState(false);
+
   const classActive =
     "bg-white border border-black dark:bg-gray-700 dark:border-white";
 
   const classHover = `border-b-2 border-transparent hover:border-primary `;
+
+  const handleLoginLogout = () => {
+    if (!currentUser) {
+      router.push("/login");
+    } else {
+      localStorage.removeItem("token");
+      router.push("/");
+      setCurrentUser("");
+    }
+  };
 
   return (
     <nav className="flex flex-col">
@@ -84,10 +100,14 @@ function MainNavigation() {
                 </li>
                 <li className="hidden lg:flex">
                   <MainButton
-                    className="p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-md bg-gradient-to-br rounded-sm shadow transform from-sky-400  
-      to-primary hover:from-sky-400 hover:to-sky-500"
+                    handleClick={() => handleLoginLogout()}
+                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-md bg-gradient-to-br rounded-sm shadow transform ${
+                      !currentUser
+                        ? "from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
+                        : "from-yellow-600 to-yellow-800 hover:from-yellow-500 hover:to-yellow-600"
+                    }`}
                   >
-                    Sign In
+                    {!currentUser ? "Sign In" : "Sign Out"}
                   </MainButton>
                 </li>
                 <li

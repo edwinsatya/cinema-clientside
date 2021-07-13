@@ -28,6 +28,8 @@ export default function DetailBoxMovie(props) {
             ? getUnicodeFlagIcon(
                 detail.original_language.toUpperCase() == "JA"
                   ? "JP"
+                  : detail.original_language.toUpperCase() == "EN"
+                  ? "US"
                   : detail.original_language
               )
             : "-"}

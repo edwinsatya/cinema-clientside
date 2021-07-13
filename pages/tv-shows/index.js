@@ -81,19 +81,6 @@ export default function TvShowsPage(props) {
     router.push(`/tv-shows/${e.id}`);
   };
 
-  // useEffect(() => {
-  //   setDataHeader({
-  //     data: listDiscover[Math.floor(Math.random() * listDiscover.length - 1)],
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!dataHeader.data) {
-  //     console.log(dataHeader);
-  //     router.replace(router.asPath);
-  //   }
-  // }, [dataHeader]);
-
   return (
     <Layout title="Tv-Shows">
       {/* <Header dataHeader={dataHeader.data} onGoDetail={goDetail}></Header> */}

@@ -1,13 +1,70 @@
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
-import { changeDark, changeLight } from "../../store";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import {
+  changeDark,
+  changeLight,
+  currentUser as currentUserAtom,
+} from "../../store";
+import { useRouter } from "next/router";
+import { css } from "@emotion/react";
+import HashLoader from "react-spinners/HashLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 export default function AuthMode(props) {
   const changeThemeToDark = useSetRecoilState(changeDark);
   const changeThemeToLight = useSetRecoilState(changeLight);
+  const setCurrentUser = useSetRecoilState(currentUserAtom);
+  const currentUser = useRecoilValue(currentUserAtom);
+  const router = useRouter();
+
+  const isPublicUrl = (url) => {
+    let maniUrl = "/";
+    let countSlash = 0;
+    let flag = false;
+    for (let i = 0; i < url.length; i++) {
+      if (countSlash == 2) {
+        break;
+      } else {
+        if (url[i] == "/") {
+          countSlash++;
+        } else {
+          maniUrl += url[i];
+        }
+      }
+    }
+    switch (maniUrl) {
+      case "/":
+        flag = true;
+        break;
+      case "/login":
+        flag = true;
+        break;
+      case "/register":
+        flag = true;
+        break;
+      default:
+        flag = false;
+        break;
+    }
+    return flag;
+  };
 
   useEffect(() => {
     localStorage.removeItem("theme");
+
+    if (localStorage.getItem("token")) {
+      setCurrentUser(localStorage.getItem("token"));
+    } else {
+      setCurrentUser("");
+      if (!isPublicUrl(router.asPath)) {
+        router.push("/login");
+      }
+    }
 
     if (
       localStorage.theme === "dark" ||
@@ -21,6 +78,14 @@ export default function AuthMode(props) {
       changeThemeToLight();
     }
   }, []);
+
+  if (!currentUser && !isPublicUrl(router.asPath)) {
+    return (
+      <div className="flex justify-center items-center h-screen w-full bg-gray-800">
+        <HashLoader color={`177EE2`} loading={true} css={override} size={150} />
+      </div>
+    );
+  }
 
   return <>{props.children}</>;
 }
