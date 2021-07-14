@@ -86,6 +86,5 @@ export default function AuthMode(props) {
       </div>
     );
   }
-
-  return <>{props.children}</>;
+  return <div>{props.children}</div>;
 }
