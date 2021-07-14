@@ -11,7 +11,7 @@ import headerStyle from "../styles/header.module.css";
 import { MainNavigation } from "../components/navigation/Navigation";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { theme } from "../store";
+import { theme, currentUser as currentUserAtom } from "../store";
 
 export default function Introduction() {
   const [anq, setAnq] = useState({
@@ -44,6 +44,8 @@ export default function Introduction() {
       },
     ],
   });
+
+  const currentUser = useRecoilValue(currentUserAtom);
 
   const [contentCard, setContentCard] = useState({
     listContentCard: [
@@ -179,20 +181,31 @@ export default function Introduction() {
               <h2 className="text-md font-light sm:text-xl mb-3 mt-5">
                 Ready to watch? Enter your email to register your account.
               </h2>
-              <div className="flex flex-col justify-center lg:flex-row lg:items-center">
-                <input
-                  className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
-                  type="text"
-                />
-                <div className="w-full lg:w-4/12">
+              {currentUser ? (
+                <div>
                   <MainButton
                     className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
       to-primary hover:from-sky-400 hover:to-sky-500"
                   >
-                    Sign Up
+                    Get Start
                   </MainButton>
                 </div>
-              </div>
+              ) : (
+                <div className="flex flex-col justify-center lg:flex-row lg:items-center">
+                  <input
+                    className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
+                    type="text"
+                  />
+                  <div className="w-full lg:w-4/12">
+                    <MainButton
+                      className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+  to-primary hover:from-sky-400 hover:to-sky-500"
+                    >
+                      Sign Up
+                    </MainButton>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -230,27 +243,29 @@ export default function Introduction() {
             );
           })}
         </div>
-        <div className="mt-10">
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-center">
-            Ready to watch? Enter your email to create or restart your
-            membership.
-          </h2>
+        {!currentUser && (
+          <div className="mt-10">
+            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-center">
+              Ready to watch? Enter your email to create or restart your
+              membership.
+            </h2>
 
-          <div className="flex flex-col justify-center lg:flex-row lg:items-center mt-6 mb-16">
-            <input
-              className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
-              type="text"
-            />
-            <div className="w-full lg:w-4/12">
-              <MainButton
-                className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
-      to-primary hover:from-sky-400 hover:to-sky-500"
-              >
-                Sign Up
-              </MainButton>
+            <div className="flex flex-col justify-center lg:flex-row lg:items-center mt-6 mb-16">
+              <input
+                className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
+                type="text"
+              />
+              <div className="w-full lg:w-4/12">
+                <MainButton
+                  className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+        to-primary hover:from-sky-400 hover:to-sky-500"
+                >
+                  Sign Up
+                </MainButton>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <hr className="border-b-4 border-gray-500 shadow-2xl" />
     </Layout>

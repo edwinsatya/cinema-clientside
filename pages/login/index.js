@@ -167,7 +167,7 @@ export default function Login() {
                       />
                       <span
                         onClick={() => setShowPassword(!showPassword)}
-                        className="text-white absolute right-4 top-4"
+                        className="text-white cursor-pointer absolute right-4 top-4"
                       >
                         {!showPassword ? (
                           <svg

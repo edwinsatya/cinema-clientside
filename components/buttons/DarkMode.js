@@ -22,7 +22,7 @@ export default function DarkMode(props) {
     <div className={`flex items-center justify-center ${props.className}`}>
       <button
         onClick={() => changeTheme("dark")}
-        className="mr-2 rounded-lg focus:outline-none focus:ring focus:ring-sky-800"
+        className="mr-1 rounded-lg focus:outline-none focus:ring focus:ring-sky-800"
       >
         <svg
           className="text-gray-600 dark:text-white transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle"
@@ -41,7 +41,7 @@ export default function DarkMode(props) {
       </button>
       <button
         onClick={() => changeTheme("light")}
-        className="ml-2 rounded-lg focus:outline-none focus:ring focus:ring-yellow-300"
+        className="ml-1 rounded-lg focus:outline-none focus:ring focus:ring-yellow-300"
       >
         <svg
           className="text-yellow-300 h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-spin-slow focus:animate-spin-slow"
