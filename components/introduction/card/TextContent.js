@@ -10,7 +10,7 @@ export default function TextContent({ content }) {
         {content.subTitle}
       </h3>
       {content.darkMode && (
-        <div className="w-1/4 rounded-xl mt-14 ring ring-black dark:ring-white shadow-xl flex justify-center items-center p-4">
+        <div className="w-1/4 rounded-xl bg-gray-200 dark:bg-transparent mt-14 ring ring-black dark:ring-white shadow-xl flex justify-center items-center p-4">
           <DarkMode />
         </div>
       )}

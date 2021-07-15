@@ -37,7 +37,7 @@ export default function Header(props) {
             />
           )}
         </div>
-        <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black via-black to-black opacity-40 duration-500"></div>
+        <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black via-transparent to-black opacity-40 duration-500"></div>
         <div
           className={`relative text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full ${headerStyle.headerContainer}`}
         >

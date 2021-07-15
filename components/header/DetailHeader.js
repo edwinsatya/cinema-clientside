@@ -92,7 +92,7 @@ export default function DetailHeader(props) {
                     quality={100}
                   />
                 </div>
-                <div className="flex flex-col sm:flex-row">
+                <div className="flex flex-col sm:flex-row w-full">
                   <div className="mb-2 sm:mb-0 w-full sm:w-9/12 sm:px-4">
                     <div className="text-center sm:text-left font-semibold">
                       Overview {dataHeader.title || dataHeader.name}

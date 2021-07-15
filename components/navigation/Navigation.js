@@ -102,7 +102,11 @@ function MainNavigation() {
             </div>
             <div>
               <ul className="flex items-center justify-center">
-                <li>
+                <li
+                  className={`${
+                    router.asPath !== "/" ? "inline-block" : "hidden"
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className={`lg:text-white  ${
