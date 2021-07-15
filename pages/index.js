@@ -251,7 +251,7 @@ export default function Introduction() {
                     </div>
                   </form>
                   <span
-                    className={`text-red-600 text-base mt-2 ${
+                    className={`text-primary text-base mt-2 ${
                       !emailValid ? "inline-block" : "hidden"
                     }`}
                   >
@@ -303,7 +303,7 @@ export default function Introduction() {
               membership.
             </h2>
 
-            <div className="">
+            <div className="mt-3">
               <form
                 onSubmit={handleSubmitEmail}
                 className="flex flex-col justify-center lg:flex-row lg:items-center"
@@ -326,7 +326,7 @@ export default function Introduction() {
                 </div>
               </form>
               <span
-                className={`text-red-600 text-base mt-2 ${
+                className={`text-primary text-base mt-2 ${
                   !emailValid ? "inline-block" : "hidden"
                 }`}
               >

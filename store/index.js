@@ -15,6 +15,11 @@ const preRegister = atom({
   default: "",
 });
 
+const showDropDownNav = atom({
+  key: "status-dropdown",
+  default: false,
+});
+
 const changeDark = selector({
   key: "c-t-1",
   set: ({ set }) => set(theme, (currTheme) => (currTheme = "dark")),
@@ -25,4 +30,11 @@ const changeLight = selector({
   set: ({ set }) => set(theme, (currTheme) => (currTheme = "light")),
 });
 
-export { theme, changeDark, changeLight, currentUser, preRegister };
+export {
+  theme,
+  changeDark,
+  changeLight,
+  currentUser,
+  preRegister,
+  showDropDownNav,
+};

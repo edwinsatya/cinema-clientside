@@ -64,7 +64,7 @@ export default function Register() {
       <main>
         <div className="relative h-100 bg-white p-6 pb-28 sm:pb-0 flex justify-center items-center">
           <div className="relative w-full max-w-md flex flex-col">
-            {/* <div className="bg-primary flex items-center px-3 py-4">
+            <div className="bg-primary flex items-center px-3 py-4">
               <div className="pr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -80,9 +80,9 @@ export default function Register() {
                 </svg>
               </div>
               <div className="text-sm sm:text-base lg:text-lg text-white">
-                Incorrect password. Please try again or you can
+                Incorrect password. Please try again or you can bla baldasldslad
               </div>
-            </div> */}
+            </div>
             <div className="text-xl sm:text-2xl lg:text-3xl font-semibold mt-5 flex flex-col">
               <span>Welcome back!</span>
               <span>
@@ -197,7 +197,7 @@ export default function Register() {
                     type="submit"
                     className="bg-primary hover:bg-blue-600 text-xl text-white w-full py-3 rounded-md focus:outline-none"
                   >
-                    Sign In
+                    Sign Up
                   </button>
                 </div>
               </form>

@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
-import { changeDark, changeLight, theme } from "../../store";
+import {
+  changeDark,
+  changeLight,
+  theme,
+  showDropDownNav as showDropDownNavAtom,
+} from "../../store";
 
 export default function DarkMode(props) {
   const changeThemeToDark = useSetRecoilState(changeDark);
   const changeThemeToLight = useSetRecoilState(changeLight);
   const themeNow = useRecoilValue(theme);
+  const showDropDownNav = useRecoilValue(showDropDownNavAtom);
 
   const activeClassDark = "ring ring-sky-800";
   const activeClassAnimationDark = "animate-wiggle";
@@ -36,7 +42,9 @@ export default function DarkMode(props) {
         <svg
           className={`${
             themeNow === "dark" ? activeClassAnimationDark : ""
-          } text-gray-700 dark:text-white lg:text-white transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle`}
+          } lg:text-white  ${
+            showDropDownNav ? "text-black dark:text-white" : "text-white"
+          } transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           stroke="currentColor"

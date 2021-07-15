@@ -4,9 +4,12 @@ import IconBurger from "../icons/IconBurger";
 import IconClose from "../icons/IconClose";
 import ButtonLogo from "../buttons/ButtonLogo";
 import Link from "next/link";
-import { useRecoilState } from "recoil";
-import { currentUser as currentUserAtom } from "../../store";
-import { useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  currentUser as currentUserAtom,
+  showDropDownNav as showDropDownNavAtom,
+} from "../../store";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 function MainNavigation() {
@@ -35,6 +38,7 @@ function MainNavigation() {
   ];
 
   const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
+  const setShowDropDownNav = useSetRecoilState(showDropDownNavAtom);
 
   const [dropDown, setDropDown] = useState(false);
 
@@ -51,6 +55,10 @@ function MainNavigation() {
       setCurrentUser("");
     }
   };
+
+  useEffect(() => {
+    setShowDropDownNav(dropDown);
+  }, [dropDown]);
 
   return (
     <nav className="flex flex-col">
@@ -97,7 +105,9 @@ function MainNavigation() {
                 <li>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="text-gray-700 dark:text-white lg:text-white cursor-pointer mr-3 transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle"
+                    className={`lg:text-white  ${
+                      dropDown ? "text-black dark:text-white" : "text-white"
+                    } cursor-pointer mr-3 transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle`}
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -126,7 +136,9 @@ function MainNavigation() {
                 </li>
                 <li
                   onClick={() => setDropDown(!dropDown)}
-                  className="lg:hidden text-white"
+                  className={`lg:hidden ${
+                    dropDown ? "text-black dark:text-white" : "text-white"
+                  }`}
                 >
                   {!dropDown ? <IconBurger /> : <IconClose />}
                 </li>
@@ -151,7 +163,7 @@ function MainNavigation() {
                       } ${
                         router.pathname === menu.url ? classActive : ""
                       } cursor-pointer rounded-md px-3 py-1 mx-1 w-full
-                      ${router.pathname === "/" ? "hidden" : ""}
+                      ${router.pathname === "/" && !currentUser ? "hidden" : ""}
                       `}
                     >
                       <Link href={menu.url}>
@@ -160,7 +172,7 @@ function MainNavigation() {
                     </li>
                   );
                 })}
-                <li className="w-full mt-10">
+                <li className={`w-full ${currentUser ? "mt-10" : ""}`}>
                   <MainButton
                     handleClick={() => handleLoginLogout()}
                     className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-base bg-gradient-to-br rounded-sm shadow transform ${
