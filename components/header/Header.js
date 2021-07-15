@@ -37,7 +37,7 @@ export default function Header(props) {
             />
           )}
         </div>
-        <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-gray-300 dark:from-black via-transparent dark:via-transparent to-gray-300 dark:to-black opacity-30 duration-500"></div>
+        <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black via-black to-black opacity-40 duration-500"></div>
         <div
           className={`relative text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full ${headerStyle.headerContainer}`}
         >
@@ -45,7 +45,7 @@ export default function Header(props) {
             <h1 className="text-2xl text-primary sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4">
               {dataHeader.title || dataHeader.name}
             </h1>
-            <h2 className="text-lg text-gray-300 dark:text-white font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
+            <h2 className="text-lg text-white font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
               {dataHeader.overview.length > 233
                 ? dataHeader.overview.substr(0, 233) + "..."
                 : dataHeader.overview}

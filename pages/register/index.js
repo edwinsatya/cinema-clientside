@@ -1,6 +1,8 @@
 import Layout from "../../components/layout/Layout";
 import ButtonLogo from "../../components/buttons/ButtonLogo";
 import Link from "next/link";
+import { preRegister as preRegisterAtom } from "../../store";
+import { useRecoilValue } from "recoil";
 import { useRef, useState, useEffect } from "react";
 
 export default function Register() {
@@ -12,6 +14,21 @@ export default function Register() {
   const [errMsgSubmit, setErrMsgSubmit] = useState("");
   const inputEmail = useRef("");
   const inputPassword = useRef("");
+  const emailPreRegister = useRecoilValue(preRegisterAtom);
+
+  const validationEmail = (e) => {
+    let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (!e) {
+      setEmailValid(false);
+      setErrMsgEmail("Email is required");
+    } else if (!emailPattern.test(e)) {
+      setEmailValid(false);
+      setErrMsgEmail("Please enter a valid email");
+    } else {
+      setEmailValid(true);
+    }
+  };
 
   const validationPassword = (e) => {
     if (!e) {
@@ -36,7 +53,7 @@ export default function Register() {
           </div>
           <div>
             <Link href="/login">
-              <a className="text-sm sm:p-2 cursor-pointer sm:text-md lg:text-2xl leading-relaxed font-base hover:underline">
+              <a className="text-sm sm:p-2 cursor-pointer sm:text-base lg:text-2xl leading-relaxed font-base hover:underline">
                 Sign In
               </a>
             </Link>
@@ -62,7 +79,7 @@ export default function Register() {
                   />
                 </svg>
               </div>
-              <div className="text-sm sm:text-md lg:text-lg text-white">
+              <div className="text-sm sm:text-base lg:text-lg text-white">
                 Incorrect password. Please try again or you can
               </div>
             </div> */}
@@ -72,19 +89,45 @@ export default function Register() {
                 Joining <span className="text-primary">Cinema21</span> is easy.
               </span>
             </div>
-            <div className="text-md sm:text-lg lg:text-xl mt-4">
+            <div className="text-base sm:text-lg lg:text-xl mt-4">
               Enter your password and you'll be watching in no time.
             </div>
             <div className="mt-4">
               <form>
-                <div className="flex flex-col">
-                  <span className="text-md sm:text-md lg:text-lg font-light">
-                    Email
-                  </span>
-                  <span className="text-sm sm:text-md lg:text-lg font-bold">
-                    edwinsatyayudistira@gmail.com
-                  </span>
-                </div>
+                {emailPreRegister ? (
+                  <div className="flex flex-col">
+                    <span className="text-base sm:text-base lg:text-lg font-light">
+                      Email
+                    </span>
+                    <span className="text-sm sm:text-base lg:text-lg font-bold">
+                      {emailPreRegister}
+                    </span>
+                  </div>
+                ) : (
+                  <div>
+                    <input
+                      ref={inputEmail}
+                      type="email"
+                      autoComplete="current-email"
+                      required
+                      placeholder="email@gmail.com"
+                      onChange={(e) => validationEmail(e.target.value)}
+                      className={`text-black focus:outline-none px-4 py-5 w-full rounded-md border border-black  ${
+                        !emailValid && errMsgEmail
+                          ? "border-2 border-blue-800"
+                          : "focus:border-green-500"
+                      }`}
+                    />
+                    <span
+                      className={`text-blue-800 text-sm mt-1 ${
+                        !emailValid ? "inline-block" : "hidden"
+                      }`}
+                    >
+                      {errMsgEmail}
+                    </span>
+                  </div>
+                )}
+
                 <div className="relative w-full mt-4">
                   <input
                     ref={inputPassword}

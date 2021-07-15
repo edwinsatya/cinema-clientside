@@ -9,7 +9,7 @@ export default function Accordion(props) {
         onClick={() => props.onHandleChangeShow(props.idx)}
         className={`rounded ${
           props.anq.show ? "rounded-b-none" : ""
-        } cursor-pointer shadow-xl py-2 px-6 flex items-center justify-between text-md sm:text-lg md:text-xl lg:text-2xl font-normal text-black dark:text-white bg-white dark:bg-gray-900 border ${
+        } cursor-pointer shadow-xl py-2 px-6 flex items-center justify-between text-base sm:text-lg md:text-xl lg:text-2xl font-normal text-black dark:text-white bg-white dark:bg-gray-900 border ${
           props.anq.show ? "border-b-3" : ""
         } border-black dark:border-gray-500`}
       >
@@ -53,7 +53,7 @@ export default function Accordion(props) {
           props.anq.show
             ? "flex opacity-100 py-5 px-8"
             : "visible opacity-0 p-0"
-        } rounded-b text-md sm:text-lg md:text-xl lg:text-2xl font-normal text-black dark:text-white bg-white dark:bg-gray-900 border border-t-0 border-black dark:border-gray-500 transition-all duration-200`}
+        } rounded-b text-base sm:text-lg md:text-xl lg:text-2xl font-normal text-black dark:text-white bg-white dark:bg-gray-900 border border-t-0 border-black dark:border-gray-500 transition-all duration-200`}
       >
         <h2 className={`${!props.anq.show ? "h-0" : ""}`}>
           {props.anq.answer}

@@ -64,10 +64,10 @@ export default function DetailHeader(props) {
           {!showTrailer ? (
             <div className="py-2 px-4 md:px-8 lg:px-12 absolute top-12 sm:top-16 lg:top-24 flex flex-col w-full text-black dark:text-white">
               <div>
-                <h2 className="text-md sm:text-lg md:text-xl font-bold">
+                <h2 className="text-base sm:text-lg md:text-xl font-bold">
                   {dataHeader.title || dataHeader.name}
                 </h2>
-                <span className="text-md sm:text-lg md:text-xl font-base">
+                <span className="text-base sm:text-lg md:text-xl font-base">
                   {dataHeader.release_date
                     ? `${getDateStr(dataHeader.release_date)}`
                     : `${getDateStr(dataHeader.first_air_date)}`}

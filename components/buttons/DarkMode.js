@@ -1,9 +1,16 @@
-import { useSetRecoilState } from "recoil";
-import { changeDark, changeLight } from "../../store";
+import { useEffect, useState } from "react";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { changeDark, changeLight, theme } from "../../store";
 
 export default function DarkMode(props) {
   const changeThemeToDark = useSetRecoilState(changeDark);
   const changeThemeToLight = useSetRecoilState(changeLight);
+  const themeNow = useRecoilValue(theme);
+
+  const activeClassDark = "ring ring-sky-800";
+  const activeClassAnimationDark = "animate-wiggle";
+  const activeClassLight = "ring ring-yellow-300";
+  const activeClassAnimationLight = "animate-spin-slow";
 
   const changeTheme = (value) => {
     const html = document.querySelector("html");
@@ -22,10 +29,14 @@ export default function DarkMode(props) {
     <div className={`flex items-center justify-center ${props.className}`}>
       <button
         onClick={() => changeTheme("dark")}
-        className="mr-1 rounded-lg focus:outline-none focus:ring focus:ring-sky-800"
+        className={`${
+          themeNow === "dark" ? activeClassDark : ""
+        } mr-1 rounded-lg focus:outline-none focus:ring focus:ring-sky-800`}
       >
         <svg
-          className="text-gray-600 dark:text-white transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle"
+          className={`${
+            themeNow === "dark" ? activeClassAnimationDark : ""
+          } text-gray-700 dark:text-white lg:text-white transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           stroke="currentColor"
@@ -41,10 +52,14 @@ export default function DarkMode(props) {
       </button>
       <button
         onClick={() => changeTheme("light")}
-        className="ml-1 rounded-lg focus:outline-none focus:ring focus:ring-yellow-300"
+        className={`${
+          themeNow === "light" ? activeClassLight : ""
+        } ml-1 rounded-lg focus:outline-none focus:ring focus:ring-yellow-300`}
       >
         <svg
-          className="text-yellow-300 h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-spin-slow focus:animate-spin-slow"
+          className={`${
+            themeNow === "light" ? activeClassAnimationLight : ""
+          } text-yellow-300 h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-spin-slow focus:animate-spin-slow`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           stroke="currentColor"

@@ -10,6 +10,11 @@ const currentUser = atom({
   default: "",
 });
 
+const preRegister = atom({
+  key: "pre-register",
+  default: "",
+});
+
 const changeDark = selector({
   key: "c-t-1",
   set: ({ set }) => set(theme, (currTheme) => (currTheme = "dark")),
@@ -20,4 +25,4 @@ const changeLight = selector({
   set: ({ set }) => set(theme, (currTheme) => (currTheme = "light")),
 });
 
-export { theme, changeDark, changeLight, currentUser };
+export { theme, changeDark, changeLight, currentUser, preRegister };

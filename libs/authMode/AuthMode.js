@@ -59,10 +59,13 @@ export default function AuthMode(props) {
 
     if (localStorage.getItem("token")) {
       setCurrentUser(localStorage.getItem("token"));
+      if (router.asPath === "/login" || router.asPath === "/register") {
+        router.replace("/");
+      }
     } else {
       setCurrentUser("");
       if (!isPublicUrl(router.asPath)) {
-        router.push("/login");
+        router.replace("/login");
       }
     }
 
@@ -78,6 +81,17 @@ export default function AuthMode(props) {
       changeThemeToLight();
     }
   }, []);
+
+  if (
+    currentUser &&
+    (router.asPath === "/login" || router.asPath === "/register")
+  ) {
+    return (
+      <div className="flex justify-center items-center h-screen w-full bg-gray-800">
+        <HashLoader color={`177EE2`} loading={true} css={override} size={150} />
+      </div>
+    );
+  }
 
   if (!currentUser && !isPublicUrl(router.asPath)) {
     return (

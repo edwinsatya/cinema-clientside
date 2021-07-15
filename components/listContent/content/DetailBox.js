@@ -93,7 +93,7 @@ export default function DetailBoxMovie(props) {
         <span>:</span>
         {detail.homepage ? (
           <a
-            className="text-sm md:text-md lg:text-md sm:ml-2 sm:w-7/12 underline text-blue-600"
+            className="text-sm md:text-base lg:text-base sm:ml-2 sm:w-7/12 underline text-blue-600"
             href={detail.homepage}
             rel="noreferrer"
             target="_blank"

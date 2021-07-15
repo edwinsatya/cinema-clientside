@@ -38,8 +38,7 @@ function MainNavigation() {
 
   const [dropDown, setDropDown] = useState(false);
 
-  const classActive =
-    "bg-white border border-black dark:bg-gray-700 dark:border-white";
+  const classActive = "border text-white bg-gray-700 border-white";
 
   const classHover = `border-b-2 border-transparent hover:border-primary `;
 
@@ -74,7 +73,7 @@ function MainNavigation() {
                 router.pathname === "/" ? "hidden" : "lg:flex"
               }`}
             >
-              <ul className="flex items-center justify-around text-sm sm:text-md lg:text-lg text black dark:text-white">
+              <ul className="flex items-center justify-around text-sm sm:text-base lg:text-lg text-white">
                 {listMenu.map((menu, index) => {
                   return (
                     <li
@@ -98,7 +97,7 @@ function MainNavigation() {
                 <li>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="text-white mr-3 transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle"
+                    className="text-gray-700 dark:text-white lg:text-white cursor-pointer mr-3 transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -116,7 +115,7 @@ function MainNavigation() {
                 <li className="hidden lg:flex">
                   <MainButton
                     handleClick={() => handleLoginLogout()}
-                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-md bg-gradient-to-br rounded-sm shadow transform ${
+                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-base bg-gradient-to-br rounded-sm shadow transform ${
                       !currentUser
                         ? "from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
                         : "from-yellow-600 to-yellow-800 hover:from-yellow-500 hover:to-yellow-600"
@@ -127,7 +126,7 @@ function MainNavigation() {
                 </li>
                 <li
                   onClick={() => setDropDown(!dropDown)}
-                  className="lg:hidden text-black dark:text-white"
+                  className="lg:hidden text-white"
                 >
                   {!dropDown ? <IconBurger /> : <IconClose />}
                 </li>
@@ -141,7 +140,7 @@ function MainNavigation() {
           <div className="absolute z-50 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 text-black dark:text-white w-full h-screen">
             <div className="p-4">
               <ul
-                className={`flex flex-col items-center justify-around text-sm sm:text-md lg:text-xl text black dark:text-white`}
+                className={`flex flex-col items-center justify-around text-sm sm:text-base lg:text-xl text black dark:text-white`}
               >
                 {listMenu.map((menu, index) => {
                   return (
@@ -164,7 +163,7 @@ function MainNavigation() {
                 <li className="w-full mt-10">
                   <MainButton
                     handleClick={() => handleLoginLogout()}
-                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-md bg-gradient-to-br rounded-sm shadow transform ${
+                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-base bg-gradient-to-br rounded-sm shadow transform ${
                       !currentUser
                         ? "from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
                         : "from-yellow-600 to-yellow-800 hover:from-yellow-500 hover:to-yellow-600"

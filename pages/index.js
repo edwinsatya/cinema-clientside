@@ -9,11 +9,20 @@ import Card from "../components/introduction/card/Card";
 import Accordion from "../components/accordion/Accordion";
 import headerStyle from "../styles/header.module.css";
 import { MainNavigation } from "../components/navigation/Navigation";
-import { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { theme, currentUser as currentUserAtom } from "../store";
+import { useState, useEffect, useRef } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  theme,
+  currentUser as currentUserAtom,
+  preRegister as preRegisterAtom,
+} from "../store";
+import { useRouter } from "next/router";
 
 export default function Introduction() {
+  const router = useRouter();
+  const currentUser = useRecoilValue(currentUserAtom);
+  const setEmailPreRegister = useSetRecoilState(preRegisterAtom);
+
   const [anq, setAnq] = useState({
     arr: [
       {
@@ -45,7 +54,9 @@ export default function Introduction() {
     ],
   });
 
-  const currentUser = useRecoilValue(currentUserAtom);
+  const [emailValid, setEmailValid] = useState(false);
+  const [errMsgEmail, setErrMsgEmail] = useState("");
+  const inputEmail = useRef("");
 
   const [contentCard, setContentCard] = useState({
     listContentCard: [
@@ -124,6 +135,20 @@ export default function Introduction() {
 
   const currentTheme = useRecoilValue(theme);
 
+  const validationEmail = (e) => {
+    let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (!e) {
+      setEmailValid(false);
+      setErrMsgEmail("Email is required");
+    } else if (!emailPattern.test(e)) {
+      setEmailValid(false);
+      setErrMsgEmail("Please enter a valid email");
+    } else {
+      setEmailValid(true);
+    }
+  };
+
   const handleChangeShow = (e) => {
     const copyArr = anq.arr.concat();
     const newArr = copyArr.map((data, index) => {
@@ -137,6 +162,17 @@ export default function Introduction() {
     setAnq({
       arr: newArr,
     });
+  };
+
+  const handleSubmitEmail = (e) => {
+    e.preventDefault();
+    if (emailValid) {
+      const email = inputEmail.current.value;
+      setEmailPreRegister(email);
+      router.push("/register");
+    } else {
+      validationEmail();
+    }
   };
 
   useEffect(() => {
@@ -169,8 +205,8 @@ export default function Introduction() {
             quality={100}
             priority={true}
           />
-          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-br  from-black via-sky-200 dark:via-gray-900 to-black opacity-50 duration-500"></div>
-          <div className="absolute h-full text-center text-black dark:text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
+          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-br  from-black  to-black opacity-50 duration-500"></div>
+          <div className="absolute h-full text-center text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
             <div className="max-w-xl relative h-auto">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold mb-4">
                 Unlimited Trailer movies, TV shows, and more.
@@ -178,12 +214,13 @@ export default function Introduction() {
               <h2 className="text-lg font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
                 Watch anywhere. Watch anytime.
               </h2>
-              <h2 className="text-md font-light sm:text-xl mb-3 mt-5">
+              <h2 className="text-base font-light sm:text-xl mb-3 mt-5">
                 Ready to watch? Enter your email to register your account.
               </h2>
               {currentUser ? (
                 <div>
                   <MainButton
+                    handleClick={() => router.push("/home")}
                     className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
       to-primary hover:from-sky-400 hover:to-sky-500"
                   >
@@ -191,19 +228,35 @@ export default function Introduction() {
                   </MainButton>
                 </div>
               ) : (
-                <div className="flex flex-col justify-center lg:flex-row lg:items-center">
-                  <input
-                    className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
-                    type="text"
-                  />
-                  <div className="w-full lg:w-4/12">
-                    <MainButton
-                      className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+                <div>
+                  <form
+                    onSubmit={handleSubmitEmail}
+                    className="flex flex-col justify-center lg:flex-row lg:items-center"
+                  >
+                    <input
+                      ref={inputEmail}
+                      onChange={(e) => validationEmail(e.target.value)}
+                      required
+                      className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
+                      type="email"
+                    />
+                    <div className="w-full lg:w-4/12">
+                      <MainButton
+                        handleClick={() => handleSubmitEmail}
+                        className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
   to-primary hover:from-sky-400 hover:to-sky-500"
-                    >
-                      Sign Up
-                    </MainButton>
-                  </div>
+                      >
+                        Sign Up
+                      </MainButton>
+                    </div>
+                  </form>
+                  <span
+                    className={`text-red-600 text-base mt-2 ${
+                      !emailValid ? "inline-block" : "hidden"
+                    }`}
+                  >
+                    {errMsgEmail}
+                  </span>
                 </div>
               )}
             </div>
@@ -244,25 +297,41 @@ export default function Introduction() {
           })}
         </div>
         {!currentUser && (
-          <div className="mt-10">
-            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-center">
+          <div className="mt-10 w-full lg:w-8/12">
+            <h2 className="text-base md:text-lg lg:text-2xl font-medium text-center">
               Ready to watch? Enter your email to create or restart your
               membership.
             </h2>
 
-            <div className="flex flex-col justify-center lg:flex-row lg:items-center mt-6 mb-16">
-              <input
-                className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
-                type="text"
-              />
-              <div className="w-full lg:w-4/12">
-                <MainButton
-                  className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
-        to-primary hover:from-sky-400 hover:to-sky-500"
-                >
-                  Sign Up
-                </MainButton>
-              </div>
+            <div className="">
+              <form
+                onSubmit={handleSubmitEmail}
+                className="flex flex-col justify-center lg:flex-row lg:items-center"
+              >
+                <input
+                  ref={inputEmail}
+                  onChange={(e) => validationEmail(e.target.value)}
+                  required
+                  className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
+                  type="email"
+                />
+                <div className="w-full lg:w-4/12">
+                  <MainButton
+                    handleClick={() => handleSubmitEmail}
+                    className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
+  to-primary hover:from-sky-400 hover:to-sky-500"
+                  >
+                    Sign Up
+                  </MainButton>
+                </div>
+              </form>
+              <span
+                className={`text-red-600 text-base mt-2 ${
+                  !emailValid ? "inline-block" : "hidden"
+                }`}
+              >
+                {errMsgEmail}
+              </span>
             </div>
           </div>
         )}
