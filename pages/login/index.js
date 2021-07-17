@@ -38,11 +38,8 @@ export default function Login() {
   };
 
   const validationPassword = (e) => {
-    console.log("validationpassword", e);
     if (!e) {
       setPasswordValid(false);
-      console.log("masuk sini validation", e);
-
       setErrMsgPassword("Password is required");
     } else if (e.length < 8) {
       setPasswordValid(false);
@@ -79,9 +76,8 @@ export default function Login() {
     }
   };
 
-  useEffect(() => {
-    console.log(currentUser, "state current user");
-  }, [currentUser]);
+  // useEffect(() => {
+  // }, [currentUser]);
 
   return (
     <Layout title="Login">

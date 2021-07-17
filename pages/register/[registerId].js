@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import ButtonLogo from "../../components/buttons/ButtonLogo";
 import Link from "next/link";
@@ -17,17 +17,30 @@ const override = css`
 
 export async function getServerSideProps(context) {
   const registerId = context.params.registerId;
-  const detailRegister = await cinemaAPI(`/users/register/${registerId}`);
-
-  return {
-    props: {
-      detailRegister: detailRegister.data.data,
-    },
-  };
+  try {
+    const detailRegister = await cinemaAPI(`/users/register/${registerId}`);
+    return {
+      props: {
+        detailRegister: detailRegister.data.data,
+        isError: false,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        detailRegister: {
+          name: "-",
+          email: "-",
+          errMsg: error.response.data.errors.message,
+        },
+        isError: true,
+      },
+    };
+  }
 }
 
 export default function SuccessRegister(props) {
-  const { detailRegister } = props;
+  const { detailRegister, errDetailRegister, isError } = props;
   const router = useRouter();
   const [isSendEmail, setIsSendEmail] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
@@ -69,6 +82,22 @@ export default function SuccessRegister(props) {
       }, 5000);
     }
   };
+
+  useEffect(() => {
+    if (isError) {
+      setShowPopUp(true);
+      setTimeout(() => {
+        setIsSendEmail(true);
+      }, 2500);
+      setPopUpMsg(detailRegister.errMsg);
+      setTimeout(() => {
+        setShowPopUp(false);
+        setIsSendEmail(false);
+        setPopUpMsg("");
+        router.replace("/register");
+      }, 5000);
+    }
+  }, [isError]);
 
   return (
     <Layout title="Success Register">
@@ -123,12 +152,12 @@ export default function SuccessRegister(props) {
               <span className="text-left md:text-center mt-5 px-4">
                 Hai{" "}
                 <span className="capitalize text-primary">
-                  {detailRegister.name},&nbsp;
+                  {detailRegister.name || "-"},&nbsp;
                 </span>
                 <span>
                   We sent an email to&nbsp;
                   <span className="text-primary">
-                    {detailRegister.email}&nbsp;
+                    {detailRegister.email || "-"}&nbsp;
                   </span>
                   to verify your email address and active your account. The link
                   in the email expire in 24 hours,
