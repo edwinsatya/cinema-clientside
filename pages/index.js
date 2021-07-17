@@ -9,7 +9,7 @@ import Card from "../components/introduction/card/Card";
 import Accordion from "../components/accordion/Accordion";
 import headerStyle from "../styles/header.module.css";
 import { MainNavigation } from "../components/navigation/Navigation";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   theme,
@@ -56,7 +56,7 @@ export default function Introduction() {
 
   const [emailValid, setEmailValid] = useState(false);
   const [errMsgEmail, setErrMsgEmail] = useState("");
-  const inputEmail = useRef("");
+  const [inputEmail, setInputEmail] = useState("");
 
   const [contentCard, setContentCard] = useState({
     listContentCard: [
@@ -136,6 +136,7 @@ export default function Introduction() {
   const currentTheme = useRecoilValue(theme);
 
   const validationEmail = (e) => {
+    setInputEmail(e);
     let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
     if (!e) {
@@ -167,11 +168,9 @@ export default function Introduction() {
   const handleSubmitEmail = (e) => {
     e.preventDefault();
     if (emailValid) {
-      const email = inputEmail.current.value;
+      const email = inputEmail;
       setEmailPreRegister(email);
       router.push("/register");
-    } else {
-      validationEmail();
     }
   };
 
@@ -234,7 +233,7 @@ export default function Introduction() {
                     className="flex flex-col justify-center lg:flex-row lg:items-center"
                   >
                     <input
-                      ref={inputEmail}
+                      value={inputEmail}
                       onChange={(e) => validationEmail(e.target.value)}
                       required
                       className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
@@ -309,7 +308,7 @@ export default function Introduction() {
                 className="flex flex-col justify-center lg:flex-row lg:items-center"
               >
                 <input
-                  ref={inputEmail}
+                  value={inputEmail}
                   onChange={(e) => validationEmail(e.target.value)}
                   required
                   className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"

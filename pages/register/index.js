@@ -2,8 +2,16 @@ import Layout from "../../components/layout/Layout";
 import ButtonLogo from "../../components/buttons/ButtonLogo";
 import Link from "next/link";
 import { preRegister as preRegisterAtom } from "../../store";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useRef, useState, useEffect } from "react";
+import { cinemaAPI } from "../../services/api";
+import { useRouter } from "next/router";
+import MoonLoader from "react-spinners/MoonLoader";
+import { css } from "@emotion/react";
+
+const override = css`
+  overflow: hidden;
+`;
 
 export default function Register() {
   const [emailValid, setEmailValid] = useState(false);
@@ -13,8 +21,14 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [errMsgSubmit, setErrMsgSubmit] = useState("");
   const inputEmail = useRef("");
+  const inputName = useRef("");
   const inputPassword = useRef("");
-  const emailPreRegister = useRecoilValue(preRegisterAtom);
+  const [emailPreRegister, setEmailPreRegister] =
+    useRecoilState(preRegisterAtom);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
+
+  const router = useRouter();
 
   const validationEmail = (e) => {
     let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -42,6 +56,53 @@ export default function Register() {
     }
   };
 
+  const resetForm = () => {
+    if (!emailPreRegister) {
+      inputEmail.current.value = "";
+      inputPassword.current.value = "";
+      inputName.current.value = "";
+    } else {
+      setEmailPreRegister("");
+      inputPassword.current.value = "";
+      inputName.current.value = "";
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      if (emailValid && passwordValid) {
+        setShowPopUp(true);
+        const body = {
+          email: emailPreRegister ? emailPreRegister : inputEmail.current.value,
+          name: inputName.current.value,
+          password: inputPassword.current.value,
+        };
+        const response = await cinemaAPI.post(`/users/register`, body);
+        localStorage.setItem("tokenVerification", response.data.token);
+        setTimeout(() => {
+          setIsSuccess(true);
+        }, 2500);
+        setTimeout(() => {
+          setShowPopUp(false);
+          setIsSuccess(false);
+          router.push(`/register/${response.data.data.id}`);
+          setErrMsgSubmit("");
+        }, 5000);
+      }
+    } catch (error) {
+      setErrMsgSubmit(error.response.data.errors.message);
+      setShowPopUp(false);
+      resetForm();
+    }
+  };
+
+  useEffect(() => {
+    if (emailPreRegister) {
+      setEmailValid(true);
+    }
+  }, [emailPreRegister]);
+
   return (
     <Layout title="Register">
       <header className="sticky top-0 z-50">
@@ -63,8 +124,28 @@ export default function Register() {
 
       <main>
         <div className="relative h-100 bg-white p-6 pb-28 sm:pb-0 flex justify-center items-center">
+          <div
+            className={`${
+              showPopUp ? "flex" : "hidden"
+            } absolute border border-gray-400 rounded-lg bg-opacity-95 flex-col justify-center items-center z-40 bg-white h-1/3 w-full max-w-lg`}
+          >
+            {!isSuccess ? (
+              <MoonLoader
+                color={`#177ee2`}
+                loading={true}
+                css={override}
+                size={120}
+              />
+            ) : (
+              <span className="text-primary text-xl">Register Successful</span>
+            )}
+          </div>
           <div className="relative w-full max-w-md flex flex-col">
-            <div className="bg-primary flex items-center px-3 py-4">
+            <div
+              className={`${
+                errMsgSubmit ? "block" : "hidden"
+              } bg-primary flex items-center px-3 py-4 mt-10 sm:mt-0`}
+            >
               <div className="pr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +161,7 @@ export default function Register() {
                 </svg>
               </div>
               <div className="text-sm sm:text-base lg:text-lg text-white">
-                Incorrect password. Please try again or you can bla baldasldslad
+                {errMsgSubmit}
               </div>
             </div>
             <div className="text-xl sm:text-2xl lg:text-3xl font-semibold mt-5 flex flex-col">
@@ -93,7 +174,7 @@ export default function Register() {
               Enter your password and you'll be watching in no time.
             </div>
             <div className="mt-4">
-              <form>
+              <form onSubmit={handleSubmit}>
                 {emailPreRegister ? (
                   <div className="flex flex-col">
                     <span className="text-base sm:text-base lg:text-lg font-light">
@@ -127,6 +208,17 @@ export default function Register() {
                     </span>
                   </div>
                 )}
+
+                <div className="mt-4">
+                  <input
+                    ref={inputName}
+                    type="text"
+                    autoComplete="current-name"
+                    required
+                    placeholder="Your Name"
+                    className={`text-black focus:outline-none px-4 py-5 w-full rounded-md border border-black focus:border-green-500`}
+                  />
+                </div>
 
                 <div className="relative w-full mt-4">
                   <input

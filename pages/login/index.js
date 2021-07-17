@@ -38,8 +38,11 @@ export default function Login() {
   };
 
   const validationPassword = (e) => {
+    console.log("validationpassword", e);
     if (!e) {
       setPasswordValid(false);
+      console.log("masuk sini validation", e);
+
       setErrMsgPassword("Password is required");
     } else if (e.length < 8) {
       setPasswordValid(false);
@@ -69,9 +72,6 @@ export default function Login() {
         setCurrentUser(token);
         setErrMsgSubmit("");
         router.push("/home");
-      } else {
-        validationEmail();
-        validationPassword();
       }
     } catch (error) {
       setErrMsgSubmit(error.response.data.errors.message);
@@ -120,7 +120,7 @@ export default function Login() {
                 } w-full bg-blue-800 rounded-md p-2 sm:p-3 lg:p-4 mb-4`}
               >
                 <span className="text-white font-semibold text-sm md:text-base">
-                  Incorrect email or password.
+                  {errMsgSubmit}
                 </span>
                 <span className="text-white font-medium text-sm md:text-base ml-2">
                   Please try again

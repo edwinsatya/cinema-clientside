@@ -10,9 +10,7 @@ import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
 
 const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
+  overflow: hidden;
 `;
 
 export default function AuthMode(props) {
@@ -95,8 +93,13 @@ export default function AuthMode(props) {
 
   if (!currentUser && !isPublicUrl(router.asPath)) {
     return (
-      <div className="flex justify-center items-center h-screen w-full bg-gray-800">
-        <HashLoader color={`177EE2`} loading={true} css={override} size={150} />
+      <div className="flex justify-center items-center h-screen w-full bg-white">
+        <HashLoader
+          color={`#177ee2`}
+          loading={true}
+          css={override}
+          size={100}
+        />
       </div>
     );
   }
