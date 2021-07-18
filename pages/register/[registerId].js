@@ -52,11 +52,12 @@ export default function SuccessRegister(props) {
   socket.on("emailVerified", (data) => {
     if (data.id == detailRegister.id) {
       if (data.isVerify) {
+        localStorage.removeItem("tokenVerification");
         router.replace("/login");
       } else {
         localStorage.removeItem("tokenVerification");
-        localStorage.removeItem("currentRegisterId");
         setTimeout(() => {
+          clearInterval(intervalId);
           router.replace("/register");
         }, 5000);
       }
@@ -104,13 +105,22 @@ export default function SuccessRegister(props) {
       setTimeout(() => {
         setIsSendEmail(true);
       }, 2500);
-      setPopUpMsg(error.response.data.errors.message);
+      if (error.response.data.errors.message == "jwt malformed") {
+        setPopUpMsg("Sorry your session is time out");
+      } else {
+        setPopUpMsg(error.response.data.errors.message);
+      }
       setTimeout(() => {
         setShowPopUp(false);
         setIsSendEmail(false);
         setPopUpMsg("");
-
-        // router.replace("/register");
+        if (
+          error.response.data.status == 401 &&
+          error.response.data.errors.message == "jwt malformed"
+        ) {
+          clearInterval(intervalId);
+          router.replace("/register");
+        }
       }, 5000);
     }
   };
@@ -124,7 +134,6 @@ export default function SuccessRegister(props) {
       setPopUpMsg(detailRegister.errMsg);
       setTimeout(() => {
         localStorage.removeItem("tokenVerification");
-        localStorage.removeItem("currentRegisterId");
         router.replace("/register");
         setShowPopUp(false);
         setIsSendEmail(false);
