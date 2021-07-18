@@ -1,59 +1,44 @@
 import Image from "next/image";
-import IconFire from "../../icons/IconFire";
+import RatingStar from "../ratingStar/RatingStar";
 import cardStyle from "../../../styles/card.module.css";
 import { useState } from "react";
 
 export default function Card(props) {
-  const { dataContent, indexContent } = props;
-  const countRating = (e) => {
-    const rating = Math.round(e);
-    const arr = [];
-    switch (rating) {
-      case 1 || 2:
-        for (let i = 0; i < 1; i++) {
-          arr.push({});
-        }
-        break;
-      case 3 || 4:
-        for (let i = 0; i < 2; i++) {
-          arr.push({});
-        }
-        break;
-      case 5 || 6:
-        for (let i = 0; i < 3; i++) {
-          arr.push({});
-        }
-        break;
-      case 7 || 8:
-        for (let i = 0; i < 4; i++) {
-          arr.push({});
-        }
-        break;
-      case 9 || 10:
-        for (let i = 0; i < 5; i++) {
-          arr.push({});
-        }
-        break;
-      default:
-        arr.push({});
-        break;
-    }
-    return arr;
-  };
+  const { dataContent, indexContent, onHandleClick } = props;
+
   const [cardHover, setCardHover] = useState(null);
+
+  const getMinimTitle = (title) => {
+    const lengthTitle = title.length;
+    if (lengthTitle > 28) {
+      return `${title.substr(0, 28)}...`;
+    }
+    return title;
+  };
 
   return (
     <div
       onMouseOver={() => setCardHover(indexContent)}
       onMouseOut={() => setCardHover(null)}
+      onClick={() => onHandleClick(dataContent)}
       className={`${cardStyle.card} cursor-pointer relative w-80 h-48 rounded-lg shadow-xl drop-shadow-lg mx-3 my-2 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
     >
       <div className={`${cardStyle.imageContent} relative w-full h-full`}>
         <Image
           src={
             cardHover == indexContent
-              ? dataContent.poster_path
-              : dataContent.backdrop_path
+              ? `${
+                  dataContent.poster_path
+                    ? "https://image.tmdb.org/t/p/original" +
+                      dataContent.poster_path
+                    : "https://i.ibb.co/6HwNvXv/coming-soon-reopening-event-retail-sale-design-template-79543bc1062ebb6f9eb55d1bb7994d49-screen.jpg"
+                }`
+              : `${
+                  dataContent.backdrop_path
+                    ? "https://image.tmdb.org/t/p/original" +
+                      dataContent.backdrop_path
+                    : "https://i.ibb.co/9spxhL0/2588754.jpg"
+                }`
           }
           layout={"fill"}
           objectFit={"fill"}
@@ -61,32 +46,34 @@ export default function Card(props) {
           alt="list"
         />
       </div>
-      <div className="absolute bottom-0 w-full h-10">
-        <div className="bg-white dark:bg-black w-full h-full opacity-60 absolute"></div>
-        <div className="absolute flex justify-around items-center h-full py-2 w-full text-center">
-          <span>{dataContent.original_title}</span>
-          <span className="flex">
-            {countRating(dataContent.vote_average).map((fire, index) => {
-              return (
-                <IconFire
-                  key={index}
-                  className={`${
-                    countRating(dataContent.vote_average).length == 1
-                      ? "text-red-500"
-                      : countRating(dataContent.vote_average).length == 2
-                      ? "text-green-500"
-                      : countRating(dataContent.vote_average).length == 3
-                      ? "text-blue-500"
-                      : countRating(dataContent.vote_average).length == 4
-                      ? "text-yellow-300"
-                      : countRating(dataContent.vote_average).length == 5
-                      ? "text-yellow-700"
-                      : "text-black"
-                  }`}
-                />
-              );
-            })}
-          </span>
+      <div
+        className={`absolute bottom-0 w-full ${
+          cardHover != indexContent ? "h-10" : "h-20"
+        }`}
+      >
+        <div
+          className={`bg-white dark:bg-black w-full h-full ${
+            cardHover != indexContent ? "opacity-60" : "opacity-90"
+          } absolute`}
+        ></div>
+        <div className="absolute flex flex-col justify-center items-center h-full py-2 w-full text-center">
+          <div>
+            <span className="font-bold text-base">
+              {dataContent.title
+                ? getMinimTitle(dataContent.title)
+                : getMinimTitle(dataContent.name)}
+            </span>
+          </div>
+          <div
+            className={`${
+              cardHover == indexContent ? "flex" : "hidden"
+            } w-full items-center justify-around`}
+          >
+            <RatingStar className="flex" voteAvg={dataContent.vote_average} />
+            <span className="font-bold text-base">
+              {dataContent.vote_average}
+            </span>
+          </div>
         </div>
       </div>
     </div>

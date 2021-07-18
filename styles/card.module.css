@@ -17,7 +17,29 @@
 
 .card:hover {
   height: 380px;
-  width: 270px;
+  width: 288px;
+}
+
+.contentBoxReview {
+  max-height: 320px;
+}
+
+@media (min-width: 640px) {
+  .contentBoxReview {
+    max-height: 400px;
+  }
+}
+
+@media (min-width: 768px) {
+  .contentBoxReview {
+    max-height: 480px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contentBoxReview {
+    max-height: 600px;
+  }
 }
 
 /* .card:hover .imageContent {

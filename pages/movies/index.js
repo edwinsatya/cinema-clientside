@@ -1,33 +1,139 @@
+import Layout from "../../components/layout/Layout";
+import Card from "../../components/listContent/card/Card";
+import IconMovie from "../../components/icons/IconMovie";
+import Header from "../../components/header/Header";
+import ContentBox from "../../components/listContent/content/ContentBox";
+import { cinemaAPI } from "../../services/api";
 import { useRouter } from "next/router";
-
-export default function MoviesPage(props) {
-  const { movies } = props;
-  const router = useRouter();
-
-  return (
-    <div>
-      <h2 className="text-green-700 text-2xl antialiased">List Movie</h2>
-      <ul>
-        {movies.map((movie, index) => {
-          return (
-            <li onClick={() => router.push(`/movies/${movie.id}`)} key={index}>
-              {movie.title}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
+import { useEffect, useState } from "react";
 
 export async function getStaticProps() {
-  const host = process.env.HOST;
-  const response = await fetch(`${host}/api/movies`);
-  const movies = await response.json();
+  const [
+    listDiscover,
+    listNowPlaying,
+    listPopular,
+    listTopRated,
+    listUpcoming,
+  ] = await Promise.all([
+    cinemaAPI.get(`/movies`),
+    cinemaAPI.get(`/movies/now-playing`),
+    cinemaAPI.get(`/movies/popular`),
+    cinemaAPI.get(`/movies/top-rated`),
+    cinemaAPI.get(`/movies/upcoming`),
+  ]);
 
   return {
     props: {
-      movies: movies.data.results,
+      listDiscover: listDiscover.data.data.results,
+      listNowPlaying: listNowPlaying.data.data.results,
+      listPopular: listPopular.data.data.results,
+      listTopRated: listTopRated.data.data.results,
+      listUpcoming: listUpcoming.data.data.results,
     },
+    revalidate: 86400,
   };
+}
+
+export default function MoviesPage(props) {
+  const {
+    listDiscover,
+    listNowPlaying,
+    listPopular,
+    listTopRated,
+    listUpcoming,
+  } = props;
+
+  const router = useRouter();
+
+  const [dataHeader, setDataHeader] = useState({
+    data: {
+      backdrop_path: "https://i.ibb.co/9spxhL0/2588754.jpg",
+      title: "",
+      name: "",
+      overview: "",
+    },
+  });
+
+  const listContent = [
+    {
+      title: "Discover",
+      icon: <IconMovie />,
+      data: listDiscover,
+    },
+    {
+      title: "Now Playing",
+      icon: <IconMovie />,
+      data: listNowPlaying,
+    },
+    {
+      title: "Popular",
+      icon: <IconMovie />,
+      data: listPopular,
+    },
+    {
+      title: "Top Rated",
+      icon: <IconMovie />,
+      data: listTopRated,
+    },
+    {
+      title: "Upcoming",
+      icon: <IconMovie />,
+      data: listUpcoming,
+    },
+  ];
+
+  const goDetail = (e) => {
+    router.push(`/movies/${e.id}`);
+  };
+
+  // useEffect(() => {
+  //   setDataHeader({
+  //     data: listDiscover[Math.floor(Math.random() * listDiscover.length - 1)],
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!dataHeader.data) {
+  //     console.log(dataHeader);
+  //     router.replace(router.asPath);
+  //   }
+  // }, [dataHeader]);
+
+  return (
+    <Layout title="Movies">
+      {/* <Header dataHeader={dataHeader.data} onGoDetail={goDetail}></Header> */}
+      <Header
+        dataHeader={
+          listDiscover[Math.floor(Math.random() * listDiscover.length)]
+        }
+        onGoDetail={goDetail}
+      ></Header>
+
+      <hr className="border-b-4 border-gray-500 shadow-2xl" />
+
+      <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
+        {listContent.map((content, idxContent) => {
+          return (
+            <ContentBox
+              key={idxContent}
+              title={content.title}
+              icon={content.icon}
+            >
+              {content.data.map((vid, index) => {
+                return (
+                  <Card
+                    onHandleClick={(e) => goDetail(e)}
+                    key={index}
+                    dataContent={vid}
+                    indexContent={index}
+                  />
+                );
+              })}
+            </ContentBox>
+          );
+        })}
+      </div>
+      <hr className="border-b-4 border-gray-500 shadow-2xl" />
+    </Layout>
+  );
 }
