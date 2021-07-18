@@ -164,8 +164,8 @@ export default function SuccessRegister(props) {
                 </span>
               </span>
               <span className="text-left md:text-center mt-3 px-4">
-                This page automatic redirect to page login if your account has
-                been active.&nbsp;
+                If your account has been active, this page automatic redirect to
+                Login Page.&nbsp;
                 <span
                   onClick={() => sendVerificationEmail()}
                   className="text-primary font-semibold cursor-pointer hover:underline hover:text-blue-400"
