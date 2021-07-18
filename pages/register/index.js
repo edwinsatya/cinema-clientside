@@ -80,6 +80,7 @@ export default function Register() {
         };
         const response = await cinemaAPI.post(`/users/register`, body);
         localStorage.setItem("tokenVerification", response.data.token);
+        localStorage.setItem("currentRegisterId", response.data.data.id);
         setTimeout(() => {
           setIsSuccess(true);
         }, 2500);

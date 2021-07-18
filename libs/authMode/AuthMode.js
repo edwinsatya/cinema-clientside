@@ -36,13 +36,16 @@ export default function AuthMode(props) {
       }
     }
     switch (maniUrl) {
-      case "/":
-        flag = true;
-        break;
       case "/login":
         flag = true;
         break;
       case "/register":
+        flag = true;
+        break;
+      case "/verify-email":
+        flag = true;
+        break;
+      case "/":
         flag = true;
         break;
       default:
@@ -85,8 +88,13 @@ export default function AuthMode(props) {
     (router.asPath === "/login" || router.asPath === "/register")
   ) {
     return (
-      <div className="flex justify-center items-center h-screen w-full bg-gray-800">
-        <HashLoader color={`177EE2`} loading={true} css={override} size={150} />
+      <div className="flex justify-center items-center h-screen w-full bg-white">
+        <HashLoader
+          color={`#177EE2`}
+          loading={true}
+          css={override}
+          size={150}
+        />
       </div>
     );
   }

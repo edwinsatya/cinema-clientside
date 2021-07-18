@@ -40,17 +40,46 @@ export async function getServerSideProps(context) {
 }
 
 export default function SuccessRegister(props) {
-  const { detailRegister, errDetailRegister, isError } = props;
+  const { detailRegister, isError } = props;
   const router = useRouter();
   const [isSendEmail, setIsSendEmail] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
   const [popUpMsg, setPopUpMsg] = useState("");
+  const [countDown, setCountDown] = useState(60);
+  const [shouldCount, setShouldCount] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
 
   socket.on("emailVerified", (data) => {
     if (data.id == detailRegister.id) {
-      router.replace("/login");
+      if (data.isVerify) {
+        router.replace("/login");
+      } else {
+        localStorage.removeItem("tokenVerification");
+        localStorage.removeItem("currentRegisterId");
+        setTimeout(() => {
+          router.replace("/register");
+        }, 5000);
+      }
     }
   });
+
+  useEffect(() => {
+    if (shouldCount) {
+      let countTime = setInterval(() => {
+        setCountDown((prevTime) => prevTime - 1);
+      }, 1000);
+      setIntervalId(countTime);
+    }
+  }, [shouldCount]);
+
+  useEffect(() => {
+    console.log(countDown);
+    if (countDown == 0) {
+      clearInterval(intervalId);
+      setShouldCount(false);
+      setCountDown(60);
+    }
+  }, [countDown]);
 
   const sendVerificationEmail = async () => {
     try {
@@ -61,6 +90,7 @@ export default function SuccessRegister(props) {
           token,
         },
       });
+      setShouldCount(true);
       setTimeout(() => {
         setIsSendEmail(true);
       }, 2500);
@@ -70,6 +100,7 @@ export default function SuccessRegister(props) {
         setIsSendEmail(false);
       }, 5000);
     } catch (error) {
+      setShouldCount(true);
       setTimeout(() => {
         setIsSendEmail(true);
       }, 2500);
@@ -78,7 +109,8 @@ export default function SuccessRegister(props) {
         setShowPopUp(false);
         setIsSendEmail(false);
         setPopUpMsg("");
-        router.replace("/register");
+
+        // router.replace("/register");
       }, 5000);
     }
   };
@@ -91,10 +123,12 @@ export default function SuccessRegister(props) {
       }, 2500);
       setPopUpMsg(detailRegister.errMsg);
       setTimeout(() => {
+        localStorage.removeItem("tokenVerification");
+        localStorage.removeItem("currentRegisterId");
+        router.replace("/register");
         setShowPopUp(false);
         setIsSendEmail(false);
         setPopUpMsg("");
-        router.replace("/register");
       }, 5000);
     }
   }, [isError]);
@@ -165,14 +199,19 @@ export default function SuccessRegister(props) {
               </span>
               <span className="text-left md:text-center mt-3 px-4">
                 If your account has been active, this page automatic redirect to
-                Login Page.&nbsp;
-                <span
-                  onClick={() => sendVerificationEmail()}
-                  className="text-primary font-semibold cursor-pointer hover:underline hover:text-blue-400"
-                >
-                  Click Here&nbsp;
-                </span>
-                if you did not receive an email
+                Login Page.&nbsp; If you did not receive an email&nbsp;
+                {!shouldCount ? (
+                  <span
+                    onClick={() => sendVerificationEmail()}
+                    className="text-primary font-semibold cursor-pointer hover:underline hover:text-blue-400"
+                  >
+                    Click Here
+                  </span>
+                ) : (
+                  <span className="text-primary font-semibold">
+                    wait {countDown < 10 ? "0" + countDown : countDown} Seconds
+                  </span>
+                )}
               </span>
             </div>
           </div>
