@@ -47,6 +47,7 @@ export default function DetailTvShow(props) {
 
   const goDetail = (e) => {
     router.push(`/tv-shows/${e.id}`);
+    setIndexTrailer(null);
     setShowReviews(false);
   };
 
