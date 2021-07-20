@@ -1,0 +1,47 @@
+.card {
+  transition: height 1s ease, width 0.8s ease;
+}
+
+.cardWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.cardWrapper {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* .imageContent {
+  transition: height 1.5s ease;
+} */
+
+.card:hover {
+  height: 380px;
+  width: 288px;
+}
+
+.contentBoxReview {
+  max-height: 320px;
+}
+
+@media (min-width: 640px) {
+  .contentBoxReview {
+    max-height: 400px;
+  }
+}
+
+@media (min-width: 768px) {
+  .contentBoxReview {
+    max-height: 480px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contentBoxReview {
+    max-height: 600px;
+  }
+}
+
+/* .card:hover .imageContent {
+  height: 330px;
+} */
