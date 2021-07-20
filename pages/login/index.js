@@ -14,6 +14,7 @@ export default function Login() {
   const [errMsgPassword, setErrMsgPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errMsgSubmit, setErrMsgSubmit] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const inputEmail = useRef("");
   const inputPassword = useRef("");
 
@@ -54,6 +55,7 @@ export default function Login() {
     try {
       e.preventDefault();
       if (emailValid && passwordValid) {
+        setIsLoading(true);
         const body = {
           email: inputEmail.current.value,
           password: inputPassword.current.value,
@@ -64,10 +66,12 @@ export default function Login() {
         localStorage.setItem("tokenOtp", token);
         // setCurrentUser(token);
         setErrMsgSubmit("");
+        setIsLoading(false);
         router.push("/login/verify-otp");
       }
     } catch (error) {
       setErrMsgSubmit(error.response.data.errors.message);
+      setIsLoading(false);
       resetForm();
     }
   };
@@ -122,6 +126,7 @@ export default function Login() {
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-col">
                     <input
+                      disabled={isLoading}
                       ref={inputEmail}
                       type="email"
                       autoComplete="current-email"
@@ -145,6 +150,7 @@ export default function Login() {
                   <div className="flex flex-col mt-5">
                     <div className="relative w-full">
                       <input
+                        disabled={isLoading}
                         ref={inputPassword}
                         type={showPassword ? "text" : "password"}
                         autoComplete="current-password"
@@ -161,7 +167,7 @@ export default function Login() {
                         onClick={() => setShowPassword(!showPassword)}
                         className="text-white cursor-pointer absolute right-4 top-4"
                       >
-                        {!showPassword ? (
+                        {showPassword ? (
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"
@@ -210,10 +216,15 @@ export default function Login() {
                   </div>
                   <div className="mt-10">
                     <button
+                      disabled={isLoading}
                       type="submit"
-                      className="bg-primary hover:bg-blue-600 text-lg text-white w-full py-2 rounded-md focus:outline-none"
+                      className={`${
+                        isLoading
+                          ? "bg-gray-500"
+                          : "bg-primary hover:bg-blue-600"
+                      } text-lg text-white w-full py-2 rounded-md focus:outline-none`}
                     >
-                      Sign In
+                      {!isLoading ? "Sign In" : "Loading..."}
                     </button>
                   </div>
                 </form>
