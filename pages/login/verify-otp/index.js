@@ -324,7 +324,7 @@ export default function VerifyOtp() {
               </form>
               <div className="flex justify-center items-center mt-3">
                 <span className="text-center text-gray-500 font-medium text-sm">
-                  Don't receive verification otp?&nbsp;
+                  Dont receive verification otp?&nbsp;
                   {!shouldCount ? (
                     <span
                       onClick={() => sendVerificationOtp()}
