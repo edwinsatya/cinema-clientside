@@ -83,7 +83,6 @@ export default function SuccessRegister(props) {
   }, [shouldCount]);
 
   useEffect(() => {
-    console.log(countDown);
     if (countDown == 0) {
       clearInterval(intervalId);
       setShouldCount(false);

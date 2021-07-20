@@ -11,10 +11,6 @@ import { cinemaAPI } from "../../../services/api";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { currentUser as currentUserAtom } from "../../../store";
-import getConfig from "next/config";
-const { publicRuntimeConfig } = getConfig();
-
-const socket = io(publicRuntimeConfig.hostUrl);
 
 const overrideHide = css`
   overflow: hidden;
@@ -108,12 +104,17 @@ export default function VerifyOtp() {
         setStatus("Successfully Verified");
         setSubStatus(response.data.message);
         setColorIcon(listColor.success);
-        setIsLoading(false);
+        // setIsLoading(false);
         setTimeout(() => {
           localStorage.setItem("token", tokenOtp);
           localStorage.removeItem("tokenOtp");
           inputOtp.current.value = "";
-          router.push("/home");
+          clearInterval(intervalId);
+          setCountDown(60);
+          setTimeout(() => {
+            router.push("/home");
+            setIsLoading(false);
+          }, 500);
         }, 3000);
       }, 5000);
     } catch (error) {
@@ -130,9 +131,13 @@ export default function VerifyOtp() {
         inputOtp.current.value = "";
         if (error.response.data.status == 401) {
           setTimeout(() => {
-            router.replace("/login");
+            localStorage.removeItem("tokenOtp");
+            clearInterval(intervalId);
+            setCountDown(60);
+            setTimeout(() => {
+              router.replace("/login");
+            }, 500);
           }, 3000);
-        } else {
         }
       }, 5000);
     }
@@ -142,7 +147,7 @@ export default function VerifyOtp() {
     try {
       setShowPopUp(true);
       const token = localStorage.getItem("tokenOtp");
-      await cinemaAPI.post(`/users/send-email`, null, {
+      await cinemaAPI.post(`/users/send-otp`, null, {
         headers: {
           token,
         },
@@ -161,7 +166,7 @@ export default function VerifyOtp() {
       setTimeout(() => {
         setIsSendEmail(true);
       }, 2500);
-      if (error.response.data.errors.message == "jwt malformed") {
+      if (error.response.data.status == 401) {
         setPopUpMsg("Sorry your session is time out");
       } else {
         setPopUpMsg(error.response.data.errors.message);
@@ -170,10 +175,8 @@ export default function VerifyOtp() {
         setShowPopUp(false);
         setIsSendEmail(false);
         setPopUpMsg("");
-        if (
-          error.response.data.status == 401 &&
-          error.response.data.errors.message == "jwt malformed"
-        ) {
+        if (error.response.data.status == 401) {
+          localStorage.removeItem("tokenOtp");
           clearInterval(intervalId);
           setCountDown(60);
           setTimeout(() => {
@@ -194,7 +197,6 @@ export default function VerifyOtp() {
   }, [shouldCount]);
 
   useEffect(() => {
-    console.log(countDown);
     if (countDown == 0) {
       clearInterval(intervalId);
       setShouldCount(false);
@@ -336,9 +338,6 @@ export default function VerifyOtp() {
                       Seconds
                     </span>
                   )}
-                  {/* <span className="text-primary cursor-pointer hover:text-blue-400">
-                    Resend again
-                  </span> */}
                 </span>
               </div>
             </div>

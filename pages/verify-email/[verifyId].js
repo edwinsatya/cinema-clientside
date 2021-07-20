@@ -1,7 +1,6 @@
 import Layout from "../../components/layout/Layout";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { cinemaAPI } from "../../services/api";
 import ScaleLoader from "react-spinners/ScaleLoader";
 
@@ -31,10 +30,7 @@ export async function getServerSideProps(context) {
 
 export default function VerifyEmail(props) {
   const { popUpMsg } = props;
-  // const [popUpMsg, setPopUpMsg] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  // const router = useRouter();
-  // const userId = router.query.verifyId;
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,31 +40,6 @@ export default function VerifyEmail(props) {
       window.close();
     }, 6000);
   }, []);
-
-  // useEffect(() => {
-  //   const verifyEmail = async () => {
-  //     try {
-  //       console.log(userId, "userid nya");
-  //       const response = await cinemaAPI.patch(
-  //         `/users/verification-email/${userId}`
-  //       );
-  //       setTimeout(() => {
-  //         setPopUpMsg(response.data.message);
-  //       }, 3500);
-  //       setTimeout(() => {
-  //         window.close();
-  //       }, 6000);
-  //     } catch (error) {
-  //       setTimeout(() => {
-  //         setPopUpMsg(error.response.data.errors.message);
-  //       }, 3500);
-  //       // setTimeout(() => {
-  //       //   window.close();
-  //       // }, 6000);
-  //     }
-  //   };
-  //   verifyEmail();
-  // }, []);
 
   return (
     <Layout title="verify email">
