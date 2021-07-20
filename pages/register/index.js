@@ -171,7 +171,7 @@ export default function Register() {
               </span>
             </div>
             <div className="text-base sm:text-lg lg:text-xl mt-4">
-              Enter your password and you'll be watching in no time.
+              Enter your password and you be watching in no time.
             </div>
             <div className="mt-4">
               <form onSubmit={handleSubmit}>
