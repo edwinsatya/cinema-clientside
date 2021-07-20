@@ -46,8 +46,8 @@ export default function Header(props) {
               {dataHeader.title || dataHeader.name}
             </h1>
             <h2 className="text-lg text-white font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
-              {dataHeader.overview.length > 233
-                ? dataHeader.overview.substr(0, 233) + "..."
+              {dataHeader.overview.length > 200
+                ? dataHeader.overview.substr(0, 200) + "..."
                 : dataHeader.overview}
             </h2>
             <div className="w-5/12 mx-auto md:mx-0">

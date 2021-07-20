@@ -8,8 +8,10 @@ import { css } from "@emotion/react";
 import { io } from "socket.io-client";
 import { useRouter } from "next/router";
 import { cinemaAPI } from "../../services/api";
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
 
-const socket = io("http://localhost:3100");
+const socket = io(publicRuntimeConfig.hostUrl);
 
 const override = css`
   overflow: hidden;
@@ -53,12 +55,19 @@ export default function SuccessRegister(props) {
     if (data.id == detailRegister.id) {
       if (data.isVerify) {
         localStorage.removeItem("tokenVerification");
-        router.replace("/login");
+        clearInterval(intervalId);
+        setCountDown(60);
+        setTimeout(() => {
+          router.replace("/login");
+        }, 500);
       } else {
         localStorage.removeItem("tokenVerification");
         setTimeout(() => {
           clearInterval(intervalId);
-          router.replace("/register");
+          setCountDown(60);
+          setTimeout(() => {
+            router.replace("/register");
+          }, 500);
         }, 5000);
       }
     }
@@ -74,7 +83,6 @@ export default function SuccessRegister(props) {
   }, [shouldCount]);
 
   useEffect(() => {
-    console.log(countDown);
     if (countDown == 0) {
       clearInterval(intervalId);
       setShouldCount(false);
@@ -105,7 +113,7 @@ export default function SuccessRegister(props) {
       setTimeout(() => {
         setIsSendEmail(true);
       }, 2500);
-      if (error.response.data.errors.message == "jwt malformed") {
+      if (error.response.data.status == 401) {
         setPopUpMsg("Sorry your session is time out");
       } else {
         setPopUpMsg(error.response.data.errors.message);
@@ -114,12 +122,13 @@ export default function SuccessRegister(props) {
         setShowPopUp(false);
         setIsSendEmail(false);
         setPopUpMsg("");
-        if (
-          error.response.data.status == 401 &&
-          error.response.data.errors.message == "jwt malformed"
-        ) {
+        if (error.response.data.status == 401) {
+          localStorage.removeItem("tokenVerification");
           clearInterval(intervalId);
-          router.replace("/register");
+          setCountDown(60);
+          setTimeout(() => {
+            router.replace("/register");
+          }, 500);
         }
       }, 5000);
     }
@@ -134,10 +143,10 @@ export default function SuccessRegister(props) {
       setPopUpMsg(detailRegister.errMsg);
       setTimeout(() => {
         localStorage.removeItem("tokenVerification");
-        router.replace("/register");
         setShowPopUp(false);
         setIsSendEmail(false);
         setPopUpMsg("");
+        router.replace("/register");
       }, 5000);
     }
   }, [isError]);
@@ -202,8 +211,8 @@ export default function SuccessRegister(props) {
                   <span className="text-primary">
                     {detailRegister.email || "-"}&nbsp;
                   </span>
-                  to verify your email address and active your account. The link
-                  in the email expire in 24 hours,
+                  to verify your email address and active your account. Your
+                  email will be expire in 24 hours,
                 </span>
               </span>
               <span className="text-left md:text-center mt-3 px-4">

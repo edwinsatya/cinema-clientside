@@ -60,7 +60,11 @@ export default function AuthMode(props) {
 
     if (localStorage.getItem("token")) {
       setCurrentUser(localStorage.getItem("token"));
-      if (router.asPath === "/login" || router.asPath === "/register") {
+      if (
+        router.asPath === "/login" ||
+        router.asPath === "/register" ||
+        router.asPath === "/login/verify-otp"
+      ) {
         router.replace("/");
       }
     } else {
