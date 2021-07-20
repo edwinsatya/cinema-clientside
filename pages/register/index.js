@@ -238,7 +238,7 @@ export default function Register() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="text-black cursor-pointer absolute right-4 top-6"
                   >
-                    {!showPassword ? (
+                    {showPassword ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5"

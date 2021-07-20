@@ -3,8 +3,6 @@ import Image from "next/image";
 import ImgBg from "../../public/images/bg-intro.jpeg";
 import Link from "next/link";
 import ButtonLogo from "../../components/buttons/ButtonLogo";
-import { useRecoilState } from "recoil";
-import { currentUser as currentUserAtom } from "../../store";
 import { useRef, useState, useEffect } from "react";
 import { cinemaAPI } from "../../services/api";
 import { useRouter } from "next/router";
@@ -20,8 +18,6 @@ export default function Login() {
   const inputPassword = useRef("");
 
   const router = useRouter();
-
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
 
   const validationEmail = (e) => {
     let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -65,10 +61,10 @@ export default function Login() {
 
         const response = await cinemaAPI.post(`/users/login`, body);
         const token = response.data.token;
-        localStorage.setItem("token", token);
-        setCurrentUser(token);
+        localStorage.setItem("tokenOtp", token);
+        // setCurrentUser(token);
         setErrMsgSubmit("");
-        router.push("/home");
+        router.push("/login/verify-otp");
       }
     } catch (error) {
       setErrMsgSubmit(error.response.data.errors.message);
