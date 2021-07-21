@@ -94,6 +94,7 @@ export default function DetailMoviePage(props) {
 
   const goDetail = (e) => {
     router.push(`/movies/${e.id}`);
+    setIndexTrailer(null);
     setShowReviews(false);
   };
 

@@ -22,6 +22,7 @@ export default function CardReview(props) {
                 objectFit={"fill"}
                 quality={100}
                 alt="list"
+                priority={true}
               />
             ) : (
               <Image
@@ -30,16 +31,22 @@ export default function CardReview(props) {
                 objectFit={"fill"}
                 quality={100}
                 alt="list"
+                priority={true}
               />
             )}
           </div>
           <span>{review.author}</span>
         </div>
 
-        <div
-          className={`bg-white dark:bg-gray-900  p-2 whitespace-normal overflow-y-scroll h-10 sm:h-16 lg:h-24 lg:ml-auto rounded-md lg:w-10/12`}
-        >
-          {review.content}
+        <div>
+          <div
+            className={`bg-white dark:bg-gray-900  p-2 whitespace-normal overflow-y-scroll h-10 sm:h-16 lg:h-24 lg:ml-auto rounded-md lg:w-10/12`}
+          >
+            {review.content}
+          </div>
+          <div className="w-full flex justify-items-end">
+            <span className="ml-auto">{review.updated_at.substr(0, 10)}</span>
+          </div>
         </div>
       </div>
       {indexContent + 1 != reviewLength && (
