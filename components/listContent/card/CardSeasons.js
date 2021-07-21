@@ -18,7 +18,7 @@ export default function CardSeasons(props) {
     <div
       onMouseOver={() => setCardHover(indexContent)}
       onMouseOut={() => setCardHover(null)}
-      onClick={() => onHandleClick(dataContent)}
+      // onClick={() => onHandleClick(dataContent)}
       className={`cursor-pointer hover:scale-105 transition-all duration-300 relative w-52 h-72 rounded-lg shadow-xl drop-shadow-lg mx-3 my-3 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
     >
       <div className={`relative w-full h-full`}>
@@ -32,6 +32,7 @@ export default function CardSeasons(props) {
           objectFit={"fill"}
           quality={100}
           alt="list"
+          priority={true}
         />
       </div>
       <div

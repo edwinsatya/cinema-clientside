@@ -20,6 +20,8 @@ export default function DetailHeader(props) {
   useEffect(() => {
     if (indexTrailer !== null) {
       setShowTrailer(true);
+    } else {
+      setShowTrailer(false);
     }
   }, [indexTrailer]);
 

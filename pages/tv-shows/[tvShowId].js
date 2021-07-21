@@ -47,6 +47,7 @@ export default function DetailTvShow(props) {
 
   const goDetail = (e) => {
     router.push(`/tv-shows/${e.id}`);
+    setIndexTrailer(null);
     setShowReviews(false);
   };
 
@@ -109,9 +110,41 @@ export default function DetailTvShow(props) {
             >
               <button
                 onClick={() => setShowReviews(!showReviews)}
-                className="bg-gray-700 text-white hover:bg-gray-500 dark:bg-white dark:text-black dark:hover:bg-gray-500 rounded-md p-2 focus:outline-none"
+                className="bg-gray-700 text-white hover:bg-gray-500 dark:bg-white dark:text-black dark:hover:bg-gray-500 rounded-md py-2 px-2 sm:px-4 lg:px-6 focus:outline-none"
               >
-                <span>{!showReviews ? "Show Reviews" : "Hide Reviews"}</span>
+                <span>
+                  {!showReviews ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 11l7-7 7 7M5 19l7-7 7 7"
+                      />
+                    </svg>
+                  )}
+                </span>
               </button>
             </div>
             {showReviews ? (

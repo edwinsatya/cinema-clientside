@@ -44,6 +44,7 @@ export default function Card(props) {
           objectFit={"fill"}
           quality={100}
           alt="list"
+          priority={true}
         />
       </div>
       <div
