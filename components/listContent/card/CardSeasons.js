@@ -32,6 +32,7 @@ export default function CardSeasons(props) {
           objectFit={"fill"}
           quality={100}
           alt="list"
+          priority={true}
         />
       </div>
       <div

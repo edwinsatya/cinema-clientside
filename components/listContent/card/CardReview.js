@@ -22,6 +22,7 @@ export default function CardReview(props) {
                 objectFit={"fill"}
                 quality={100}
                 alt="list"
+                priority={true}
               />
             ) : (
               <Image
@@ -30,6 +31,7 @@ export default function CardReview(props) {
                 objectFit={"fill"}
                 quality={100}
                 alt="list"
+                priority={true}
               />
             )}
           </div>
