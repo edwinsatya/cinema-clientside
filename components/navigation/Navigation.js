@@ -84,18 +84,17 @@ function MainNavigation() {
               <ul className="flex items-center justify-around text-sm sm:text-base lg:text-lg text-white">
                 {listMenu.map((menu, index) => {
                   return (
-                    <li
-                      key={index}
-                      className={`${
-                        router.pathname === menu.url ? "" : classHover
-                      } ${
-                        router.pathname === menu.url ? classActive : ""
-                      } cursor-pointer rounded-md px-3 py-1 mx-1`}
-                    >
-                      <Link href={menu.url}>
+                    <Link key={index} href={menu.url} passHref>
+                      <li
+                        className={`${
+                          router.pathname === menu.url ? "" : classHover
+                        } ${
+                          router.pathname === menu.url ? classActive : ""
+                        } cursor-pointer rounded-md px-3 py-1 mx-1`}
+                      >
                         <a>{menu.title}</a>
-                      </Link>
-                    </li>
+                      </li>
+                    </Link>
                   );
                 })}
               </ul>
@@ -160,20 +159,19 @@ function MainNavigation() {
               >
                 {listMenu.map((menu, index) => {
                   return (
-                    <li
-                      key={index}
-                      className={`${
-                        router.pathname === menu.url ? "" : classHover
-                      } ${
-                        router.pathname === menu.url ? classActive : ""
-                      } cursor-pointer rounded-md px-3 py-1 mx-1 w-full
+                    <Link key={index} href={menu.url} passHref>
+                      <li
+                        className={`${
+                          router.pathname === menu.url ? "" : classHover
+                        } ${
+                          router.pathname === menu.url ? classActive : ""
+                        } cursor-pointer rounded-md px-3 py-1 mx-1 w-full
                       ${router.pathname === "/" && !currentUser ? "hidden" : ""}
                       `}
-                    >
-                      <Link href={menu.url}>
+                      >
                         <a>{menu.title}</a>
-                      </Link>
-                    </li>
+                      </li>
+                    </Link>
                   );
                 })}
                 <li className={`w-full ${currentUser ? "mt-10" : ""}`}>

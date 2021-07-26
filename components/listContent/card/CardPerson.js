@@ -28,7 +28,6 @@ export default function CardPerson(props) {
             objectFit={"fill"}
             quality={100}
             alt="list"
-            priority={true}
           />
         </div>
       </div>
