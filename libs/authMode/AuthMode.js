@@ -4,10 +4,18 @@ import {
   changeDark,
   changeLight,
   currentUser as currentUserAtom,
+  countUserOnline as countUserOnlineAtom,
+  listDiscussion as listDiscussionAtom,
 } from "../../store";
+import { cinemaAPI } from "../../services/api";
 import { useRouter } from "next/router";
 import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
+import { io } from "socket.io-client";
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+
+const socket = io(publicRuntimeConfig.hostUrl);
 
 const override = css`
   overflow: hidden;
@@ -17,8 +25,19 @@ export default function AuthMode(props) {
   const changeThemeToDark = useSetRecoilState(changeDark);
   const changeThemeToLight = useSetRecoilState(changeLight);
   const setCurrentUser = useSetRecoilState(currentUserAtom);
+  const setCountUserOnline = useSetRecoilState(countUserOnlineAtom);
+  const setListDiscussion = useSetRecoilState(listDiscussionAtom);
   const currentUser = useRecoilValue(currentUserAtom);
   const router = useRouter();
+
+  socket.on("updateUserOnline", () => {
+    console.log("ke trigger login");
+    getCountUserOnline();
+  });
+
+  socket.on("newDiscussion", () => {
+    getDiscussions();
+  });
 
   const isPublicUrl = (url) => {
     let maniUrl = "/";
@@ -55,6 +74,17 @@ export default function AuthMode(props) {
     return flag;
   };
 
+  const getCountUserOnline = async () => {
+    const response = await cinemaAPI.get("/users/count-user-on");
+    const total = response.data.data.length;
+    setCountUserOnline(total);
+  };
+
+  const getDiscussions = async () => {
+    const response = await cinemaAPI.get("/discussions");
+    setListDiscussion(response.data.data);
+  };
+
   useEffect(() => {
     localStorage.removeItem("theme");
 
@@ -85,6 +115,9 @@ export default function AuthMode(props) {
       document.documentElement.classList.remove("dark");
       changeThemeToLight();
     }
+
+    getCountUserOnline();
+    getDiscussions();
   }, []);
 
   if (

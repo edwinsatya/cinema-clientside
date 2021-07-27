@@ -11,6 +11,7 @@ import {
 } from "../../store";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { cinemaAPI } from "../../services/api";
 
 function MainNavigation() {
   const router = useRouter();
@@ -31,10 +32,10 @@ function MainNavigation() {
       title: "Person",
       url: "/person",
     },
-    {
-      title: "Discussions",
-      url: "/discussions",
-    },
+    // {
+    //   title: "Discussions",
+    //   url: "/discussions",
+    // },
   ];
 
   const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
@@ -46,10 +47,15 @@ function MainNavigation() {
 
   const classHover = `border-b-2 border-transparent hover:border-primary `;
 
-  const handleLoginLogout = () => {
+  const handleLoginLogout = async () => {
     if (!currentUser) {
       router.push("/login");
     } else {
+      await cinemaAPI.patch("/users/logout", null, {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
       localStorage.removeItem("token");
       router.push("/");
       setCurrentUser("");
