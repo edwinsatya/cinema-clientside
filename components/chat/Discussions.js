@@ -1,6 +1,7 @@
 import "emoji-mart/css/emoji-mart.css";
 import CardNoReply from "./card/CardNoReply";
 import CardWithReply from "./card/CardWithReply";
+import CardReply from "./card/CardReply";
 import { Picker } from "emoji-mart";
 import { useEffect, useState } from "react";
 import { cinemaAPI } from "../../services/api";
@@ -13,6 +14,7 @@ export default function Discussions(props) {
   const currentUser = useRecoilValue(currentUserAtom);
   const [showEmoji, setShowEmoji] = useState(false);
   const [inputChat, setInputChat] = useState("");
+  const [isReply, setIsReply] = useState(null);
 
   const addEmoji = (e) => {
     let emoji = e.native;
@@ -26,15 +28,24 @@ export default function Discussions(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (inputChat) {
-      const body = {
-        discussion: inputChat,
-      };
+      let body = {};
+      if (!isReply) {
+        body = {
+          discussion: inputChat,
+        };
+      } else {
+        body = {
+          discussion: inputChat,
+          replied: isReply._id,
+        };
+      }
       await cinemaAPI.post("/discussions", body, {
         headers: {
           token: localStorage.getItem("token"),
         },
       });
       setInputChat("");
+      setIsReply(null);
     }
   };
 
@@ -51,6 +62,12 @@ export default function Discussions(props) {
     elem.scrollTop = elem.scrollHeight;
   }, [discussions]);
 
+  useEffect(() => {
+    if (isReply) {
+      document.getElementById("input-chat").focus();
+    }
+  }, [isReply]);
+
   return (
     <div id="discussions" className="max-h-96 overflow-y-auto">
       <div
@@ -64,6 +81,9 @@ export default function Discussions(props) {
           </a>
         </Link>
       </div>
+      {isReply && (
+        <CardReply reply={isReply} removeReply={() => setIsReply(null)} />
+      )}
       <div className="p-3 flex flex-col mb-12">
         {discussions.map((discussion, index) =>
           discussion.replied ? (
@@ -71,12 +91,14 @@ export default function Discussions(props) {
               key={index}
               discussion={discussion}
               onDelete={(e) => handleDelete(e)}
+              onReply={(e) => setIsReply(e)}
             />
           ) : (
             <CardNoReply
               key={index}
               discussion={discussion}
               onDelete={(e) => handleDelete(e)}
+              onReply={(e) => setIsReply(e)}
             />
           )
         )}
@@ -86,6 +108,9 @@ export default function Discussions(props) {
         <div className="w-10/12 relative">
           <form onSubmit={handleSubmit}>
             <input
+              id="input-chat"
+              required
+              autoFocus
               type="text"
               onFocus={() => setShowEmoji(false)}
               onChange={handleInputChange}

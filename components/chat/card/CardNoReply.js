@@ -2,13 +2,9 @@ import { useState } from "react";
 import getTimeChat from "../../../utils/function/getTimeChat";
 
 export default function CardNoReply(props) {
-  const { discussion, onDelete } = props;
+  const { discussion, onDelete, onReply } = props;
   const userId = localStorage.getItem("userId");
   const [onHover, setOnHover] = useState(false);
-
-  const handleReply = () => {
-    console.log(discussion);
-  };
 
   return (
     <div
@@ -29,7 +25,7 @@ export default function CardNoReply(props) {
       <div className="pl-2 w-full">
         <div className="flex justify-between items-center">
           <span
-            className="capitalize"
+            className="capitalize font-bold"
             style={{ color: discussion.userId.color }}
           >
             {discussion.userId.name}
@@ -37,8 +33,8 @@ export default function CardNoReply(props) {
           {onHover ? (
             <div className="flex justify-center items-center">
               <span
-                onClick={() => handleReply()}
-                className="hover:text-primary"
+                onClick={() => onReply(discussion)}
+                className="hover:text-primary cursor-pointer"
               >
                 Reply
               </span>
