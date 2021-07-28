@@ -1,21 +1,58 @@
 import { useState, useEffect } from "react";
 import HeaderChat from "./HeaderChat";
 import Discussions from "./Discussions";
-import { useRecoilValue } from "recoil";
-import { listDiscussion as listDiscussionAtom } from "../../store";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
+import {
+  listDiscussion as listDiscussionAtom,
+  countChatNotRead as countChatNotReadAtom,
+  openChat as openChatAtom,
+} from "../../store";
 
 export default function Chat(props) {
   const { countUserOnline } = props;
   const discussions = useRecoilValue(listDiscussionAtom);
+  const [countChatNotRead, setCountChatNotRead] =
+    useRecoilState(countChatNotReadAtom);
   const [showChat, setShowChat] = useState(false);
+  const setOpenChat = useSetRecoilState(openChatAtom);
+
+  const handleOpenChat = () => {
+    setShowChat(!showChat);
+    setCountChatNotRead(0);
+  };
+
+  useEffect(() => {
+    setOpenChat(showChat);
+  }, [showChat]);
 
   if (!showChat) {
     return (
       <div
-        onClick={() => setShowChat(!showChat)}
+        onClick={() => handleOpenChat()}
         className="cursor-pointer fixed rounded-md shadow-lg z-50 bottom-4 right-4 text-black bg-white dark:text-white dark:bg-gray-900 p-3"
       >
         <span className="text-base font-bold flex items-center">
+          <span
+            className={`${
+              countChatNotRead ? "flex" : "hidden"
+            } items-center justify-center`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+              />
+            </svg>
+            <span>{countChatNotRead}</span>
+          </span>
           <span className="mr-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"

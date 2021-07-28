@@ -57,6 +57,7 @@ function MainNavigation() {
         },
       });
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       router.push("/");
       setCurrentUser("");
     }

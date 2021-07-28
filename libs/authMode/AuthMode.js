@@ -1,11 +1,13 @@
 import { useEffect } from "react";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 import {
   changeDark,
   changeLight,
   currentUser as currentUserAtom,
   countUserOnline as countUserOnlineAtom,
   listDiscussion as listDiscussionAtom,
+  countChatNotRead as countChatNotReadAtom,
+  openChat as openChatAtom,
 } from "../../store";
 import { cinemaAPI } from "../../services/api";
 import { useRouter } from "next/router";
@@ -27,15 +29,23 @@ export default function AuthMode(props) {
   const setCurrentUser = useSetRecoilState(currentUserAtom);
   const setCountUserOnline = useSetRecoilState(countUserOnlineAtom);
   const setListDiscussion = useSetRecoilState(listDiscussionAtom);
+  const [countChatNotRead, setCountChatNotRead] =
+    useRecoilState(countChatNotReadAtom);
   const currentUser = useRecoilValue(currentUserAtom);
+  const openChat = useRecoilValue(openChatAtom);
   const router = useRouter();
 
   socket.on("updateUserOnline", () => {
-    console.log("ke trigger login");
     getCountUserOnline();
   });
 
   socket.on("newDiscussion", () => {
+    if (openChat) {
+      setCountChatNotRead(0);
+    } else {
+      let currentCountChat = countChatNotRead + 1;
+      setCountChatNotRead(currentCountChat);
+    }
     getDiscussions();
   });
 

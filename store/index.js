@@ -30,6 +30,16 @@ const listDiscussion = atom({
   default: [],
 });
 
+const countChatNotRead = atom({
+  key: "count-chat-not-read",
+  default: 0,
+});
+
+const openChat = atom({
+  key: "open-chat",
+  default: false,
+});
+
 const changeDark = selector({
   key: "c-t-1",
   set: ({ set }) => set(theme, (currTheme) => (currTheme = "dark")),
@@ -49,4 +59,6 @@ export {
   showDropDownNav,
   countUserOnline,
   listDiscussion,
+  countChatNotRead,
+  openChat,
 };

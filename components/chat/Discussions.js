@@ -38,6 +38,14 @@ export default function Discussions(props) {
     }
   };
 
+  const handleDelete = async (e) => {
+    await cinemaAPI.delete(`/discussions/${e._id}`, {
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    });
+  };
+
   useEffect(() => {
     let elem = document.getElementById("discussions");
     elem.scrollTop = elem.scrollHeight;
@@ -52,56 +60,26 @@ export default function Discussions(props) {
       >
         <Link href="/login">
           <a className="font-bold text-xl cursor-pointer text-white hover:underline hover:text-primary">
-            Login
+            Sign In
           </a>
         </Link>
       </div>
       <div className="p-3 flex flex-col mb-12">
         {discussions.map((discussion, index) =>
           discussion.replied ? (
-            <CardWithReply key={index} discussion={discussion} />
+            <CardWithReply
+              key={index}
+              discussion={discussion}
+              onDelete={(e) => handleDelete(e)}
+            />
           ) : (
-            <CardNoReply key={index} discussion={discussion} />
+            <CardNoReply
+              key={index}
+              discussion={discussion}
+              onDelete={(e) => handleDelete(e)}
+            />
           )
         )}
-
-        {/* <div className="flex text-sm">
-          <div className="flex justify-start items-start">
-            <div className="rounded-md p-3 bg-green-400">
-              <span className="font-bold leading-relaxed tracking-widest">
-                ES
-              </span>
-            </div>
-          </div>
-          <div className="pl-2 flex flex-col">
-            <div className="flex justify-between items-center">
-              <span>Edwin Satya Yudistira</span>
-              <span>9:53 am</span>
-            </div>
-            <div className="my-2 border-l-4 p-2 border-red-500 flex flex-col">
-              <div className="flex justify-start items-center">
-                <span>Edwin Satya Yudistira</span>
-                <span className="ml-2">9:53 am</span>
-              </div>
-              <div className="py-2">
-                <span>
-                  Lorem2 ipsum dolor sit amet consectetur adipisicing elit.
-                  Mollitia, rerum Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Maxime officiis corrupti dolore, corporis
-                  distinctio sunt eaque quasi? Temporibus, sunt tempora.
-                </span>
-              </div>
-            </div>
-            <div>
-              <span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Mollitia, rerum Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Maxime officiis corrupti dolore, corporis
-                distinctio sunt eaque quasi? Temporibus, sunt tempora.
-              </span>
-            </div>
-          </div>
-        </div> */}
       </div>
 
       <div className="fixed bottom-0 w-full bg-white dark:bg-gray-900 flex justify-between max-w-sm items-center">
