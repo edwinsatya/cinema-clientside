@@ -21,25 +21,15 @@ export default function Card(props) {
       onMouseOver={() => setCardHover(indexContent)}
       onMouseOut={() => setCardHover(null)}
       onClick={() => onHandleClick(dataContent)}
-      className={`${cardStyle.card} cursor-pointer relative w-80 h-48 rounded-lg shadow-xl drop-shadow-lg mx-3 my-2 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
+      className={` hover:scale-105 transition-all duration-300 cursor-pointer relative w-44 h-60 sm:w-48 sm:h-64 md:w-52 md:h-72 lg:w-56 lg:h-80 rounded-lg shadow-xl drop-shadow-lg mx-3 my-3 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
     >
-      <div className={`${cardStyle.imageContent} relative w-full h-full`}>
+      <div className={`relative w-full h-full`}>
         <Image
-          src={
-            cardHover == indexContent
-              ? `${
-                  dataContent.poster_path
-                    ? "https://image.tmdb.org/t/p/original" +
-                      dataContent.poster_path
-                    : "https://i.ibb.co/6HwNvXv/coming-soon-reopening-event-retail-sale-design-template-79543bc1062ebb6f9eb55d1bb7994d49-screen.jpg"
-                }`
-              : `${
-                  dataContent.backdrop_path
-                    ? "https://image.tmdb.org/t/p/original" +
-                      dataContent.backdrop_path
-                    : "https://i.ibb.co/9spxhL0/2588754.jpg"
-                }`
-          }
+          src={`${
+            dataContent.poster_path
+              ? "https://image.tmdb.org/t/p/original" + dataContent.poster_path
+              : "https://i.ibb.co/6HwNvXv/coming-soon-reopening-event-retail-sale-design-template-79543bc1062ebb6f9eb55d1bb7994d49-screen.jpg"
+          }`}
           layout={"fill"}
           objectFit={"fill"}
           quality={100}
@@ -48,7 +38,7 @@ export default function Card(props) {
       </div>
       <div
         className={`absolute bottom-0 w-full ${
-          cardHover != indexContent ? "h-10" : "h-20"
+          cardHover != indexContent ? "h-16" : "h-20"
         }`}
       >
         <div

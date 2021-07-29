@@ -69,7 +69,7 @@ export default function Discussions(props) {
   }, [isReply]);
 
   return (
-    <div id="discussions" className="max-h-96 overflow-y-auto">
+    <div id="discussions" className="max-h-96 lg:max-h-97 overflow-y-auto">
       <div
         className={`${
           currentUser ? "hidden" : "absolute"

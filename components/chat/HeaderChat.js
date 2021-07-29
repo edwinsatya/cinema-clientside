@@ -1,13 +1,17 @@
+import LogoText from "../icons/LogoText";
+
 export default function HeaderChat(props) {
   const { countUserOnline, handleShowChat } = props;
   return (
     <div className="flex items-center justify-center border-b dark:border-gray-700 p-3">
       <div className="w-1/2 flex items-center">
-        <span className="text-base font-bold">Cinema21</span>
+        <span className="text-base font-bold">
+          <LogoText />
+        </span>
       </div>
       <div className="w-1/2 flex justify-end items-center">
         <span>
-          <div className="h-3 w-3 bg-green-400 mx-1 rounded-full"></div>
+          <div className="h-3 w-3 bg-green-500 mx-1 rounded-full"></div>
         </span>
         <span>{countUserOnline}</span>
         <span onClick={() => handleShowChat()} className="ml-3 cursor-pointer">

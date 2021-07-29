@@ -9,6 +9,9 @@ module.exports = {
         100: "40rem",
         97: "38rem",
       },
+      maxHeight: {
+        97: "30rem",
+      },
       colors: {
         primary: "#0779E4",
         fullBlack: "#171717",

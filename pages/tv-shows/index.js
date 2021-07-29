@@ -4,7 +4,6 @@ import IconTv from "../../components/icons/IconTv";
 import Header from "../../components/header/Header";
 import ContentBox from "../../components/listContent/content/ContentBox";
 import { cinemaAPI } from "../../services/api";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 export async function getStaticProps() {
@@ -39,15 +38,6 @@ export default function TvShowsPage(props) {
   } = props;
 
   const router = useRouter();
-
-  const [dataHeader, setDataHeader] = useState({
-    data: {
-      backdrop_path: "https://i.ibb.co/9spxhL0/2588754.jpg",
-      title: "",
-      name: "",
-      overview: "",
-    },
-  });
 
   const listContent = [
     {

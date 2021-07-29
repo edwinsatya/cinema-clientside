@@ -5,7 +5,6 @@ import Header from "../../components/header/Header";
 import ContentBox from "../../components/listContent/content/ContentBox";
 import { cinemaAPI } from "../../services/api";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 export async function getStaticProps() {
   const [
@@ -45,15 +44,6 @@ export default function MoviesPage(props) {
 
   const router = useRouter();
 
-  const [dataHeader, setDataHeader] = useState({
-    data: {
-      backdrop_path: "https://i.ibb.co/9spxhL0/2588754.jpg",
-      title: "",
-      name: "",
-      overview: "",
-    },
-  });
-
   const listContent = [
     {
       title: "Discover",
@@ -85,19 +75,6 @@ export default function MoviesPage(props) {
   const goDetail = (e) => {
     router.push(`/movies/${e.id}`);
   };
-
-  // useEffect(() => {
-  //   setDataHeader({
-  //     data: listDiscover[Math.floor(Math.random() * listDiscover.length - 1)],
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!dataHeader.data) {
-  //     console.log(dataHeader);
-  //     router.replace(router.asPath);
-  //   }
-  // }, [dataHeader]);
 
   return (
     <Layout title="Movies">

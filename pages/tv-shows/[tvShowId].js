@@ -195,6 +195,7 @@ export default function DetailTvShow(props) {
           })}
         </div>
       </section>
+      <hr className="border-b-4 border-gray-500 shadow-2xl" />
     </Layout>
   );
 }

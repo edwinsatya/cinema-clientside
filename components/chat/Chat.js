@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import HeaderChat from "./HeaderChat";
 import Discussions from "./Discussions";
+import LogoText from "../icons/LogoText";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import {
   listDiscussion as listDiscussionAtom,
@@ -69,9 +70,12 @@ export default function Chat(props) {
               />
             </svg>
           </span>
-          Chat Cinema21
           <span>
-            <div className="h-3 w-3 bg-green-400 mx-1 rounded-full"></div>
+            <LogoText />
+          </span>
+          &nbsp;<span className="text-sm">Live Chat</span>
+          <span>
+            <div className="h-3 w-3 bg-green-500 mx-1 rounded-full"></div>
           </span>
           <span>{countUserOnline}</span>
         </span>

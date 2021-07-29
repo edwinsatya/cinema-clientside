@@ -29,8 +29,8 @@ function MainNavigation() {
       url: "/tv-shows",
     },
     {
-      title: "Person",
-      url: "/person",
+      title: "Persons",
+      url: "/persons",
     },
     // {
     //   title: "Discussions",

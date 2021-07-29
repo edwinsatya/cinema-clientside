@@ -1,6 +1,6 @@
-.card {
+/* .card {
   transition: height 1s ease, width 0.8s ease;
-}
+} */
 
 .cardWrapper::-webkit-scrollbar {
   display: none;
@@ -15,10 +15,10 @@
   transition: height 1.5s ease;
 } */
 
-.card:hover {
+/* .card:hover {
   height: 380px;
   width: 288px;
-}
+} */
 
 .contentBoxReview {
   max-height: 320px;
