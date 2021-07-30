@@ -43,7 +43,7 @@ export default function Card(props) {
       >
         <div
           className={`bg-white dark:bg-black w-full h-full ${
-            cardHover == indexContent ? "opacity-80" : "hidden"
+            cardHover == indexContent ? "opacity-90" : "hidden"
           } absolute`}
         ></div>
         <div className="absolute flex flex-col justify-center items-center h-full py-2 w-full text-center">

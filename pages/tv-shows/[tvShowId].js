@@ -7,8 +7,10 @@ import CardReview from "../../components/listContent/card/CardReview";
 import CardSeasons from "../../components/listContent/card/CardSeasons";
 import CardAnyTrailer from "../../components/listContent/card/CardAnyTrailer";
 import CardNoTrailer from "../../components/listContent/card/CardNoTrailer";
+import CardSimplePerson from "../../components/listContent/card/CardSimplePerson";
 import IconTv from "../../components/icons/IconTv";
 import IconComment from "../../components/icons/IconComment";
+import IconPeople from "../../components/icons/IconPeople";
 import { cinemaAPI } from "../../services/api";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -68,6 +70,24 @@ export default function DetailTvShow(props) {
 
       <section id="list-content">
         <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
+          <ContentBox title={"Series Cast"} icon={<IconPeople />}>
+            {detailTv.credits.cast.length > 0 ? (
+              detailTv.credits.cast
+                .map((credit, index) => {
+                  return (
+                    <CardSimplePerson
+                      key={index}
+                      dataContent={credit}
+                      onHandleClick={(e) => console.log(e)}
+                    />
+                  );
+                })
+                .slice(0, 10)
+            ) : (
+              <CardNoTrailer title={"No Have Caster"} />
+            )}
+          </ContentBox>
+
           <ContentBox title={"List Trailer :"}>
             {detailTv.video.length > 0 ? (
               detailTv.video.map((vid, index) => {

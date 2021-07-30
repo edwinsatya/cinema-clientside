@@ -6,8 +6,10 @@ import CardAnyTrailer from "../../components/listContent/card/CardAnyTrailer";
 import Card from "../../components/listContent/card/Card";
 import CardReview from "../../components/listContent/card/CardReview";
 import CardNoTrailer from "../../components/listContent/card/CardNoTrailer";
+import CardSimplePerson from "../../components/listContent/card/CardSimplePerson";
 import IconMovie from "../../components/icons/IconMovie";
 import IconComment from "../../components/icons/IconComment";
+import IconPeople from "../../components/icons/IconPeople";
 import { cinemaAPI } from "../../services/api";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -115,6 +117,24 @@ export default function DetailMoviePage(props) {
 
       <section id="list-content">
         <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
+          <ContentBox title={"Top Billed Cast"} icon={<IconPeople />}>
+            {detailMovie.credits.cast.length > 0 ? (
+              detailMovie.credits.cast
+                .map((credit, index) => {
+                  return (
+                    <CardSimplePerson
+                      key={index}
+                      dataContent={credit}
+                      onHandleClick={(e) => console.log(e)}
+                    />
+                  );
+                })
+                .slice(0, 10)
+            ) : (
+              <CardNoTrailer title={"No Have Caster"} />
+            )}
+          </ContentBox>
+
           <ContentBox title={"List Trailer :"}>
             {detailMovie.video.length > 0 ? (
               detailMovie.video.map((vid, index) => {

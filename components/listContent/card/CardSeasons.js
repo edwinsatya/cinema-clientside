@@ -39,7 +39,7 @@ export default function CardSeasons(props) {
           cardHover == indexContent ? "flex" : "hidden"
         }`}
       >
-        <div className="bg-white dark:bg-black bg-opacity-80 w-full h-full opacity-100 absolute"></div>
+        <div className="bg-white dark:bg-black bg-opacity-90 w-full h-full absolute"></div>
         <div className="absolute flex flex-col justify-center items-center h-full py-2 w-full text-center">
           <div>
             <span

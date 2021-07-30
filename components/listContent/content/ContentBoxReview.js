@@ -4,7 +4,7 @@ export default function ContentBoxReview(props) {
   return (
     <div>
       <div className="flex items-center">
-        <h3 className="text-lg sm:text-xl md:text-2xl font-semibold">
+        <h3 className="text-base sm:text-lg md:text-xl font-semibold">
           {props.title}
         </h3>
         <div className="ml-3">{props.icon}</div>
