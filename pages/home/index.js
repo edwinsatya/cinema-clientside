@@ -163,7 +163,7 @@ export default function Home(props) {
         <div>
           <div>
             {/* button control trending */}
-            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-semibold">
               Trending of the :
             </h3>
           </div>

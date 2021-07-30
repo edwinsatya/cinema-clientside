@@ -140,7 +140,7 @@ export default function DetailMoviePage(props) {
             >
               <button
                 onClick={() => setShowReviews(!showReviews)}
-                className="bg-gray-700 text-white hover:bg-gray-500 dark:bg-white dark:text-black dark:hover:bg-gray-500 rounded-md py-2 px-2 sm:px-4 lg:px-6 focus:outline-none"
+                className="text-black dark:text-white hover:text-primary dark:hover:text-primary rounded-md py-2 px-2 sm:px-4 lg:px-6 focus:outline-none"
               >
                 <span>
                   {!showReviews ? (

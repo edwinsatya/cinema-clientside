@@ -4,7 +4,7 @@ export default function ContentBox(props) {
   return (
     <div>
       <div className="flex items-center">
-        <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-semibold">
           {props.title}
         </h3>
         <div className="ml-3">{props.icon}</div>

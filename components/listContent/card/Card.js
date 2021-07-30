@@ -43,11 +43,11 @@ export default function Card(props) {
       >
         <div
           className={`bg-white dark:bg-black w-full h-full ${
-            cardHover != indexContent ? "opacity-60" : "opacity-90"
+            cardHover == indexContent ? "opacity-80" : "hidden"
           } absolute`}
         ></div>
         <div className="absolute flex flex-col justify-center items-center h-full py-2 w-full text-center">
-          <div>
+          <div className={`${cardHover != indexContent ? "hidden" : ""}`}>
             <span className="font-bold text-base">
               {dataContent.title
                 ? getMinimTitle(dataContent.title)
