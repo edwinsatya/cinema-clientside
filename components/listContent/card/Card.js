@@ -1,6 +1,5 @@
 import Image from "next/image";
 import RatingStar from "../ratingStar/RatingStar";
-import cardStyle from "../../../styles/card.module.css";
 import { useState } from "react";
 
 export default function Card(props) {
@@ -61,7 +60,7 @@ export default function Card(props) {
           >
             <RatingStar className="flex" voteAvg={dataContent.vote_average} />
             <span className="font-bold text-base">
-              {dataContent.vote_average}
+              {dataContent.vote_average.toFixed(1)}
             </span>
           </div>
         </div>

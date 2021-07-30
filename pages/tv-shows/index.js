@@ -40,15 +40,15 @@ export default function TvShowsPage(props) {
   const router = useRouter();
 
   const listContent = [
+    // {
+    //   title: "Discover",
+    //   icon: <IconTv />,
+    //   data: listDiscover,
+    // },
     {
-      title: "Discover",
+      title: "Airing Today",
       icon: <IconTv />,
-      data: listDiscover,
-    },
-    {
-      title: "Top Rated",
-      icon: <IconTv />,
-      data: listTopRated,
+      data: listAiringToday,
     },
     {
       title: "Popular",
@@ -56,9 +56,9 @@ export default function TvShowsPage(props) {
       data: listPopular,
     },
     {
-      title: "Airing Today",
+      title: "Top Rated",
       icon: <IconTv />,
-      data: listAiringToday,
+      data: listTopRated,
     },
     {
       title: "On Air",

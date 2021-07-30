@@ -2,7 +2,9 @@ import Layout from "../../components/layout/Layout";
 import DetailHeader from "../../components/header/DetailHeader";
 import ContentBox from "../../components/listContent/content/ContentBox";
 import ContentBoxReview from "../../components/listContent/content/ContentBoxReview";
+import ContentBoxMedia from "../../components/listContent/content/ContentBoxMedia";
 import CardAnyTrailer from "../../components/listContent/card/CardAnyTrailer";
+import CardMedia from "../../components/listContent/card/CardMedia";
 import Card from "../../components/listContent/card/Card";
 import CardReview from "../../components/listContent/card/CardReview";
 import CardNoTrailer from "../../components/listContent/card/CardNoTrailer";
@@ -13,54 +15,6 @@ import IconPeople from "../../components/icons/IconPeople";
 import { cinemaAPI } from "../../services/api";
 import { useState } from "react";
 import { useRouter } from "next/router";
-
-// export async function getStaticPaths() {
-//   const [
-//     listDiscover,
-//     listNowPlaying,
-//     listPopular,
-//     listTopRated,
-//     listUpcoming,
-//   ] = await Promise.all([
-//     cinemaAPI.get(`/movies`),
-//     cinemaAPI.get(`/movies/now-playing`),
-//     cinemaAPI.get(`/movies/popular`),
-//     cinemaAPI.get(`/movies/top-rated`),
-//     cinemaAPI.get(`/movies/upcoming`),
-//   ]);
-
-//   const arr1 = listDiscover.data.data.results;
-//   const arr2 = listNowPlaying.data.data.results;
-//   const arr3 = listPopular.data.data.results;
-//   const arr4 = listTopRated.data.data.results;
-//   const arr5 = listUpcoming.data.data.results;
-
-//   const listMovie = arr1.concat(arr2, arr3, arr4, arr5);
-
-//   const paths = listMovie.map((movie) => {
-//     return {
-//       params: {
-//         movieId: String(movie.id),
-//       },
-//     };
-//   });
-
-//   return {
-//     paths,
-//     fallback: true,
-//   };
-// }
-
-// export async function getStaticProps(context) {
-//   const movieId = context.params.movieId;
-//   const movie = await cinemaAPI.get(`/movies/${movieId}`);
-
-//   return {
-//     props: {
-//       detailMovie: movie.data.data,
-//     },
-//   };
-// }
 
 export async function getServerSideProps(context) {
   const movieId = context.params.movieId;
@@ -93,6 +47,35 @@ export default function DetailMoviePage(props) {
       data: detailMovie.similar,
     },
   ];
+
+  const [selectedMedia, setSelectedMedia] = useState({
+    list: [
+      {
+        title: "Trailers",
+        isActive: true,
+      },
+      {
+        title: "Backdrops",
+        isActive: false,
+      },
+      {
+        title: "Posters",
+        isActive: false,
+      },
+    ],
+  });
+
+  const handleSelectedMedia = (index) => {
+    let newSelected = selectedMedia.list.map((el) => {
+      el.isActive = false;
+      return el;
+    });
+    newSelected[index].isActive = true;
+    setSelectedMedia({
+      list: newSelected,
+    });
+    setIndexTrailer(null);
+  };
 
   const goDetail = (e) => {
     router.push(`/movies/${e.id}`);
@@ -132,23 +115,6 @@ export default function DetailMoviePage(props) {
                 .slice(0, 10)
             ) : (
               <CardNoTrailer title={"No Have Caster"} />
-            )}
-          </ContentBox>
-
-          <ContentBox title={"List Trailer :"}>
-            {detailMovie.video.length > 0 ? (
-              detailMovie.video.map((vid, index) => {
-                return (
-                  <CardAnyTrailer
-                    key={index}
-                    indexTrailer={index}
-                    videoKey={vid.key}
-                    onClick={(e) => selectedTrailer(e)}
-                  />
-                );
-              })
-            ) : (
-              <CardNoTrailer title={"Trailer Coming Soon"} />
             )}
           </ContentBox>
 
@@ -210,7 +176,7 @@ export default function DetailMoviePage(props) {
                   );
                 })
               ) : (
-                <div className="flex justify-center text-xs sm:text-sm md:text-base lg:text-xl font-bold">
+                <div className="flex justify-center text-xs sm:text-sm md:text-base font-bold">
                   <span>No Have Review</span>
                 </div>
               )
@@ -218,6 +184,63 @@ export default function DetailMoviePage(props) {
               ""
             )}
           </ContentBoxReview>
+
+          <ContentBoxMedia
+            title={"Media"}
+            listSelected={selectedMedia.list}
+            onSelectedMedia={(e) => handleSelectedMedia(e)}
+          >
+            {selectedMedia.list[0].isActive ? (
+              detailMovie.video.length > 0 ? (
+                detailMovie.video.map((vid, index) => {
+                  return (
+                    <CardAnyTrailer
+                      key={index}
+                      indexTrailer={index}
+                      videoKey={vid.key}
+                      onClick={(e) => selectedTrailer(e)}
+                    />
+                  );
+                })
+              ) : (
+                <CardNoTrailer title={"Trailer Coming Soon"} />
+              )
+            ) : selectedMedia.list[1].isActive ? (
+              detailMovie.images.backdrops.length > 0 ? (
+                detailMovie.images.backdrops
+                  .map((img, index) => {
+                    return (
+                      <CardMedia
+                        key={index}
+                        media={"backdrops"}
+                        dataContent={img}
+                      />
+                    );
+                  })
+                  .slice(0, 10)
+              ) : (
+                <CardNoTrailer title={"No have backdrops"} />
+              )
+            ) : selectedMedia.list[2].isActive ? (
+              detailMovie.images.posters.length > 0 ? (
+                detailMovie.images.posters
+                  .map((img, index) => {
+                    return (
+                      <CardMedia
+                        key={index}
+                        media={"posters"}
+                        dataContent={img}
+                      />
+                    );
+                  })
+                  .slice(0, 10)
+              ) : (
+                <CardNoTrailer title={"No have posters"} />
+              )
+            ) : (
+              ""
+            )}
+          </ContentBoxMedia>
 
           {listContent.map((content, idxContent) => {
             return (

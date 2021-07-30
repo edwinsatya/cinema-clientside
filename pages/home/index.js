@@ -143,7 +143,7 @@ export default function Home(props) {
               style={{ height: "100%", width: "100%", objectFit: "initial" }}
             ></iframe> */}
           </div>
-          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black via-transparent to-black opacity-20 duration-500"></div>
+          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black via-transparent to-black opacity-50 duration-500"></div>
           <div className="absolute h-full text-center text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
             <div className="max-w-xl relative h-auto">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold mb-4">
@@ -176,7 +176,7 @@ export default function Home(props) {
               name="day"
               className={`${
                 filter === "day" ? btnActive : btnNonActive
-              } p-1 w-1/2 text-center text-sm sm:text-base md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 focus:outline-none focus:ring focus:ring-blue-400`}
+              } p-1 w-1/2 text-center text-sm sm:text-base md:text-lg lg:text-xl hover:bg-primary hover:scale-105 transition duration-200 focus:outline-none`}
             >
               Day
             </button>
@@ -185,7 +185,7 @@ export default function Home(props) {
               name="week"
               className={`${
                 filter === "week" ? btnActive : btnNonActive
-              } w-1/2 p-1 text-center text-sm sm:text-base md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 focus:outline-none focus:ring focus:ring-blue-400`}
+              } w-1/2 p-1 text-center text-sm sm:text-base md:text-lg lg:text-xl hover:bg-primary  hover:scale-105 transition duration-200 focus:outline-none`}
             >
               Week
             </button>

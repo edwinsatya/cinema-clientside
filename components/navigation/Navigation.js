@@ -117,7 +117,7 @@ function MainNavigation() {
                     xmlns="http://www.w3.org/2000/svg"
                     className={`lg:text-white  ${
                       dropDown ? "text-black dark:text-white" : "text-white"
-                    } cursor-pointer mr-3 transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle`}
+                    } cursor-pointer mr-3 transform h-6 w-6 lg:h-7 lg:w-7 hover:animate-wiggle focus:animate-wiggle`}
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -135,7 +135,7 @@ function MainNavigation() {
                 <li className="hidden lg:flex">
                   <MainButton
                     handleClick={() => handleLoginLogout()}
-                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-base bg-gradient-to-br rounded-sm shadow transform ${
+                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-3 lg:text-sm bg-gradient-to-br rounded-sm shadow transform ${
                       !currentUser
                         ? "from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
                         : "from-yellow-600 to-yellow-800 hover:from-yellow-500 hover:to-yellow-600"

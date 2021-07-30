@@ -2,12 +2,14 @@ import Layout from "../../components/layout/Layout";
 import DetailHeader from "../../components/header/DetailHeader";
 import ContentBox from "../../components/listContent/content/ContentBox";
 import ContentBoxReview from "../../components/listContent/content/ContentBoxReview";
+import ContentBoxMedia from "../../components/listContent/content/ContentBoxMedia";
 import Card from "../../components/listContent/card/Card";
 import CardReview from "../../components/listContent/card/CardReview";
 import CardSeasons from "../../components/listContent/card/CardSeasons";
 import CardAnyTrailer from "../../components/listContent/card/CardAnyTrailer";
 import CardNoTrailer from "../../components/listContent/card/CardNoTrailer";
 import CardSimplePerson from "../../components/listContent/card/CardSimplePerson";
+import CardMedia from "../../components/listContent/card/CardMedia";
 import IconTv from "../../components/icons/IconTv";
 import IconComment from "../../components/icons/IconComment";
 import IconPeople from "../../components/icons/IconPeople";
@@ -47,6 +49,35 @@ export default function DetailTvShow(props) {
     },
   ];
 
+  const [selectedMedia, setSelectedMedia] = useState({
+    list: [
+      {
+        title: "Trailers",
+        isActive: true,
+      },
+      {
+        title: "Backdrops",
+        isActive: false,
+      },
+      {
+        title: "Posters",
+        isActive: false,
+      },
+    ],
+  });
+
+  const handleSelectedMedia = (index) => {
+    let newSelected = selectedMedia.list.map((el) => {
+      el.isActive = false;
+      return el;
+    });
+    newSelected[index].isActive = true;
+    setSelectedMedia({
+      list: newSelected,
+    });
+    setIndexTrailer(null);
+  };
+
   const goDetail = (e) => {
     router.push(`/tv-shows/${e.id}`);
     setIndexTrailer(null);
@@ -85,23 +116,6 @@ export default function DetailTvShow(props) {
                 .slice(0, 10)
             ) : (
               <CardNoTrailer title={"No Have Caster"} />
-            )}
-          </ContentBox>
-
-          <ContentBox title={"List Trailer :"}>
-            {detailTv.video.length > 0 ? (
-              detailTv.video.map((vid, index) => {
-                return (
-                  <CardAnyTrailer
-                    key={index}
-                    indexTrailer={index}
-                    videoKey={vid.key}
-                    onClick={(e) => selectedTrailer(e)}
-                  />
-                );
-              })
-            ) : (
-              <CardNoTrailer title={"Trailer Coming Soon"} />
             )}
           </ContentBox>
 
@@ -180,7 +194,7 @@ export default function DetailTvShow(props) {
                   );
                 })
               ) : (
-                <div className="flex justify-center text-xs sm:text-sm md:text-base lg:text-xl font-bold">
+                <div className="flex justify-center text-xs sm:text-sm md:text-base font-bold">
                   <span>No Have Review</span>
                 </div>
               )
@@ -188,6 +202,63 @@ export default function DetailTvShow(props) {
               ""
             )}
           </ContentBoxReview>
+
+          <ContentBoxMedia
+            title={"Media"}
+            listSelected={selectedMedia.list}
+            onSelectedMedia={(e) => handleSelectedMedia(e)}
+          >
+            {selectedMedia.list[0].isActive ? (
+              detailTv.video.length > 0 ? (
+                detailTv.video.map((vid, index) => {
+                  return (
+                    <CardAnyTrailer
+                      key={index}
+                      indexTrailer={index}
+                      videoKey={vid.key}
+                      onClick={(e) => selectedTrailer(e)}
+                    />
+                  );
+                })
+              ) : (
+                <CardNoTrailer title={"Trailer Coming Soon"} />
+              )
+            ) : selectedMedia.list[1].isActive ? (
+              detailTv.images.backdrops.length > 0 ? (
+                detailTv.images.backdrops
+                  .map((img, index) => {
+                    return (
+                      <CardMedia
+                        key={index}
+                        media={"backdrops"}
+                        dataContent={img}
+                      />
+                    );
+                  })
+                  .slice(0, 10)
+              ) : (
+                <CardNoTrailer title={"No have backdrops"} />
+              )
+            ) : selectedMedia.list[2].isActive ? (
+              detailTv.images.posters.length > 0 ? (
+                detailTv.images.posters
+                  .map((img, index) => {
+                    return (
+                      <CardMedia
+                        key={index}
+                        media={"posters"}
+                        dataContent={img}
+                      />
+                    );
+                  })
+                  .slice(0, 10)
+              ) : (
+                <CardNoTrailer title={"No have posters"} />
+              )
+            ) : (
+              ""
+            )}
+          </ContentBoxMedia>
 
           {listContent.map((content, idxContent) => {
             return (

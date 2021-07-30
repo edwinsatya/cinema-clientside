@@ -45,11 +45,11 @@ export default function MoviesPage(props) {
   const router = useRouter();
 
   const listContent = [
-    {
-      title: "Discover",
-      icon: <IconMovie />,
-      data: listDiscover,
-    },
+    // {
+    //   title: "Discover",
+    //   icon: <IconMovie />,
+    //   data: listDiscover,
+    // },
     {
       title: "Now Playing",
       icon: <IconMovie />,
