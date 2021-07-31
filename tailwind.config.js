@@ -8,6 +8,7 @@ module.exports = {
       height: {
         100: "40rem",
         97: "38rem",
+        "lg-img-detail-people": "27rem",
       },
       width: {
         97: "30rem",

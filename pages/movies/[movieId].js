@@ -83,6 +83,10 @@ export default function DetailMoviePage(props) {
     setShowReviews(false);
   };
 
+  const goDetailPerson = (e) => {
+    router.push(`/persons/${e.id}`);
+  };
+
   const selectedTrailer = (index) => {
     window.scrollTo(0, 0);
     setIndexTrailer(index);
@@ -111,7 +115,7 @@ export default function DetailMoviePage(props) {
                       classText="h-auto w-32 sm:w-32 md:w-36 lg:w-40"
                       key={index}
                       dataContent={credit}
-                      onHandleClick={(e) => console.log(e)}
+                      onHandleClick={(e) => goDetailPerson(e)}
                     />
                   );
                 })

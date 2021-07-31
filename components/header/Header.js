@@ -55,7 +55,7 @@ export default function Header(props) {
                 handleClick={() => onGoDetail(dataHeader)}
                 className="p-2 rounded-md bg-white dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-500"
               >
-                <div className="flex justify-center">
+                <div className="flex justify-center items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6 mr-1 text-black dark:text-white"

@@ -5,7 +5,7 @@ export default function CardReview(props) {
 
   return (
     <>
-      <div className="my-2 text-xs sm:text-sm lg:text-lg flex flex-col lg:flex-row lg:items-center">
+      <div className="my-2 text-xs sm:text-sm lg:text-base flex flex-col lg:flex-row lg:items-center">
         <div className="hidden mb-2 lg:mb-0 sm:flex sm:items-center lg:flex-col lg:w-2/12">
           <div className="relative mr-2 lg:mr-0 lg:mb-3 h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14 rounded-md overflow-hidden">
             {review.author_details.avatar_path ? (
@@ -42,7 +42,7 @@ export default function CardReview(props) {
           >
             {review.content}
           </div>
-          <div className="lg:w-full flex">
+          <div className="lg:w-full flex mt-2">
             <span className="ml-auto">{review.updated_at.substr(0, 10)}</span>
           </div>
         </div>

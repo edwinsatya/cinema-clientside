@@ -104,6 +104,10 @@ export default function Home(props) {
     }
   };
 
+  const goDetailPerson = (e) => {
+    router.push(`/persons/${e.id}`);
+  };
+
   useEffect(() => {
     if (filter === "day") {
       setListTrending({
@@ -213,7 +217,7 @@ export default function Home(props) {
                 : content.data.map((vid, index) => {
                     return (
                       <CardPerson
-                        onHandleClick={(e) => goDetail(e)}
+                        onHandleClick={(e) => goDetailPerson(e)}
                         key={index}
                         dataContent={vid}
                         indexContent={index}

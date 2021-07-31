@@ -33,7 +33,7 @@ export default function CardSimplePerson(props) {
             dataContent.known_for
               .map((el) => el.title)
               .join(",")
-              .substr(0, 20) + ".."}
+              .substr(0, 22) + ".."}
         </span>
       </div>
     </div>
