@@ -12,7 +12,7 @@ export default function PersonalInfo(props) {
     return age;
   };
   return (
-    <div className="flex px-2 lg:px-0 flex-col">
+    <div className="flex px-5 lg:px-0 flex-col">
       <h3 className="font-semibold text-lg">Personal Info</h3>
       <div className="flex justify-between sm:justify-start lg:flex-col">
         <div className="flex flex-col my-1">

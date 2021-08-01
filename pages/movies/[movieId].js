@@ -15,6 +15,7 @@ import IconPeople from "../../components/icons/IconPeople";
 import { cinemaAPI } from "../../services/api";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export async function getServerSideProps(context) {
   const movieId = context.params.movieId;
@@ -68,14 +69,17 @@ export default function DetailMoviePage(props) {
       {
         title: "Trailers",
         isActive: true,
+        data: detailMovie.video,
       },
       {
         title: "Backdrops",
         isActive: false,
+        data: detailMovie.images.backdrops,
       },
       {
         title: "Posters",
         isActive: false,
+        data: detailMovie.images.posters,
       },
     ],
   });
@@ -90,6 +94,28 @@ export default function DetailMoviePage(props) {
       list: newSelected,
     });
     setIndexTrailer(null);
+  };
+
+  const resetSelectedMedia = () => {
+    setSelectedMedia({
+      list: [
+        {
+          title: "Trailers",
+          isActive: true,
+          data: detailMovie.video,
+        },
+        {
+          title: "Backdrops",
+          isActive: false,
+          data: detailMovie.images.backdrops,
+        },
+        {
+          title: "Posters",
+          isActive: false,
+          data: detailMovie.images.posters,
+        },
+      ],
+    });
   };
 
   const handleScroll = (e) => {
@@ -120,6 +146,7 @@ export default function DetailMoviePage(props) {
     router.push(`/movies/${e.id}`);
     setIndexTrailer(null);
     setShowReviews(false);
+    resetSelectedMedia();
   };
 
   const goDetailPerson = (e) => {
@@ -130,6 +157,35 @@ export default function DetailMoviePage(props) {
     window.scrollTo(0, 0);
     setIndexTrailer(index);
   };
+
+  useEffect(() => {
+    setListContent({
+      arr: [
+        {
+          title: "Recommended Movies",
+          icon: <IconMovie />,
+          data: detailMovie.recommendations,
+          isBlur: true,
+        },
+        {
+          title: "Similar Movies",
+          icon: <IconMovie />,
+          data: detailMovie.similar,
+          isBlur: true,
+        },
+      ],
+    });
+    setListCast({
+      arr: [
+        {
+          title: "Top Billed Cast",
+          icon: <IconPeople />,
+          data: detailMovie.credits.cast,
+          isBlur: true,
+        },
+      ],
+    });
+  }, [detailMovie]);
 
   return (
     <Layout title="Detail Movie">
@@ -154,6 +210,7 @@ export default function DetailMoviePage(props) {
                 isBlur={content.isBlur}
                 onScroll={(e) => handleScroll(e)}
                 type="cast"
+                detail={detailMovie}
               >
                 {content.data.length > 0 ? (
                   content.data
@@ -247,6 +304,13 @@ export default function DetailMoviePage(props) {
           <ContentBoxMedia
             title={"Media"}
             listSelected={selectedMedia.list}
+            lengthContent={
+              selectedMedia.list[0].isActive
+                ? selectedMedia.list[0].data.length
+                : selectedMedia.list[1].isActive
+                ? selectedMedia.list[1].data.length
+                : selectedMedia.list[2].data.length
+            }
             onSelectedMedia={(e) => handleSelectedMedia(e)}
           >
             {selectedMedia.list[0].isActive ? (
@@ -312,6 +376,7 @@ export default function DetailMoviePage(props) {
                 isBlur={content.isBlur}
                 onScroll={(e) => handleScroll(e)}
                 type="main"
+                detail={detailMovie}
               >
                 {content.data.length > 0 ? (
                   content.data

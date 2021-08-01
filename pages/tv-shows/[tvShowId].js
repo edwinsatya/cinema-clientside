@@ -16,6 +16,7 @@ import IconPeople from "../../components/icons/IconPeople";
 import { cinemaAPI } from "../../services/api";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export async function getServerSideProps(context) {
   const tvShowId = context.params.tvShowId;
@@ -79,14 +80,17 @@ export default function DetailTvShow(props) {
       {
         title: "Trailers",
         isActive: true,
+        data: detailTv.video,
       },
       {
         title: "Backdrops",
         isActive: false,
+        data: detailTv.images.backdrops,
       },
       {
         title: "Posters",
         isActive: false,
+        data: detailTv.images.posters,
       },
     ],
   });
@@ -101,6 +105,28 @@ export default function DetailTvShow(props) {
       list: newSelected,
     });
     setIndexTrailer(null);
+  };
+
+  const resetSelectedMedia = () => {
+    setSelectedMedia({
+      list: [
+        {
+          title: "Trailers",
+          isActive: true,
+          data: detailTv.video,
+        },
+        {
+          title: "Backdrops",
+          isActive: false,
+          data: detailTv.images.backdrops,
+        },
+        {
+          title: "Posters",
+          isActive: false,
+          data: detailTv.images.posters,
+        },
+      ],
+    });
   };
 
   const handleScroll = (e) => {
@@ -141,6 +167,7 @@ export default function DetailTvShow(props) {
     router.push(`/tv-shows/${e.id}`);
     setIndexTrailer(null);
     setShowReviews(false);
+    resetSelectedMedia();
   };
 
   const goDetailPerson = (e) => {
@@ -151,6 +178,44 @@ export default function DetailTvShow(props) {
     window.scrollTo(0, 0);
     setIndexTrailer(index);
   };
+
+  useEffect(() => {
+    setListCast({
+      arr: [
+        {
+          title: "Series Cast",
+          icon: <IconPeople />,
+          data: detailTv.credits.cast,
+          isBlur: true,
+        },
+      ],
+    });
+    setListSeason({
+      arr: [
+        {
+          title: "Seasons",
+          data: detailTv.seasons,
+          isBlur: true,
+        },
+      ],
+    });
+    setListContent({
+      arr: [
+        {
+          title: "Recommended Tv Shows",
+          icon: <IconTv />,
+          data: detailTv.recommendations,
+          isBlur: true,
+        },
+        {
+          title: "Similar Tv Shows",
+          icon: <IconTv />,
+          data: detailTv.similar,
+          isBlur: true,
+        },
+      ],
+    });
+  }, [detailTv]);
 
   return (
     <Layout title="Detail Tv Show">
@@ -175,6 +240,7 @@ export default function DetailTvShow(props) {
                 isBlur={content.isBlur}
                 onScroll={(e) => handleScroll(e)}
                 type="cast"
+                detail={detailTv}
               >
                 {content.data.length > 0 ? (
                   content.data
@@ -208,6 +274,7 @@ export default function DetailTvShow(props) {
                 isBlur={content.isBlur}
                 onScroll={(e) => handleScroll(e)}
                 type="season"
+                detail={detailTv}
               >
                 {content.data.length > 0 ? (
                   content.data.map((season, index) => {
@@ -297,6 +364,13 @@ export default function DetailTvShow(props) {
           <ContentBoxMedia
             title={"Media"}
             listSelected={selectedMedia.list}
+            lengthContent={
+              selectedMedia.list[0].isActive
+                ? selectedMedia.list[0].data.length
+                : selectedMedia.list[1].isActive
+                ? selectedMedia.list[1].data.length
+                : selectedMedia.list[2].data.length
+            }
             onSelectedMedia={(e) => handleSelectedMedia(e)}
           >
             {selectedMedia.list[0].isActive ? (
@@ -362,6 +436,7 @@ export default function DetailTvShow(props) {
                 isBlur={content.isBlur}
                 onScroll={(e) => handleScroll(e)}
                 type="main"
+                detail={detailTv}
               >
                 {content.data.length > 0 ? (
                   content.data

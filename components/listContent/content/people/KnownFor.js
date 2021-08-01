@@ -40,7 +40,7 @@ export default function KnownFor(props) {
   };
 
   return (
-    <div>
+    <div className="px-5 lg:px-0 mt-3">
       <div className="flex items-center">
         <h3 className="text-base sm:text-lg font-semibold">Known For</h3>
       </div>
@@ -67,8 +67,8 @@ export default function KnownFor(props) {
         </div>
         <div
           className={`absolute h-full ${
-            showBlurContent && detailPerson.known_for.length > 0
-              ? "w-1/12"
+            showBlurContent && detailPerson.known_for.length > 8
+              ? "w-3/12 sm:w-2/12 lg:w-1/12"
               : "w-0"
           } transform transition-all duration-300 bottom-0 right-0 bg-gradient-to-r from-transparent to-gray-100 dark:from-transparent dark:to-black`}
         ></div>

@@ -1,5 +1,7 @@
+import { useEffect } from "react";
+
 export default function ContentBox(props) {
-  const { lengthContent, isBlur, onScroll, indexContent, type } = props;
+  const { lengthContent, isBlur, onScroll, indexContent, type, detail } = props;
 
   const handleScrollX = () => {
     const widthContent = document.getElementById(
@@ -24,7 +26,11 @@ export default function ContentBox(props) {
     //   "half",
     //   valScroll,
     //   "val",
-    //   window.innerWidth
+    //   document.getElementById(`content-box-${type}-${indexContent}`)
+    //     .offsetWidth -
+    //     document.getElementById(`content-box-${type}-${indexContent}`)
+    //       .clientWidth,
+    //   "bar width"
     // );
 
     if (valScroll >= half) {
@@ -37,6 +43,12 @@ export default function ContentBox(props) {
       }
     }
   };
+
+  useEffect(() => {
+    document.getElementById(
+      `content-box-${type}-${indexContent}`
+    ).scrollLeft = 0;
+  }, [detail]);
 
   return (
     <div>

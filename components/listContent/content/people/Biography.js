@@ -5,7 +5,7 @@ export default function Biography(props) {
   const [showMoreBio, setShowMoreBio] = useState(false);
 
   return (
-    <>
+    <div className="px-5 lg:px-0 mt-3">
       <div className="font-bold text-3xl hidden lg:flex lg:mb-5">
         {detailPerson.name}
       </div>
@@ -45,6 +45,6 @@ export default function Biography(props) {
           </span>
         </div>
       </div>
-    </>
+    </div>
   );
 }

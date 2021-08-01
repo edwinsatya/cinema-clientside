@@ -3,6 +3,7 @@ import Image from "next/image";
 import PersonalInfo from "../../components/listContent/content/people/PersonalInfo";
 import Biography from "../../components/listContent/content/people/Biography";
 import KnownFor from "../../components/listContent/content/people/KnownFor";
+import Credits from "../../components/listContent/content/people/Credits";
 import { cinemaAPI } from "../../services/api";
 import { MainNavigation } from "../../components/navigation/Navigation";
 
@@ -23,13 +24,13 @@ export default function DetailPerson(props) {
   return (
     <Layout>
       <header>
-        <div className="relative h-16 lg:h-20  border-b border-gray-200 dark:border-gray-700 bg-gray-900">
+        <div className="relative h-16 lg:h-20 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <MainNavigation />
         </div>
       </header>
 
       <main>
-        <div className="relative h-auto bg-gray-100 dark:bg-black text-black dark:text-white py-4 px-3 md:px-8 lg:py-8 lg:px-14">
+        <div className="relative h-auto bg-gray-100 dark:bg-black text-black dark:text-white py-4 px-0 md:px-8 lg:py-8 lg:px-14">
           <div className="flex flex-col lg:flex-row">
             <div className="flex flex-col lg:max-w-md">
               <div className="flex flex-col justify-center items-center lg:items-start lg:mb-5">
@@ -56,9 +57,10 @@ export default function DetailPerson(props) {
               <PersonalInfo detailPerson={detailPerson} />
             </div>
             {/* div 2 */}
-            <div className="flex flex-col px-2 lg:px-0 lg:pl-7 lg:pt-1 lg:w-9/12">
+            <div className="flex flex-col px-0 lg:px-0 lg:pl-7 lg:pt-1 lg:w-9/12">
               <Biography detailPerson={detailPerson} />
               <KnownFor detailPerson={detailPerson} />
+              <Credits detailPerson={detailPerson} />
             </div>
           </div>
         </div>

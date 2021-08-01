@@ -26,7 +26,7 @@ export default function Persons(props) {
   return (
     <Layout title="Persons">
       <header>
-        <div className="relative h-16 lg:h-20 bg-gray-300 border-b border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        <div className="relative h-16 lg:h-20 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <MainNavigation />
         </div>
       </header>
