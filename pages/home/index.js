@@ -64,27 +64,31 @@ export default function Home(props) {
     tv: trendingTvShowsDay,
     person: trendingPersonsDay,
   });
-
-  const listContent = [
-    {
-      title: "Movies",
-      icon: <IconMovie />,
-      data: listTrending.movie,
-      isPerson: false,
-    },
-    {
-      title: "Tv Shows",
-      icon: <IconTv />,
-      data: listTrending.tv,
-      isPerson: false,
-    },
-    {
-      title: "Persons",
-      icon: <IconPeople />,
-      data: listTrending.person,
-      isPerson: true,
-    },
-  ];
+  const [listContent, setListContent] = useState({
+    arr: [
+      {
+        title: "Movies",
+        icon: <IconMovie />,
+        data: listTrending.movie,
+        isPerson: false,
+        isBlur: true,
+      },
+      {
+        title: "Tv Shows",
+        icon: <IconTv />,
+        data: listTrending.tv,
+        isPerson: false,
+        isBlur: true,
+      },
+      {
+        title: "Persons",
+        icon: <IconPeople />,
+        data: listTrending.person,
+        isPerson: true,
+        isBlur: true,
+      },
+    ],
+  });
 
   const goFilterTrending = (e) => {
     setFilter(e.target.name);
@@ -101,6 +105,20 @@ export default function Home(props) {
       default:
         router.push(`/home`);
         break;
+    }
+  };
+
+  const handleScroll = (e) => {
+    const newArr = listContent.arr.map((content, index) => {
+      if (e.index == index) {
+        content.isBlur = e.isBlur;
+      }
+      return content;
+    });
+    if (e.type === "main") {
+      setListContent({
+        arr: newArr,
+      });
     }
   };
 
@@ -196,34 +214,43 @@ export default function Home(props) {
           </div>
         </div>
 
-        {listContent.map((content, idxContent) => {
+        {listContent.arr.map((content, idxContent) => {
           return (
             <ContentBox
               key={idxContent}
               title={content.title}
               icon={content.icon}
+              lengthContent={content.data.length}
+              indexContent={idxContent}
+              isBlur={content.isBlur}
+              onScroll={(e) => handleScroll(e)}
+              type="main"
             >
               {!content.isPerson
-                ? content.data.map((vid, index) => {
-                    return (
-                      <Card
-                        onHandleClick={(e) => goDetail(e)}
-                        key={index}
-                        dataContent={vid}
-                        indexContent={index}
-                      />
-                    );
-                  })
-                : content.data.map((vid, index) => {
-                    return (
-                      <CardPerson
-                        onHandleClick={(e) => goDetailPerson(e)}
-                        key={index}
-                        dataContent={vid}
-                        indexContent={index}
-                      />
-                    );
-                  })}
+                ? content.data
+                    .map((vid, index) => {
+                      return (
+                        <Card
+                          onHandleClick={(e) => goDetail(e)}
+                          key={index}
+                          dataContent={vid}
+                          indexContent={index}
+                        />
+                      );
+                    })
+                    .slice(0, 10)
+                : content.data
+                    .map((vid, index) => {
+                      return (
+                        <CardPerson
+                          onHandleClick={(e) => goDetailPerson(e)}
+                          key={index}
+                          dataContent={vid}
+                          indexContent={index}
+                        />
+                      );
+                    })
+                    .slice(0, 10)}
             </ContentBox>
           );
         })}

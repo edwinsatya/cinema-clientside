@@ -35,18 +35,33 @@ export default function DetailMoviePage(props) {
 
   const [showReviews, setShowReviews] = useState(false);
 
-  const listContent = [
-    {
-      title: "Recommended Movies",
-      icon: <IconMovie />,
-      data: detailMovie.recommendations,
-    },
-    {
-      title: "Similar Movies",
-      icon: <IconMovie />,
-      data: detailMovie.similar,
-    },
-  ];
+  const [listContent, setListContent] = useState({
+    arr: [
+      {
+        title: "Recommended Movies",
+        icon: <IconMovie />,
+        data: detailMovie.recommendations,
+        isBlur: true,
+      },
+      {
+        title: "Similar Movies",
+        icon: <IconMovie />,
+        data: detailMovie.similar,
+        isBlur: true,
+      },
+    ],
+  });
+
+  const [listCast, setListCast] = useState({
+    arr: [
+      {
+        title: "Top Billed Cast",
+        icon: <IconPeople />,
+        data: detailMovie.credits.cast,
+        isBlur: true,
+      },
+    ],
+  });
 
   const [selectedMedia, setSelectedMedia] = useState({
     list: [
@@ -77,6 +92,30 @@ export default function DetailMoviePage(props) {
     setIndexTrailer(null);
   };
 
+  const handleScroll = (e) => {
+    if (e.type === "main") {
+      const newArr = listContent.arr.map((content, index) => {
+        if (e.index == index) {
+          content.isBlur = e.isBlur;
+        }
+        return content;
+      });
+      setListContent({
+        arr: newArr,
+      });
+    } else if (e.type === "cast") {
+      const newArr = listCast.arr.map((content, index) => {
+        if (e.index == index) {
+          content.isBlur = e.isBlur;
+        }
+        return content;
+      });
+      setListCast({
+        arr: newArr,
+      });
+    }
+  };
+
   const goDetail = (e) => {
     router.push(`/movies/${e.id}`);
     setIndexTrailer(null);
@@ -104,26 +143,39 @@ export default function DetailMoviePage(props) {
 
       <section id="list-content">
         <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
-          <ContentBox title={"Top Billed Cast"} icon={<IconPeople />}>
-            {detailMovie.credits.cast.length > 0 ? (
-              detailMovie.credits.cast
-                .map((credit, index) => {
-                  return (
-                    <CardSimplePerson
-                      classWrapper="mx-2"
-                      classImage="w-32 h-40 sm:w-32 sm:h-44 md:w-36 md:h-48 lg:w-40 lg:h-52"
-                      classText="h-auto w-32 sm:w-32 md:w-36 lg:w-40"
-                      key={index}
-                      dataContent={credit}
-                      onHandleClick={(e) => goDetailPerson(e)}
-                    />
-                  );
-                })
-                .slice(0, 10)
-            ) : (
-              <CardNoTrailer title={"No Have Caster"} />
-            )}
-          </ContentBox>
+          {listCast.arr.map((content, idxContent) => {
+            return (
+              <ContentBox
+                key={idxContent}
+                title={content.title}
+                icon={content.icon}
+                lengthContent={content.data.length}
+                indexContent={idxContent}
+                isBlur={content.isBlur}
+                onScroll={(e) => handleScroll(e)}
+                type="cast"
+              >
+                {content.data.length > 0 ? (
+                  content.data
+                    .map((credit, index) => {
+                      return (
+                        <CardSimplePerson
+                          classWrapper="mx-2"
+                          classImage="w-32 h-40 sm:w-32 sm:h-44 md:w-36 md:h-48 lg:w-40 lg:h-52"
+                          classText="h-auto w-32 sm:w-32 md:w-36 lg:w-40"
+                          key={index}
+                          dataContent={credit}
+                          onHandleClick={(e) => goDetailPerson(e)}
+                        />
+                      );
+                    })
+                    .slice(0, 10)
+                ) : (
+                  <CardNoTrailer title={"No Have Caster"} />
+                )}
+              </ContentBox>
+            );
+          })}
 
           <ContentBoxReview title={"Reviews"} icon={<IconComment />}>
             <div
@@ -249,24 +301,31 @@ export default function DetailMoviePage(props) {
             )}
           </ContentBoxMedia>
 
-          {listContent.map((content, idxContent) => {
+          {listContent.arr.map((content, idxContent) => {
             return (
               <ContentBox
                 key={idxContent}
                 title={content.title}
                 icon={content.icon}
+                lengthContent={content.data.length}
+                indexContent={idxContent}
+                isBlur={content.isBlur}
+                onScroll={(e) => handleScroll(e)}
+                type="main"
               >
                 {content.data.length > 0 ? (
-                  content.data.map((vid, index) => {
-                    return (
-                      <Card
-                        onHandleClick={(e) => goDetail(e)}
-                        key={index}
-                        dataContent={vid}
-                        indexContent={index}
-                      />
-                    );
-                  })
+                  content.data
+                    .map((vid, index) => {
+                      return (
+                        <Card
+                          onHandleClick={(e) => goDetail(e)}
+                          key={index}
+                          dataContent={vid}
+                          indexContent={index}
+                        />
+                      );
+                    })
+                    .slice(0, 10)
                 ) : (
                   <CardNoTrailer title={"Not Available"} />
                 )}

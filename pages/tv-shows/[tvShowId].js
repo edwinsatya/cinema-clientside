@@ -36,18 +36,43 @@ export default function DetailTvShow(props) {
 
   const [showReviews, setShowReviews] = useState(false);
 
-  const listContent = [
-    {
-      title: "Recommended Tv Shows",
-      icon: <IconTv />,
-      data: detailTv.recommendations,
-    },
-    {
-      title: "Similar Tv Shows",
-      icon: <IconTv />,
-      data: detailTv.similar,
-    },
-  ];
+  const [listContent, setListContent] = useState({
+    arr: [
+      {
+        title: "Recommended Tv Shows",
+        icon: <IconTv />,
+        data: detailTv.recommendations,
+        isBlur: true,
+      },
+      {
+        title: "Similar Tv Shows",
+        icon: <IconTv />,
+        data: detailTv.similar,
+        isBlur: true,
+      },
+    ],
+  });
+
+  const [listCast, setListCast] = useState({
+    arr: [
+      {
+        title: "Series Cast",
+        icon: <IconPeople />,
+        data: detailTv.credits.cast,
+        isBlur: true,
+      },
+    ],
+  });
+
+  const [listSeason, setListSeason] = useState({
+    arr: [
+      {
+        title: "Seasons",
+        data: detailTv.seasons,
+        isBlur: true,
+      },
+    ],
+  });
 
   const [selectedMedia, setSelectedMedia] = useState({
     list: [
@@ -78,6 +103,40 @@ export default function DetailTvShow(props) {
     setIndexTrailer(null);
   };
 
+  const handleScroll = (e) => {
+    if (e.type === "main") {
+      const newArr = listContent.arr.map((content, index) => {
+        if (e.index == index) {
+          content.isBlur = e.isBlur;
+        }
+        return content;
+      });
+      setListContent({
+        arr: newArr,
+      });
+    } else if (e.type === "season") {
+      const newArr = listSeason.arr.map((content, index) => {
+        if (e.index == index) {
+          content.isBlur = e.isBlur;
+        }
+        return content;
+      });
+      setListSeason({
+        arr: newArr,
+      });
+    } else if (e.type === "cast") {
+      const newArr = listCast.arr.map((content, index) => {
+        if (e.index == index) {
+          content.isBlur = e.isBlur;
+        }
+        return content;
+      });
+      setListCast({
+        arr: newArr,
+      });
+    }
+  };
+
   const goDetail = (e) => {
     router.push(`/tv-shows/${e.id}`);
     setIndexTrailer(null);
@@ -105,43 +164,68 @@ export default function DetailTvShow(props) {
 
       <section id="list-content">
         <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
-          <ContentBox title={"Series Cast"} icon={<IconPeople />}>
-            {detailTv.credits.cast.length > 0 ? (
-              detailTv.credits.cast
-                .map((credit, index) => {
-                  return (
-                    <CardSimplePerson
-                      classWrapper="mx-2"
-                      classImage="w-32 h-40 sm:w-32 sm:h-44 md:w-36 md:h-48 lg:w-40 lg:h-52"
-                      classText="h-auto w-32 sm:w-32 md:w-36 lg:w-40"
-                      key={index}
-                      dataContent={credit}
-                      onHandleClick={(e) => goDetailPerson(e)}
-                    />
-                  );
-                })
-                .slice(0, 10)
-            ) : (
-              <CardNoTrailer title={"No Have Caster"} />
-            )}
-          </ContentBox>
+          {listCast.arr.map((content, idxContent) => {
+            return (
+              <ContentBox
+                key={idxContent}
+                title={content.title}
+                icon={content.icon}
+                lengthContent={content.data.length}
+                indexContent={idxContent}
+                isBlur={content.isBlur}
+                onScroll={(e) => handleScroll(e)}
+                type="cast"
+              >
+                {content.data.length > 0 ? (
+                  content.data
+                    .map((credit, index) => {
+                      return (
+                        <CardSimplePerson
+                          classWrapper="mx-2"
+                          classImage="w-32 h-40 sm:w-32 sm:h-44 md:w-36 md:h-48 lg:w-40 lg:h-52"
+                          classText="h-auto w-32 sm:w-32 md:w-36 lg:w-40"
+                          key={index}
+                          dataContent={credit}
+                          onHandleClick={(e) => goDetailPerson(e)}
+                        />
+                      );
+                    })
+                    .slice(0, 10)
+                ) : (
+                  <CardNoTrailer title={"No Have Caster"} />
+                )}
+              </ContentBox>
+            );
+          })}
 
-          <ContentBox title={"Seasons :"}>
-            {detailTv.seasons.length > 0 ? (
-              detailTv.seasons.map((season, index) => {
-                return (
-                  <CardSeasons
-                    key={index}
-                    dataContent={season}
-                    indexContent={index}
-                    onHandleClick={(e) => goDetail(e)}
-                  />
-                );
-              })
-            ) : (
-              <CardNoTrailer title={"Not Available"} />
-            )}
-          </ContentBox>
+          {listSeason.arr.map((content, idxContent) => {
+            return (
+              <ContentBox
+                key={idxContent}
+                title={content.title}
+                lengthContent={content.data.length}
+                indexContent={idxContent}
+                isBlur={content.isBlur}
+                onScroll={(e) => handleScroll(e)}
+                type="season"
+              >
+                {content.data.length > 0 ? (
+                  content.data.map((season, index) => {
+                    return (
+                      <CardSeasons
+                        key={index}
+                        dataContent={season}
+                        indexContent={index}
+                        onHandleClick={(e) => goDetail(e)}
+                      />
+                    );
+                  })
+                ) : (
+                  <CardNoTrailer title={"Not Available"} />
+                )}
+              </ContentBox>
+            );
+          })}
 
           <ContentBoxReview title={"Reviews"} icon={<IconComment />}>
             <div
@@ -267,24 +351,31 @@ export default function DetailTvShow(props) {
             )}
           </ContentBoxMedia>
 
-          {listContent.map((content, idxContent) => {
+          {listContent.arr.map((content, idxContent) => {
             return (
               <ContentBox
                 key={idxContent}
                 title={content.title}
                 icon={content.icon}
+                lengthContent={content.data.length}
+                indexContent={idxContent}
+                isBlur={content.isBlur}
+                onScroll={(e) => handleScroll(e)}
+                type="main"
               >
                 {content.data.length > 0 ? (
-                  content.data.map((vid, index) => {
-                    return (
-                      <Card
-                        onHandleClick={(e) => goDetail(e)}
-                        key={index}
-                        dataContent={vid}
-                        indexContent={index}
-                      />
-                    );
-                  })
+                  content.data
+                    .map((vid, index) => {
+                      return (
+                        <Card
+                          onHandleClick={(e) => goDetail(e)}
+                          key={index}
+                          dataContent={vid}
+                          indexContent={index}
+                        />
+                      );
+                    })
+                    .slice(0, 10)
                 ) : (
                   <CardNoTrailer title={"Not Available"} />
                 )}

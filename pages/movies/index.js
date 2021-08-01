@@ -5,6 +5,7 @@ import Header from "../../components/header/Header";
 import ContentBox from "../../components/listContent/content/ContentBox";
 import { cinemaAPI } from "../../services/api";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export async function getStaticProps() {
   const [
@@ -43,34 +44,48 @@ export default function MoviesPage(props) {
   } = props;
 
   const router = useRouter();
+  const [listContent, setListContent] = useState({
+    arr: [
+      {
+        title: "Now Playing",
+        icon: <IconMovie />,
+        data: listNowPlaying,
+        isBlur: true,
+      },
+      {
+        title: "Popular",
+        icon: <IconMovie />,
+        data: listPopular,
+        isBlur: true,
+      },
+      {
+        title: "Top Rated",
+        icon: <IconMovie />,
+        data: listTopRated,
+        isBlur: true,
+      },
+      {
+        title: "Upcoming",
+        icon: <IconMovie />,
+        data: listUpcoming,
+        isBlur: true,
+      },
+    ],
+  });
 
-  const listContent = [
-    // {
-    //   title: "Discover",
-    //   icon: <IconMovie />,
-    //   data: listDiscover,
-    // },
-    {
-      title: "Now Playing",
-      icon: <IconMovie />,
-      data: listNowPlaying,
-    },
-    {
-      title: "Popular",
-      icon: <IconMovie />,
-      data: listPopular,
-    },
-    {
-      title: "Top Rated",
-      icon: <IconMovie />,
-      data: listTopRated,
-    },
-    {
-      title: "Upcoming",
-      icon: <IconMovie />,
-      data: listUpcoming,
-    },
-  ];
+  const handleScroll = (e) => {
+    const newArr = listContent.arr.map((content, index) => {
+      if (e.index == index) {
+        content.isBlur = e.isBlur;
+      }
+      return content;
+    });
+    if (e.type === "main") {
+      setListContent({
+        arr: newArr,
+      });
+    }
+  };
 
   const goDetail = (e) => {
     router.push(`/movies/${e.id}`);
@@ -89,23 +104,30 @@ export default function MoviesPage(props) {
       <hr className="border-b-4 border-gray-500 shadow-2xl" />
 
       <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
-        {listContent.map((content, idxContent) => {
+        {listContent.arr.map((content, idxContent) => {
           return (
             <ContentBox
               key={idxContent}
               title={content.title}
               icon={content.icon}
+              lengthContent={content.data.length}
+              indexContent={idxContent}
+              isBlur={content.isBlur}
+              onScroll={(e) => handleScroll(e)}
+              type="main"
             >
-              {content.data.map((vid, index) => {
-                return (
-                  <Card
-                    onHandleClick={(e) => goDetail(e)}
-                    key={index}
-                    dataContent={vid}
-                    indexContent={index}
-                  />
-                );
-              })}
+              {content.data
+                .map((vid, index) => {
+                  return (
+                    <Card
+                      onHandleClick={(e) => goDetail(e)}
+                      key={index}
+                      dataContent={vid}
+                      indexContent={index}
+                    />
+                  );
+                })
+                .slice(0, 10)}
             </ContentBox>
           );
         })}

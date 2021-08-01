@@ -30,7 +30,7 @@ export default function Chat(props) {
     return (
       <div
         onClick={() => handleOpenChat()}
-        className="cursor-pointer fixed rounded-md shadow-lg z-50 bottom-4 right-4 text-black bg-white dark:text-white dark:bg-gray-900 p-3"
+        className="cursor-pointer fixed rounded-md shadow-lg z-50 bottom-2 right-2 md:bottom-3 md:right-3 lg:bottom-4 lg:right-4 text-black bg-white dark:text-white dark:bg-gray-900 p-3"
       >
         <span className="text-base font-bold flex items-center">
           <span

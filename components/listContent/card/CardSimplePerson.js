@@ -29,11 +29,13 @@ export default function CardSimplePerson(props) {
           {dataContent.name}
         </span>
         <span className={`font-normal text-base text-left`}>
-          {dataContent.character ||
-            dataContent.known_for
-              .map((el) => el.title)
-              .join(",")
-              .substr(0, 22) + ".."}
+          {dataContent.character === ""
+            ? "-"
+            : dataContent.character ||
+              dataContent.known_for
+                .map((el) => el.title)
+                .join(",")
+                .substr(0, 22) + ".."}
         </span>
       </div>
     </div>

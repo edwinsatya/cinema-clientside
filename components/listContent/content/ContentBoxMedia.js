@@ -26,9 +26,9 @@ export default function ContentBoxMedia(props) {
           ))}
         </div>
       </div>
-      <div className="px-4 py-10">
+      <div className="p-4">
         <div
-          className={`${cardStyle.cardWrapper} rounded-lg flex items-stretch overflow-x-auto overflow-y-hidden`}
+          className={`rounded-lg flex items-stretch overflow-x-auto overflow-y-hidden`}
         >
           {props.children}
         </div>

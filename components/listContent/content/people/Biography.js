@@ -13,10 +13,7 @@ export default function Biography(props) {
       <div
         className={`${!showMoreBio ? "max-h-60" : ""} relative overflow-hidden`}
       >
-        <span
-          style={{ whiteSpace: "pre-line" }}
-          className="font-medium text-sm"
-        >
+        <span className="font-medium text-sm whitespace-pre-line">
           {detailPerson.biography.length > 0 ? detailPerson.biography : "-"}
         </span>
         <div
@@ -24,7 +21,7 @@ export default function Biography(props) {
             !showMoreBio && detailPerson.biography.length > 700
               ? "absolute"
               : "hidden"
-          } text-primary w-full right-0 text-right font-bold bottom-0 bg-gradient-to-r from-transparent via-white to-white dark:from-transparent dark:via-black dark:to-black`}
+          } text-primary w-full right-0 text-right font-bold bottom-0 bg-gradient-to-r from-transparent via-gray-100 to-gray-100 dark:from-transparent dark:via-black dark:to-black`}
         >
           <span
             onClick={() => setShowMoreBio(true)}

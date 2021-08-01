@@ -43,6 +43,7 @@ module.exports = {
       borderColor: ["active"],
       textColor: ["active"],
     },
+    scrollbar: ["dark", "rounded"],
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
