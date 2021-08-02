@@ -76,7 +76,7 @@ export default function Discussions(props) {
         } flex justify-center items-center h-full w-full z-50 max-w-sm bg-gray-800  bg-opacity-90`}
       >
         <Link href="/login">
-          <a className="font-bold text-xl cursor-pointer text-white hover:underline hover:text-primary">
+          <a className="font-bold text-xl mb-4 cursor-pointer text-white hover:underline hover:text-primary">
             Sign In
           </a>
         </Link>
@@ -85,22 +85,28 @@ export default function Discussions(props) {
         <CardReply reply={isReply} removeReply={() => setIsReply(null)} />
       )}
       <div className="p-3 flex flex-col mb-12">
-        {discussions.map((discussion, index) =>
-          discussion.replied ? (
-            <CardWithReply
-              key={index}
-              discussion={discussion}
-              onDelete={(e) => handleDelete(e)}
-              onReply={(e) => setIsReply(e)}
-            />
-          ) : (
-            <CardNoReply
-              key={index}
-              discussion={discussion}
-              onDelete={(e) => handleDelete(e)}
-              onReply={(e) => setIsReply(e)}
-            />
+        {discussions.length > 0 ? (
+          discussions.map((discussion, index) =>
+            discussion.replied ? (
+              <CardWithReply
+                key={index}
+                discussion={discussion}
+                onDelete={(e) => handleDelete(e)}
+                onReply={(e) => setIsReply(e)}
+              />
+            ) : (
+              <CardNoReply
+                key={index}
+                discussion={discussion}
+                onDelete={(e) => handleDelete(e)}
+                onReply={(e) => setIsReply(e)}
+              />
+            )
           )
+        ) : (
+          <div className="h-36 flex justify-center items-center">
+            No Have Discussions
+          </div>
         )}
       </div>
 
