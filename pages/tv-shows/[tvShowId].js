@@ -14,9 +14,8 @@ import IconTv from "../../components/icons/IconTv";
 import IconComment from "../../components/icons/IconComment";
 import IconPeople from "../../components/icons/IconPeople";
 import { cinemaAPI } from "../../services/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 export async function getServerSideProps(context) {
   const tvShowId = context.params.tvShowId;
