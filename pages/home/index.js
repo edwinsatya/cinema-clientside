@@ -142,6 +142,34 @@ export default function Home(props) {
     }
   }, [filter]);
 
+  useEffect(() => {
+    setListContent({
+      arr: [
+        {
+          title: "Movies",
+          icon: <IconMovie />,
+          data: listTrending.movie,
+          isPerson: false,
+          isBlur: true,
+        },
+        {
+          title: "Tv Shows",
+          icon: <IconTv />,
+          data: listTrending.tv,
+          isPerson: false,
+          isBlur: true,
+        },
+        {
+          title: "Persons",
+          icon: <IconPeople />,
+          data: listTrending.person,
+          isPerson: true,
+          isBlur: true,
+        },
+      ],
+    });
+  }, [listTrending]);
+
   return (
     <Layout title="Home">
       <header>
