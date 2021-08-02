@@ -11,6 +11,7 @@ import {
 } from "../../store";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { cinemaAPI } from "../../services/api";
 
 function MainNavigation() {
   const router = useRouter();
@@ -28,13 +29,13 @@ function MainNavigation() {
       url: "/tv-shows",
     },
     {
-      title: "Person",
-      url: "/person",
+      title: "Persons",
+      url: "/persons",
     },
-    {
-      title: "Discussions",
-      url: "/discussions",
-    },
+    // {
+    //   title: "Discussions",
+    //   url: "/discussions",
+    // },
   ];
 
   const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
@@ -46,11 +47,17 @@ function MainNavigation() {
 
   const classHover = `border-b-2 border-transparent hover:border-primary `;
 
-  const handleLoginLogout = () => {
+  const handleLoginLogout = async () => {
     if (!currentUser) {
       router.push("/login");
     } else {
+      await cinemaAPI.patch("/users/logout", null, {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       router.push("/");
       setCurrentUser("");
     }
@@ -84,18 +91,17 @@ function MainNavigation() {
               <ul className="flex items-center justify-around text-sm sm:text-base lg:text-lg text-white">
                 {listMenu.map((menu, index) => {
                   return (
-                    <li
-                      key={index}
-                      className={`${
-                        router.pathname === menu.url ? "" : classHover
-                      } ${
-                        router.pathname === menu.url ? classActive : ""
-                      } cursor-pointer rounded-md px-3 py-1 mx-1`}
-                    >
-                      <Link href={menu.url}>
+                    <Link key={index} href={menu.url} passHref>
+                      <li
+                        className={`${
+                          router.pathname === menu.url ? "" : classHover
+                        } ${
+                          router.pathname === menu.url ? classActive : ""
+                        } cursor-pointer rounded-md px-3 py-1 mx-1`}
+                      >
                         <a>{menu.title}</a>
-                      </Link>
-                    </li>
+                      </li>
+                    </Link>
                   );
                 })}
               </ul>
@@ -111,7 +117,7 @@ function MainNavigation() {
                     xmlns="http://www.w3.org/2000/svg"
                     className={`lg:text-white  ${
                       dropDown ? "text-black dark:text-white" : "text-white"
-                    } cursor-pointer mr-3 transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle`}
+                    } cursor-pointer mr-3 transform h-6 w-6 lg:h-7 lg:w-7 hover:animate-wiggle focus:animate-wiggle`}
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -129,7 +135,7 @@ function MainNavigation() {
                 <li className="hidden lg:flex">
                   <MainButton
                     handleClick={() => handleLoginLogout()}
-                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-base bg-gradient-to-br rounded-sm shadow transform ${
+                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-3 lg:text-sm bg-gradient-to-br rounded-sm shadow transform ${
                       !currentUser
                         ? "from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
                         : "from-yellow-600 to-yellow-800 hover:from-yellow-500 hover:to-yellow-600"
@@ -160,20 +166,19 @@ function MainNavigation() {
               >
                 {listMenu.map((menu, index) => {
                   return (
-                    <li
-                      key={index}
-                      className={`${
-                        router.pathname === menu.url ? "" : classHover
-                      } ${
-                        router.pathname === menu.url ? classActive : ""
-                      } cursor-pointer rounded-md px-3 py-1 mx-1 w-full
+                    <Link key={index} href={menu.url} passHref>
+                      <li
+                        className={`${
+                          router.pathname === menu.url ? "" : classHover
+                        } ${
+                          router.pathname === menu.url ? classActive : ""
+                        } cursor-pointer rounded-md px-3 py-1 mx-1 w-full
                       ${router.pathname === "/" && !currentUser ? "hidden" : ""}
                       `}
-                    >
-                      <Link href={menu.url}>
+                      >
                         <a>{menu.title}</a>
-                      </Link>
-                    </li>
+                      </li>
+                    </Link>
                   );
                 })}
                 <li className={`w-full ${currentUser ? "mt-10" : ""}`}>

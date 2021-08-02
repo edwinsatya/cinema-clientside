@@ -107,12 +107,13 @@ export default function VerifyOtp() {
         setIsLoading(false);
         setTimeout(() => {
           localStorage.setItem("token", tokenOtp);
+          localStorage.setItem("userId", response.data.data._id);
           localStorage.removeItem("tokenOtp");
-          inputOtp.current.value = "";
           clearInterval(intervalId);
           setCountDown(60);
           setTimeout(() => {
             router.push("/home");
+            inputOtp.current.value = "";
           }, 500);
         }, 3000);
       }, 5000);

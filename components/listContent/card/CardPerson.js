@@ -14,7 +14,7 @@ export default function CardPerson(props) {
         onClick={() => onHandleClick(dataContent)}
         className={`transition-all duration-300 ${
           indexContent % 2 == 0 ? "rotate-6" : "-rotate-6"
-        } hover:rotate-0 cursor-pointer relative w-64 h-80 rounded-lg shadow-xl drop-shadow-lg mx-3 my-2 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
+        } hover:rotate-0 cursor-pointer relative w-36 h-52 sm:w-40 sm:h-56 md:w-44 md:h-60 lg:w-48 lg:h-64 rounded-lg shadow-xl drop-shadow-lg mx-3 my-4 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
       >
         <div className={`relative w-full h-full`}>
           <Image
@@ -22,13 +22,12 @@ export default function CardPerson(props) {
               dataContent.profile_path
                 ? "https://image.tmdb.org/t/p/original" +
                   dataContent.profile_path
-                : "https://i.ibb.co/6HwNvXv/coming-soon-reopening-event-retail-sale-design-template-79543bc1062ebb6f9eb55d1bb7994d49-screen.jpg"
+                : "https://i.ibb.co/xMkDFGB/profile.jpg"
             }`}
             layout={"fill"}
             objectFit={"fill"}
             quality={100}
             alt="list"
-            priority={true}
           />
         </div>
       </div>

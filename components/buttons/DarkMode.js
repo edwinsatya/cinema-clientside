@@ -44,7 +44,7 @@ export default function DarkMode(props) {
             themeNow === "dark" ? activeClassAnimationDark : ""
           } lg:text-white  ${
             showDropDownNav ? "text-black dark:text-white" : "text-white"
-          } transform h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-wiggle focus:animate-wiggle`}
+          } transform h-6 w-6 lg:h-7 lg:w-7 hover:animate-wiggle focus:animate-wiggle`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           stroke="currentColor"
@@ -67,7 +67,7 @@ export default function DarkMode(props) {
         <svg
           className={`${
             themeNow === "light" ? activeClassAnimationLight : ""
-          } text-yellow-300 h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 hover:animate-spin-slow focus:animate-spin-slow`}
+          } text-yellow-300 h-6 w-6 lg:h-7 lg:w-7 hover:animate-spin-slow focus:animate-spin-slow`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           stroke="currentColor"

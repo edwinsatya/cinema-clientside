@@ -37,7 +37,7 @@ export default function Header(props) {
             />
           )}
         </div>
-        <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black via-transparent to-black opacity-40 duration-500"></div>
+        <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black to-black opacity-30 duration-500"></div>
         <div
           className={`relative text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full ${headerStyle.headerContainer}`}
         >
@@ -55,7 +55,7 @@ export default function Header(props) {
                 handleClick={() => onGoDetail(dataHeader)}
                 className="p-2 rounded-md bg-white dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-500"
               >
-                <div className="flex justify-center">
+                <div className="flex justify-center items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6 mr-1 text-black dark:text-white"
