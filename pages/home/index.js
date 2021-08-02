@@ -64,27 +64,31 @@ export default function Home(props) {
     tv: trendingTvShowsDay,
     person: trendingPersonsDay,
   });
-
-  const listContent = [
-    {
-      title: "Movies",
-      icon: <IconMovie />,
-      data: listTrending.movie,
-      isPerson: false,
-    },
-    {
-      title: "Tv Shows",
-      icon: <IconTv />,
-      data: listTrending.tv,
-      isPerson: false,
-    },
-    {
-      title: "Persons",
-      icon: <IconPeople />,
-      data: listTrending.person,
-      isPerson: true,
-    },
-  ];
+  const [listContent, setListContent] = useState({
+    arr: [
+      {
+        title: "Movies",
+        icon: <IconMovie />,
+        data: listTrending.movie,
+        isPerson: false,
+        isBlur: true,
+      },
+      {
+        title: "Tv Shows",
+        icon: <IconTv />,
+        data: listTrending.tv,
+        isPerson: false,
+        isBlur: true,
+      },
+      {
+        title: "Persons",
+        icon: <IconPeople />,
+        data: listTrending.person,
+        isPerson: true,
+        isBlur: true,
+      },
+    ],
+  });
 
   const goFilterTrending = (e) => {
     setFilter(e.target.name);
@@ -102,6 +106,24 @@ export default function Home(props) {
         router.push(`/home`);
         break;
     }
+  };
+
+  const handleScroll = (e) => {
+    const newArr = listContent.arr.map((content, index) => {
+      if (e.index == index) {
+        content.isBlur = e.isBlur;
+      }
+      return content;
+    });
+    if (e.type === "main") {
+      setListContent({
+        arr: newArr,
+      });
+    }
+  };
+
+  const goDetailPerson = (e) => {
+    router.push(`/persons/${e.id}`);
   };
 
   useEffect(() => {
@@ -143,7 +165,7 @@ export default function Home(props) {
               style={{ height: "100%", width: "100%", objectFit: "initial" }}
             ></iframe> */}
           </div>
-          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black via-transparent to-black opacity-20 duration-500"></div>
+          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black via-transparent to-black opacity-50 duration-500"></div>
           <div className="absolute h-full text-center text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
             <div className="max-w-xl relative h-auto">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold mb-4">
@@ -163,7 +185,7 @@ export default function Home(props) {
         <div>
           <div>
             {/* button control trending */}
-            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-semibold">
               Trending of the :
             </h3>
           </div>
@@ -176,7 +198,7 @@ export default function Home(props) {
               name="day"
               className={`${
                 filter === "day" ? btnActive : btnNonActive
-              } p-1 w-1/2 text-center text-sm sm:text-base md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 focus:outline-none focus:ring focus:ring-blue-400`}
+              } p-1 w-1/2 text-center text-sm sm:text-base md:text-lg lg:text-xl hover:bg-primary hover:scale-105 transition duration-200 focus:outline-none`}
             >
               Day
             </button>
@@ -185,41 +207,50 @@ export default function Home(props) {
               name="week"
               className={`${
                 filter === "week" ? btnActive : btnNonActive
-              } w-1/2 p-1 text-center text-sm sm:text-base md:text-lg lg:text-xl bg-gradient-to-br hover:from-sky-400 hover:to-sky-500 hover:scale-105 transition duration-200 focus:outline-none focus:ring focus:ring-blue-400`}
+              } w-1/2 p-1 text-center text-sm sm:text-base md:text-lg lg:text-xl hover:bg-primary  hover:scale-105 transition duration-200 focus:outline-none`}
             >
               Week
             </button>
           </div>
         </div>
 
-        {listContent.map((content, idxContent) => {
+        {listContent.arr.map((content, idxContent) => {
           return (
             <ContentBox
               key={idxContent}
               title={content.title}
               icon={content.icon}
+              lengthContent={content.data.length}
+              indexContent={idxContent}
+              isBlur={content.isBlur}
+              onScroll={(e) => handleScroll(e)}
+              type="main"
             >
               {!content.isPerson
-                ? content.data.map((vid, index) => {
-                    return (
-                      <Card
-                        onHandleClick={(e) => goDetail(e)}
-                        key={index}
-                        dataContent={vid}
-                        indexContent={index}
-                      />
-                    );
-                  })
-                : content.data.map((vid, index) => {
-                    return (
-                      <CardPerson
-                        onHandleClick={(e) => goDetail(e)}
-                        key={index}
-                        dataContent={vid}
-                        indexContent={index}
-                      />
-                    );
-                  })}
+                ? content.data
+                    .map((vid, index) => {
+                      return (
+                        <Card
+                          onHandleClick={(e) => goDetail(e)}
+                          key={index}
+                          dataContent={vid}
+                          indexContent={index}
+                        />
+                      );
+                    })
+                    .slice(0, 10)
+                : content.data
+                    .map((vid, index) => {
+                      return (
+                        <CardPerson
+                          onHandleClick={(e) => goDetailPerson(e)}
+                          key={index}
+                          dataContent={vid}
+                          indexContent={index}
+                        />
+                      );
+                    })
+                    .slice(0, 10)}
             </ContentBox>
           );
         })}

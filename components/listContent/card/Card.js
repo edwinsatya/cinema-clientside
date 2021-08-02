@@ -1,6 +1,5 @@
 import Image from "next/image";
 import RatingStar from "../ratingStar/RatingStar";
-import cardStyle from "../../../styles/card.module.css";
 import { useState } from "react";
 
 export default function Card(props) {
@@ -21,44 +20,33 @@ export default function Card(props) {
       onMouseOver={() => setCardHover(indexContent)}
       onMouseOut={() => setCardHover(null)}
       onClick={() => onHandleClick(dataContent)}
-      className={`${cardStyle.card} cursor-pointer relative w-80 h-48 rounded-lg shadow-xl drop-shadow-lg mx-3 my-2 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
+      className={` hover:scale-105 transition-all duration-300 cursor-pointer relative w-36 h-52 sm:w-40 sm:h-56 md:w-44 md:h-60 lg:w-48 lg:h-64 rounded-lg shadow-xl drop-shadow-lg mx-3 my-3 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
     >
-      <div className={`${cardStyle.imageContent} relative w-full h-full`}>
+      <div className={`relative w-full h-full`}>
         <Image
-          src={
-            cardHover == indexContent
-              ? `${
-                  dataContent.poster_path
-                    ? "https://image.tmdb.org/t/p/original" +
-                      dataContent.poster_path
-                    : "https://i.ibb.co/6HwNvXv/coming-soon-reopening-event-retail-sale-design-template-79543bc1062ebb6f9eb55d1bb7994d49-screen.jpg"
-                }`
-              : `${
-                  dataContent.backdrop_path
-                    ? "https://image.tmdb.org/t/p/original" +
-                      dataContent.backdrop_path
-                    : "https://i.ibb.co/9spxhL0/2588754.jpg"
-                }`
-          }
+          src={`${
+            dataContent.poster_path
+              ? "https://image.tmdb.org/t/p/original" + dataContent.poster_path
+              : "https://i.ibb.co/6HwNvXv/coming-soon-reopening-event-retail-sale-design-template-79543bc1062ebb6f9eb55d1bb7994d49-screen.jpg"
+          }`}
           layout={"fill"}
           objectFit={"fill"}
           quality={100}
           alt="list"
-          priority={true}
         />
       </div>
       <div
         className={`absolute bottom-0 w-full ${
-          cardHover != indexContent ? "h-10" : "h-20"
+          cardHover != indexContent ? "h-16" : "h-20"
         }`}
       >
         <div
           className={`bg-white dark:bg-black w-full h-full ${
-            cardHover != indexContent ? "opacity-60" : "opacity-90"
+            cardHover == indexContent ? "opacity-90" : "hidden"
           } absolute`}
         ></div>
         <div className="absolute flex flex-col justify-center items-center h-full py-2 w-full text-center">
-          <div>
+          <div className={`${cardHover != indexContent ? "hidden" : ""}`}>
             <span className="font-bold text-base">
               {dataContent.title
                 ? getMinimTitle(dataContent.title)
@@ -72,7 +60,7 @@ export default function Card(props) {
           >
             <RatingStar className="flex" voteAvg={dataContent.vote_average} />
             <span className="font-bold text-base">
-              {dataContent.vote_average}
+              {dataContent.vote_average.toFixed(1)}
             </span>
           </div>
         </div>

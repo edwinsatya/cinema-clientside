@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily } from "recoil";
+import { atom, selector } from "recoil";
 
 const theme = atom({
   key: "v-t",
@@ -20,6 +20,26 @@ const showDropDownNav = atom({
   default: false,
 });
 
+const countUserOnline = atom({
+  key: "count-user-online",
+  default: 0,
+});
+
+const listDiscussion = atom({
+  key: "list-discussion",
+  default: [],
+});
+
+const countChatNotRead = atom({
+  key: "count-chat-not-read",
+  default: 0,
+});
+
+const openChat = atom({
+  key: "open-chat",
+  default: false,
+});
+
 const changeDark = selector({
   key: "c-t-1",
   set: ({ set }) => set(theme, (currTheme) => (currTheme = "dark")),
@@ -37,4 +57,8 @@ export {
   currentUser,
   preRegister,
   showDropDownNav,
+  countUserOnline,
+  listDiscussion,
+  countChatNotRead,
+  openChat,
 };

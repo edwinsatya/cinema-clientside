@@ -7,6 +7,14 @@ module.exports = {
     extend: {
       height: {
         100: "40rem",
+        97: "38rem",
+        "lg-img-detail-people": "27rem",
+      },
+      width: {
+        97: "30rem",
+      },
+      maxHeight: {
+        97: "30rem",
       },
       colors: {
         primary: "#0779E4",
@@ -35,6 +43,7 @@ module.exports = {
       borderColor: ["active"],
       textColor: ["active"],
     },
+    scrollbar: ["dark", "rounded"],
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };

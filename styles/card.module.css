@@ -1,24 +1,31 @@
-.card {
+/* .card {
   transition: height 1s ease, width 0.8s ease;
-}
+} */
 
-.cardWrapper::-webkit-scrollbar {
-  display: none;
-}
+/* .cardWrapper::-webkit-scrollbar {
+ 
+  width: 1px;
+  height: 10px;
+} */
 
-.cardWrapper {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
+/* .cardWrapper::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+} */
+
+/* .cardWrapper {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+} */
 
 /* .imageContent {
   transition: height 1.5s ease;
 } */
 
-.card:hover {
+/* .card:hover {
   height: 380px;
   width: 288px;
-}
+} */
 
 .contentBoxReview {
   max-height: 320px;
