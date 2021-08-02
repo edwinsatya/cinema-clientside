@@ -7,7 +7,7 @@ export default function CardPerson(props) {
   const [cardHover, setCardHover] = useState(null);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col py-3">
       <div
         onMouseOver={() => setCardHover(indexContent)}
         onMouseOut={() => setCardHover(null)}

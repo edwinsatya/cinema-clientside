@@ -20,7 +20,7 @@ export default function Card(props) {
       onMouseOver={() => setCardHover(indexContent)}
       onMouseOut={() => setCardHover(null)}
       onClick={() => onHandleClick(dataContent)}
-      className={` hover:scale-105 transition-all duration-300 cursor-pointer relative w-36 h-52 sm:w-40 sm:h-56 md:w-44 md:h-60 lg:w-48 lg:h-64 rounded-lg shadow-xl drop-shadow-lg mx-3 my-3 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
+      className={` hover:scale-105 transition-all duration-300 cursor-pointer relative w-36 h-52 sm:w-40 sm:h-56 md:w-44 md:h-60 lg:w-48 lg:h-64 rounded-lg shadow-xl drop-shadow-lg mx-3 my-5 ring-4 ring-black transform dark:ring-gray-900 flex-shrink-0 overflow-hidden`}
     >
       <div className={`relative w-full h-full`}>
         <Image

@@ -36,6 +36,8 @@ export default function DetailTvShow(props) {
 
   const [showReviews, setShowReviews] = useState(false);
 
+  const [filter, setFilter] = useState("backdrops");
+
   const [listContent, setListContent] = useState({
     arr: [
       {
@@ -74,58 +76,8 @@ export default function DetailTvShow(props) {
     ],
   });
 
-  const [selectedMedia, setSelectedMedia] = useState({
-    list: [
-      {
-        title: "Trailers",
-        isActive: true,
-        data: detailTv.video,
-      },
-      {
-        title: "Backdrops",
-        isActive: false,
-        data: detailTv.images.backdrops,
-      },
-      {
-        title: "Posters",
-        isActive: false,
-        data: detailTv.images.posters,
-      },
-    ],
-  });
-
-  const handleSelectedMedia = (index) => {
-    let newSelected = selectedMedia.list.map((el) => {
-      el.isActive = false;
-      return el;
-    });
-    newSelected[index].isActive = true;
-    setSelectedMedia({
-      list: newSelected,
-    });
-    setIndexTrailer(null);
-  };
-
-  const resetSelectedMedia = () => {
-    setSelectedMedia({
-      list: [
-        {
-          title: "Trailers",
-          isActive: true,
-          data: detailTv.video,
-        },
-        {
-          title: "Backdrops",
-          isActive: false,
-          data: detailTv.images.backdrops,
-        },
-        {
-          title: "Posters",
-          isActive: false,
-          data: detailTv.images.posters,
-        },
-      ],
-    });
+  const handleSelectedMedia = (media) => {
+    setFilter(media);
   };
 
   const handleScroll = (e) => {
@@ -166,7 +118,6 @@ export default function DetailTvShow(props) {
     router.push(`/tv-shows/${e.id}`);
     setIndexTrailer(null);
     setShowReviews(false);
-    resetSelectedMedia();
   };
 
   const goDetailPerson = (e) => {
@@ -362,17 +313,10 @@ export default function DetailTvShow(props) {
 
           <ContentBoxMedia
             title={"Media"}
-            listSelected={selectedMedia.list}
-            lengthContent={
-              selectedMedia.list[0].isActive
-                ? selectedMedia.list[0].data.length
-                : selectedMedia.list[1].isActive
-                ? selectedMedia.list[1].data.length
-                : selectedMedia.list[2].data.length
-            }
+            onFilter={filter}
             onSelectedMedia={(e) => handleSelectedMedia(e)}
           >
-            {selectedMedia.list[0].isActive ? (
+            {filter === "trailers" ? (
               detailTv.video.length > 0 ? (
                 detailTv.video.map((vid, index) => {
                   return (
@@ -387,7 +331,7 @@ export default function DetailTvShow(props) {
               ) : (
                 <CardNoTrailer title={"Trailer Coming Soon"} />
               )
-            ) : selectedMedia.list[1].isActive ? (
+            ) : filter === "backdrops" ? (
               detailTv.images.backdrops.length > 0 ? (
                 detailTv.images.backdrops
                   .map((img, index) => {
@@ -403,24 +347,20 @@ export default function DetailTvShow(props) {
               ) : (
                 <CardNoTrailer title={"No have backdrops"} />
               )
-            ) : selectedMedia.list[2].isActive ? (
-              detailTv.images.posters.length > 0 ? (
-                detailTv.images.posters
-                  .map((img, index) => {
-                    return (
-                      <CardMedia
-                        key={index}
-                        media={"posters"}
-                        dataContent={img}
-                      />
-                    );
-                  })
-                  .slice(0, 10)
-              ) : (
-                <CardNoTrailer title={"No have posters"} />
-              )
+            ) : detailTv.images.posters.length > 0 ? (
+              detailTv.images.posters
+                .map((img, index) => {
+                  return (
+                    <CardMedia
+                      key={index}
+                      media={"posters"}
+                      dataContent={img}
+                    />
+                  );
+                })
+                .slice(0, 10)
             ) : (
-              ""
+              <CardNoTrailer title={"No have posters"} />
             )}
           </ContentBoxMedia>
 

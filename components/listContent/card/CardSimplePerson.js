@@ -7,7 +7,7 @@ export default function CardSimplePerson(props) {
   return (
     <div
       onClick={() => onHandleClick(dataContent)}
-      className={`flex flex-col border dark:border-gray-800 transform transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden rounded-lg shadow-md my-3 ${classWrapper} flex-shrink-0`}
+      className={`flex flex-col border dark:border-gray-800 transform transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden rounded-lg shadow-md my-5 ${classWrapper} flex-shrink-0`}
     >
       <div className={`relative ${classImage}`}>
         <Image
