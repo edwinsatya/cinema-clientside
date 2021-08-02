@@ -1,4 +1,4 @@
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 
 export default function CardAnyTrailer(props) {
   const { indexTrailer, videoKey, onClick } = props;

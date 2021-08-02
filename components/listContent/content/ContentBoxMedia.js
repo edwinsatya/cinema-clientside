@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 export default function ContentBoxMedia(props) {
-  const { listSelected, onSelectedMedia, lengthContent } = props;
+  const { onSelectedMedia, onFilter } = props;
+  const listSelected = ["backdrops", "posters", "trailers"];
   const [showBlurContent, setShowBlurContent] = useState(true);
 
-  const handleSelectedMedia = (index) => {
-    onSelectedMedia(index);
+  const handleSelectedMedia = (media) => {
+    onSelectedMedia(media);
     document.getElementById(`content-box-media`).scrollLeft = 0;
   };
 
@@ -43,14 +44,14 @@ export default function ContentBoxMedia(props) {
           {listSelected.map((media, index) => (
             <div
               key={index}
-              onClick={() => handleSelectedMedia(index)}
+              onClick={() => handleSelectedMedia(media)}
               className={`cursor-pointer md:mx-2 ${
-                media.isActive
+                media === onFilter
                   ? "border-b-4 border-primary"
                   : "md:border-b-4 md:border-transparent"
               }`}
             >
-              <span>{media.title}</span>
+              <span className="capitalize">{media}</span>
             </div>
           ))}
         </div>
@@ -65,9 +66,7 @@ export default function ContentBoxMedia(props) {
         </div>
         <div
           className={`absolute h-full ${
-            showBlurContent && lengthContent > 8
-              ? "w-3/12 sm:w-2/12 lg:w-1/12"
-              : "w-0"
+            showBlurContent ? "w-3/12 sm:w-2/12 lg:w-1/12" : "w-0"
           } transform transition-all duration-300 bottom-0 right-0 bg-gradient-to-r from-transparent to-gray-100 dark:from-transparent dark:to-black`}
         ></div>
       </div>
