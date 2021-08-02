@@ -75,7 +75,7 @@ export default function Credits(props) {
                   : ""
               } flex justify-center items-center p-4`}
             >
-              <div className="w-2/12 lg:w-1/12 lg:text-center">
+              <div className="w-2/12 lg:w-1/12 lg:text-center lg:flex lg:justify-center">
                 {getYear(currentDate)}
               </div>
               <div className="w-1/12 hidden lg:flex lg:justify-center lg:items-center">
