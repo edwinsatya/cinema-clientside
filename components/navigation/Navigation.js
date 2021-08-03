@@ -29,7 +29,7 @@ function MainNavigation() {
       url: "/tv-shows",
     },
     {
-      title: "Persons",
+      title: "Actress",
       url: "/persons",
     },
     // {
@@ -108,7 +108,7 @@ function MainNavigation() {
             </div>
             <div>
               <ul className="flex items-center justify-center">
-                <li
+                {/* <li
                   className={`${
                     router.asPath !== "/" ? "inline-block" : "hidden"
                   }`}
@@ -128,7 +128,7 @@ function MainNavigation() {
                       clipRule="evenodd"
                     />
                   </svg>
-                </li>
+                </li> */}
                 <li>
                   <DarkMode className="mr-2 md:mr-4" />
                 </li>

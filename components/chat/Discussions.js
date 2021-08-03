@@ -15,6 +15,7 @@ export default function Discussions(props) {
   const [showEmoji, setShowEmoji] = useState(false);
   const [inputChat, setInputChat] = useState("");
   const [isReply, setIsReply] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const addEmoji = (e) => {
     let emoji = e.native;
@@ -27,25 +28,31 @@ export default function Discussions(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (inputChat) {
-      let body = {};
-      if (!isReply) {
-        body = {
-          discussion: inputChat,
-        };
-      } else {
-        body = {
-          discussion: inputChat,
-          replied: isReply._id,
-        };
+    try {
+      if (inputChat) {
+        setIsLoading(true);
+        let body = {};
+        if (!isReply) {
+          body = {
+            discussion: inputChat,
+          };
+        } else {
+          body = {
+            discussion: inputChat,
+            replied: isReply._id,
+          };
+        }
+        await cinemaAPI.post("/discussions", body, {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        });
+        setInputChat("");
+        setIsLoading(false);
+        setIsReply(null);
       }
-      await cinemaAPI.post("/discussions", body, {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      });
-      setInputChat("");
-      setIsReply(null);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -114,6 +121,7 @@ export default function Discussions(props) {
         <div className="w-10/12 relative">
           <form onSubmit={handleSubmit}>
             <input
+              disabled={isLoading}
               id="input-chat"
               required
               autoFocus
@@ -121,16 +129,22 @@ export default function Discussions(props) {
               onFocus={() => setShowEmoji(false)}
               onChange={handleInputChange}
               value={inputChat}
-              className="border h-12 dark:border-gray-700 focus:outline-none py-2 pl-2 pr-8 w-full bg-white dark:bg-gray-900 text-black dark:text-white"
+              className={`${
+                isLoading ? " text-gray-600" : "bg-white dark:bg-gray-900"
+              } border h-12 dark:border-gray-700 focus:outline-none py-2 pl-2 pr-8 w-full text-black dark:text-white`}
               placeholder="Type a message here"
             />
-            <span
-              className="cursor-pointer absolute bottom-3 right-2"
+            <button
+              type="button"
+              disabled={isLoading}
+              className={`${
+                !isLoading ? "cursor-pointer" : ""
+              }  absolute bottom-3 right-2`}
               onClick={() => setShowEmoji(!showEmoji)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className={`${isLoading ? " text-gray-600" : ""} h-6 w-6`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -142,14 +156,18 @@ export default function Discussions(props) {
                   d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-            </span>
+            </button>
           </form>
         </div>
         <div className="w-2/12 flex justify-around">
-          <span className="cursor-pointer" onClick={handleSubmit}>
+          <button
+            disabled={isLoading}
+            className={`${!isLoading ? "cursor-pointer" : ""}`}
+            onClick={handleSubmit}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className={`${isLoading ? " text-gray-600" : ""} h-6 w-6`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -161,7 +179,7 @@ export default function Discussions(props) {
                 d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-          </span>
+          </button>
           {showEmoji && (
             <span className="absolute bottom-10 right-0">
               <Picker onSelect={addEmoji} />
