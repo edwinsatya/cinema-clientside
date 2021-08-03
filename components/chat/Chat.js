@@ -83,7 +83,7 @@ export default function Chat(props) {
     );
   } else {
     return (
-      <div className="fixed rounded-none sm:rounded-md shadow-lg z-40 bottom-0 right-0 text-black bg-white dark:text-white dark:bg-gray-900 w-full max-w-sm">
+      <div className="fixed rounded-none sm:rounded-md shadow-lg z-50 bottom-0 right-0 text-black bg-white dark:text-white dark:bg-gray-900 w-full max-w-sm">
         <HeaderChat
           countUserOnline={countUserOnline}
           handleShowChat={() => setShowChat(!showChat)}

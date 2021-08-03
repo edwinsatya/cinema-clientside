@@ -75,7 +75,7 @@ function MainNavigation() {
             !dropDown
               ? "bg-transparent"
               : "bg-white dark:bg-black lg:bg-transparent lg:dark:bg-transparent border-b-2 border-black lg:border-transparent dark:border-white lg:dark:border-transparent"
-          }  z-50 w-full`}
+          }  z-40 w-full`}
         >
           <div className="p-4 md:px-8 lg:px-12 flex justify-between items-center">
             <div className="w-2/12">
