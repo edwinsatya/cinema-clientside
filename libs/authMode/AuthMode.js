@@ -49,40 +49,40 @@ export default function AuthMode(props) {
     getDiscussions();
   });
 
-  const isPublicUrl = (url) => {
-    let maniUrl = "/";
-    let countSlash = 0;
-    let flag = false;
-    for (let i = 0; i < url.length; i++) {
-      if (countSlash == 2) {
-        break;
-      } else {
-        if (url[i] == "/") {
-          countSlash++;
-        } else {
-          maniUrl += url[i];
-        }
-      }
-    }
-    switch (maniUrl) {
-      case "/login":
-        flag = true;
-        break;
-      case "/register":
-        flag = true;
-        break;
-      case "/verify-email":
-        flag = true;
-        break;
-      case "/":
-        flag = true;
-        break;
-      default:
-        flag = false;
-        break;
-    }
-    return flag;
-  };
+  // const isPublicUrl = (url) => {
+  //   let maniUrl = "/";
+  //   let countSlash = 0;
+  //   let flag = false;
+  //   for (let i = 0; i < url.length; i++) {
+  //     if (countSlash == 2) {
+  //       break;
+  //     } else {
+  //       if (url[i] == "/") {
+  //         countSlash++;
+  //       } else {
+  //         maniUrl += url[i];
+  //       }
+  //     }
+  //   }
+  //   switch (maniUrl) {
+  //     case "/login":
+  //       flag = true;
+  //       break;
+  //     case "/register":
+  //       flag = true;
+  //       break;
+  //     case "/verify-email":
+  //       flag = true;
+  //       break;
+  //     case "/":
+  //       flag = true;
+  //       break;
+  //     default:
+  //       flag = false;
+  //       break;
+  //   }
+  //   return flag;
+  // };
 
   const getCountUserOnline = async () => {
     const response = await cinemaAPI.get("/users/count-user-on");
@@ -98,20 +98,26 @@ export default function AuthMode(props) {
   useEffect(() => {
     localStorage.removeItem("theme");
 
-    if (localStorage.getItem("token")) {
-      setCurrentUser(localStorage.getItem("token"));
-      if (
-        router.asPath === "/login" ||
-        router.asPath === "/register" ||
-        router.asPath === "/login/verify-otp"
-      ) {
-        router.replace("/");
-      }
+    // if (localStorage.getItem("token")) {
+    //   setCurrentUser(localStorage.getItem("token"));
+    //   if (
+    //     router.asPath === "/login" ||
+    //     router.asPath === "/register" ||
+    //     router.asPath === "/login/verify-otp"
+    //   ) {
+    //     router.replace("/");
+    //   }
+    // } else {
+    //   setCurrentUser("");
+    //   if (!isPublicUrl(router.asPath)) {
+    //     router.replace("/login");
+    //   }
+    // }
+
+    if (localStorage.getItem("name")) {
+      setCurrentUser(localStorage.getItem("name"));
     } else {
       setCurrentUser("");
-      if (!isPublicUrl(router.asPath)) {
-        router.replace("/login");
-      }
     }
 
     if (
@@ -130,33 +136,33 @@ export default function AuthMode(props) {
     getDiscussions();
   }, []);
 
-  if (
-    currentUser &&
-    (router.asPath === "/login" || router.asPath === "/register")
-  ) {
-    return (
-      <div className="flex justify-center items-center h-screen w-full bg-white">
-        <HashLoader
-          color={`#177EE2`}
-          loading={true}
-          css={override}
-          size={150}
-        />
-      </div>
-    );
-  }
+  // if (
+  //   currentUser &&
+  //   (router.asPath === "/login" || router.asPath === "/register")
+  // ) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen w-full bg-white">
+  //       <HashLoader
+  //         color={`#177EE2`}
+  //         loading={true}
+  //         css={override}
+  //         size={150}
+  //       />
+  //     </div>
+  //   );
+  // }
 
-  if (!currentUser && !isPublicUrl(router.asPath)) {
-    return (
-      <div className="flex justify-center items-center h-screen w-full bg-white">
-        <HashLoader
-          color={`#177ee2`}
-          loading={true}
-          css={override}
-          size={100}
-        />
-      </div>
-    );
-  }
+  // if (!currentUser && !isPublicUrl(router.asPath)) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen w-full bg-white">
+  //       <HashLoader
+  //         color={`#177ee2`}
+  //         loading={true}
+  //         css={override}
+  //         size={100}
+  //       />
+  //     </div>
+  //   );
+  // }
   return <div>{props.children}</div>;
 }

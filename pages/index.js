@@ -10,7 +10,7 @@ import Accordion from "../components/accordion/Accordion";
 import headerStyle from "../styles/header.module.css";
 import { MainNavigation } from "../components/navigation/Navigation";
 import { useState, useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import {
   theme,
   currentUser as currentUserAtom,
@@ -20,8 +20,9 @@ import { useRouter } from "next/router";
 
 export default function Introduction() {
   const router = useRouter();
-  const currentUser = useRecoilValue(currentUserAtom);
-  const setEmailPreRegister = useSetRecoilState(preRegisterAtom);
+  // const currentUser = useRecoilValue(currentUserAtom);
+  // const setEmailPreRegister = useSetRecoilState(preRegisterAtom);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
 
   const [anq, setAnq] = useState({
     arr: [
@@ -54,9 +55,9 @@ export default function Introduction() {
     ],
   });
 
-  const [emailValid, setEmailValid] = useState(false);
-  const [errMsgEmail, setErrMsgEmail] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
+  const [nameValid, setNameValid] = useState(false);
+  const [errMsgName, setErrMsgName] = useState("");
+  const [inputName, setInputName] = useState("");
 
   const [contentCard, setContentCard] = useState({
     listContentCard: [
@@ -64,16 +65,15 @@ export default function Introduction() {
         firstContent: {
           type: "text",
           content: {
-            title: "Enjoy on your TV.",
-            subTitle:
-              "Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.",
+            title: "Enjoy Trailer Movie",
+            subTitle: "Watch trailer with your family",
           },
         },
         secondContent: {
           type: "video",
           content: {
             isFirst: false,
-            url: "https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-tv-0819.m4v",
+            url: "",
           },
         },
       },
@@ -99,16 +99,16 @@ export default function Introduction() {
         firstContent: {
           type: "text",
           content: {
-            title: "Watch everywhere.",
+            title: "Responsive ready.",
             subTitle:
-              "Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.",
+              "Stream trailer movies and TV shows on your phone, tablet, laptop, and more.",
           },
         },
         secondContent: {
           type: "video",
           content: {
             isFirst: false,
-            url: "https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-devices-id.m4v",
+            url: "",
           },
         },
       },
@@ -124,9 +124,8 @@ export default function Introduction() {
         secondContent: {
           type: "text",
           content: {
-            title: "Create profiles for kids.",
-            subTitle:
-              "Send kids on adventures with their favorite characters in a space made just for them—free with your account.",
+            title: "kids? dont worry",
+            subTitle: "This website is safe for kids",
           },
         },
       },
@@ -135,18 +134,14 @@ export default function Introduction() {
 
   const currentTheme = useRecoilValue(theme);
 
-  const validationEmail = (e) => {
-    setInputEmail(e);
-    let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const validationName = (e) => {
+    setInputName(e);
 
     if (!e) {
-      setEmailValid(false);
-      setErrMsgEmail("Email is required");
-    } else if (!emailPattern.test(e)) {
-      setEmailValid(false);
-      setErrMsgEmail("Please enter a valid email");
+      setNameValid(false);
+      setErrMsgName("Name is required");
     } else {
-      setEmailValid(true);
+      setNameValid(true);
     }
   };
 
@@ -165,12 +160,12 @@ export default function Introduction() {
     });
   };
 
-  const handleSubmitEmail = (e) => {
+  const handleSubmitName = (e) => {
     e.preventDefault();
-    if (emailValid) {
-      const email = inputEmail;
-      setEmailPreRegister(email);
-      router.push("/register");
+    if (nameValid) {
+      localStorage.setItem("name", inputName);
+      setCurrentUser(inputName);
+      router.push("/home");
     }
   };
 
@@ -208,13 +203,13 @@ export default function Introduction() {
           <div className="absolute h-full text-center text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
             <div className="max-w-xl relative h-auto">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold mb-4">
-                Unlimited Trailer movies, TV shows, and more.
+                Portfolio Trailer movies, TV shows, and more.
               </h1>
               <h2 className="text-lg font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
                 Watch anywhere. Watch anytime.
               </h2>
               <h2 className="text-base font-light sm:text-xl mb-3 mt-5">
-                Ready to watch? Enter your email to register your account.
+                Ready to watch? Just Enter your name for feature chat.
               </h2>
               {currentUser ? (
                 <div>
@@ -229,32 +224,32 @@ export default function Introduction() {
               ) : (
                 <div>
                   <form
-                    onSubmit={handleSubmitEmail}
+                    onSubmit={handleSubmitName}
                     className="flex flex-col justify-center lg:flex-row lg:items-center"
                   >
                     <input
-                      value={inputEmail}
-                      onChange={(e) => validationEmail(e.target.value)}
+                      value={inputName}
+                      onChange={(e) => validationName(e.target.value)}
                       required
                       className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
-                      type="email"
+                      type="text"
                     />
                     <div className="w-full lg:w-4/12">
                       <MainButton
-                        handleClick={() => handleSubmitEmail}
+                        handleClick={() => handleSubmitName}
                         className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
   to-primary hover:from-sky-400 hover:to-sky-500"
                       >
-                        Sign Up
+                        Home
                       </MainButton>
                     </div>
                   </form>
                   <span
                     className={`text-primary text-base mt-2 ${
-                      !emailValid ? "inline-block" : "hidden"
+                      !nameValid ? "inline-block" : "hidden"
                     }`}
                   >
-                    {errMsgEmail}
+                    {errMsgName}
                   </span>
                 </div>
               )}
@@ -298,38 +293,37 @@ export default function Introduction() {
         {!currentUser && (
           <div className="mt-10 w-full lg:w-8/12">
             <h2 className="text-base md:text-lg lg:text-2xl font-medium text-center">
-              Ready to watch? Enter your email to create or restart your
-              membership.
+              Ready to watch? Enter your name for feature chat.
             </h2>
 
             <div className="mt-3">
               <form
-                onSubmit={handleSubmitEmail}
+                onSubmit={handleSubmitName}
                 className="flex flex-col justify-center lg:flex-row lg:items-center"
               >
                 <input
-                  value={inputEmail}
-                  onChange={(e) => validationEmail(e.target.value)}
+                  value={inputName}
+                  onChange={(e) => validationName(e.target.value)}
                   required
                   className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
-                  type="email"
+                  type="text"
                 />
                 <div className="w-full lg:w-4/12">
                   <MainButton
-                    handleClick={() => handleSubmitEmail}
+                    handleClick={() => handleSubmitName}
                     className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
   to-primary hover:from-sky-400 hover:to-sky-500"
                   >
-                    Sign Up
+                    Home
                   </MainButton>
                 </div>
               </form>
               <span
                 className={`text-primary text-base mt-2 ${
-                  !emailValid ? "inline-block" : "hidden"
+                  !nameValid ? "inline-block" : "hidden"
                 }`}
               >
-                {errMsgEmail}
+                {errMsgName}
               </span>
             </div>
           </div>

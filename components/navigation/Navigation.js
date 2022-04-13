@@ -48,16 +48,23 @@ function MainNavigation() {
   const classHover = `border-b-2 border-transparent hover:border-primary `;
 
   const handleLoginLogout = async () => {
+    // if (!currentUser) {
+    //   router.push("/login");
+    // } else {
+    //   await cinemaAPI.patch("/users/logout", null, {
+    //     headers: {
+    //       token: localStorage.getItem("token"),
+    //     },
+    //   });
+    //   localStorage.removeItem("token");
+    //   localStorage.removeItem("userId");
+    //   router.push("/");
+    //   setCurrentUser("");
+    // }
     if (!currentUser) {
-      router.push("/login");
+      router.push("/");
     } else {
-      await cinemaAPI.patch("/users/logout", null, {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      });
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
+      localStorage.removeItem("name");
       router.push("/");
       setCurrentUser("");
     }
@@ -133,16 +140,18 @@ function MainNavigation() {
                   <DarkMode className="mr-2 md:mr-4" />
                 </li>
                 <li className="hidden lg:flex">
-                  <MainButton
-                    handleClick={() => handleLoginLogout()}
-                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-3 lg:text-sm bg-gradient-to-br rounded-sm shadow transform ${
-                      !currentUser
-                        ? "from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
-                        : "from-yellow-600 to-yellow-800 hover:from-yellow-500 hover:to-yellow-600"
-                    }`}
-                  >
-                    {!currentUser ? "Sign In" : "Sign Out"}
-                  </MainButton>
+                  {currentUser && (
+                    <MainButton
+                      handleClick={() => handleLoginLogout()}
+                      className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-3 lg:text-sm bg-gradient-to-br rounded-sm shadow transform ${
+                        !currentUser
+                          ? "from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
+                          : "from-yellow-600 to-yellow-800 hover:from-yellow-500 hover:to-yellow-600"
+                      }`}
+                    >
+                      {!currentUser ? "IntroPage" : "Clear Name"}
+                    </MainButton>
+                  )}
                 </li>
                 <li
                   onClick={() => setDropDown(!dropDown)}
@@ -182,16 +191,18 @@ function MainNavigation() {
                   );
                 })}
                 <li className={`w-full ${currentUser ? "mt-10" : ""}`}>
-                  <MainButton
-                    handleClick={() => handleLoginLogout()}
-                    className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-base bg-gradient-to-br rounded-sm shadow transform ${
-                      !currentUser
-                        ? "from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
-                        : "from-yellow-600 to-yellow-800 hover:from-yellow-500 hover:to-yellow-600"
-                    }`}
-                  >
-                    {!currentUser ? "Sign In" : "Sign Out"}
-                  </MainButton>
+                  {currentUser && (
+                    <MainButton
+                      handleClick={() => handleLoginLogout()}
+                      className={`p-1 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-base bg-gradient-to-br rounded-sm shadow transform ${
+                        !currentUser
+                          ? "from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
+                          : "from-yellow-600 to-yellow-800 hover:from-yellow-500 hover:to-yellow-600"
+                      }`}
+                    >
+                      {!currentUser ? "IntroPage" : "Clear Name"}
+                    </MainButton>
+                  )}
                 </li>
               </ul>
             </div>

@@ -197,7 +197,7 @@ export default function Home(props) {
           <div className="absolute h-full text-center text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
             <div className="max-w-xl relative h-auto">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold mb-4">
-                Unlimited Trailer movies, TV shows, and more.
+                Portfolio Trailer movies, TV shows, and more.
               </h1>
               <h2 className="text-lg font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
                 Watch anywhere. Watch anytime.

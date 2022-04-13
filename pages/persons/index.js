@@ -31,7 +31,7 @@ export default function Persons(props) {
         </div>
       </header>
       <main>
-        <div className="relative h-screen bg-gray-100 dark:bg-black text-black dark:text-white py-4 px-0 md:px-8 lg:px-14">
+        <div className="relative h-auto bg-gray-100 dark:bg-black text-black dark:text-white py-4 px-0 md:px-8 lg:px-14">
           <div className="flex justify-start items-center">
             <h3 className="text-base sm:text-lg md:text-xl font-semibold mr-3">
               Popular People
