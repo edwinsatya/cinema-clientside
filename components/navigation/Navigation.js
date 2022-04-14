@@ -65,7 +65,6 @@ function MainNavigation() {
       router.push("/");
     } else {
       localStorage.removeItem("name");
-      router.push("/");
       setCurrentUser("");
     }
   };
