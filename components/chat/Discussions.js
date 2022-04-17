@@ -82,9 +82,9 @@ export default function Discussions(props) {
           currentUser ? "hidden" : "absolute"
         } flex justify-center items-center h-full w-full z-50 max-w-sm bg-gray-800  bg-opacity-90`}
       >
-        <Link href="/login">
+        <Link href="/">
           <a className="font-bold text-xl mb-4 cursor-pointer text-white hover:underline hover:text-primary">
-            Sign In
+            Input Your Name
           </a>
         </Link>
       </div>

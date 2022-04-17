@@ -5,13 +5,13 @@ import Link from "next/link";
 import ClockLoader from "react-spinners/ClockLoader";
 import MoonLoader from "react-spinners/MoonLoader";
 import { css } from "@emotion/react";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { useRouter } from "next/router";
 import { cinemaAPI } from "../../services/api";
-import getConfig from "next/config";
-const { publicRuntimeConfig } = getConfig();
+// import getConfig from "next/config";
+// const { publicRuntimeConfig } = getConfig();
 
-const socket = io(publicRuntimeConfig.hostUrl);
+// const socket = io(publicRuntimeConfig.hostUrl);
 
 const override = css`
   overflow: hidden;
@@ -51,27 +51,27 @@ export default function SuccessRegister(props) {
   const [shouldCount, setShouldCount] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
 
-  socket.on("emailVerified", (data) => {
-    if (data.id == detailRegister.id) {
-      if (data.isVerify) {
-        localStorage.removeItem("tokenVerification");
-        clearInterval(intervalId);
-        setCountDown(60);
-        setTimeout(() => {
-          router.replace("/login");
-        }, 500);
-      } else {
-        localStorage.removeItem("tokenVerification");
-        setTimeout(() => {
-          clearInterval(intervalId);
-          setCountDown(60);
-          setTimeout(() => {
-            router.replace("/register");
-          }, 500);
-        }, 5000);
-      }
-    }
-  });
+  // socket.on("emailVerified", (data) => {
+  //   if (data.id == detailRegister.id) {
+  //     if (data.isVerify) {
+  //       localStorage.removeItem("tokenVerification");
+  //       clearInterval(intervalId);
+  //       setCountDown(60);
+  //       setTimeout(() => {
+  //         router.replace("/login");
+  //       }, 500);
+  //     } else {
+  //       localStorage.removeItem("tokenVerification");
+  //       setTimeout(() => {
+  //         clearInterval(intervalId);
+  //         setCountDown(60);
+  //         setTimeout(() => {
+  //           router.replace("/register");
+  //         }, 500);
+  //       }, 5000);
+  //     }
+  //   }
+  // });
 
   useEffect(() => {
     if (shouldCount) {

@@ -35,8 +35,14 @@ export default function AuthMode(props) {
   const openChat = useRecoilValue(openChatAtom);
   const router = useRouter();
 
-  socket.on("updateUserOnline", () => {
-    getCountUserOnline();
+  // socket.on("updateUserOnline", () => {
+  //   getCountUserOnline();
+  // });
+
+  // socket.emit("join");
+
+  socket.on("countUserOnline", (total) => {
+    getCountUserOnline(total);
   });
 
   socket.on("newDiscussion", () => {
@@ -84,9 +90,9 @@ export default function AuthMode(props) {
   //   return flag;
   // };
 
-  const getCountUserOnline = async () => {
-    const response = await cinemaAPI.get("/users/count-user-on");
-    const total = response.data.data.length;
+  const getCountUserOnline = (total) => {
+    // const response = await cinemaAPI.get("/users/count-user-on");
+    // const total = response.data.data.length;
     setCountUserOnline(total);
   };
 

@@ -16,6 +16,7 @@ import {
   currentUser as currentUserAtom,
   preRegister as preRegisterAtom,
 } from "../store";
+import { cinemaAPI } from "../services/api";
 import { useRouter } from "next/router";
 
 export default function Introduction() {
@@ -160,12 +161,22 @@ export default function Introduction() {
     });
   };
 
-  const handleSubmitName = (e) => {
+  const handleSubmitName = async (e) => {
     e.preventDefault();
-    if (nameValid) {
-      localStorage.setItem("name", inputName);
-      setCurrentUser(inputName);
-      router.push("/home");
+    try {
+      if (nameValid) {
+        const body = {
+          name: inputName,
+        };
+        const { data: res } = await cinemaAPI.post("/users/register", body);
+        localStorage.setItem("name", inputName);
+        localStorage.setItem("userId", res.data.id);
+        localStorage.setItem("token", res.token);
+        setCurrentUser(inputName);
+        router.push("/home");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

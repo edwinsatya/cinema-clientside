@@ -65,6 +65,7 @@ function MainNavigation() {
       router.push("/");
     } else {
       localStorage.removeItem("name");
+      localStorage.removeItem("token");
       setCurrentUser("");
     }
   };
