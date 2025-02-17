@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Layout from "../../components/layout/Layout";
-import ButtonLogo from "../../components/buttons/ButtonLogo";
+import { css } from "@emotion/react";
 import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import ClockLoader from "react-spinners/ClockLoader";
 import MoonLoader from "react-spinners/MoonLoader";
-import { css } from "@emotion/react";
+import ButtonLogo from "../../components/buttons/ButtonLogo";
+import Layout from "../../components/layout/Layout";
 // import { io } from "socket.io-client";
 import { useRouter } from "next/router";
 import { cinemaAPI } from "../../services/api";
@@ -88,6 +88,7 @@ export default function SuccessRegister(props) {
       setShouldCount(false);
       setCountDown(60);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countDown]);
 
   const sendVerificationEmail = async () => {
@@ -149,12 +150,13 @@ export default function SuccessRegister(props) {
         router.replace("/register");
       }, 5000);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError]);
 
   return (
     <Layout title="Success Register">
       <header className="sticky top-0 z-50">
-        <div className="relative border-b border-gray-200 bg-white p-4 md:px-8 lg:px-12 flex items-center justify-between">
+        <div className="relative flex items-center justify-between p-4 bg-white border-b border-gray-200 md:px-8 lg:px-12">
           <div className="w-2/12">
             <Link href="/" passHref>
               <ButtonLogo />
@@ -162,7 +164,7 @@ export default function SuccessRegister(props) {
           </div>
           <div>
             <Link href="/login">
-              <a className="text-sm sm:p-2 cursor-pointer sm:text-base lg:text-2xl leading-relaxed font-base hover:underline">
+              <a className="text-sm leading-relaxed cursor-pointer sm:p-2 sm:text-base lg:text-2xl font-base hover:underline">
                 Sign In
               </a>
             </Link>
@@ -171,7 +173,7 @@ export default function SuccessRegister(props) {
       </header>
 
       <main>
-        <div className="relative h-screen w-full bg-gray-100 flex justify-center items-center">
+        <div className="relative flex items-center justify-center w-full h-screen bg-gray-100">
           <div
             className={`${
               showPopUp ? "flex" : "hidden"
@@ -185,23 +187,23 @@ export default function SuccessRegister(props) {
                 size={120}
               />
             ) : (
-              <span className="text-primary text-center text-xl">
+              <span className="text-xl text-center text-primary">
                 {popUpMsg}
               </span>
             )}
           </div>
-          <div className="flex flex-col lg:max-w-xl justify-center items-center">
+          <div className="flex flex-col items-center justify-center lg:max-w-xl">
             <ClockLoader
               color={`#177ee2`}
               loading={true}
               css={override}
               size={120}
             />
-            <div className="mt-5 flex flex-col justify-center items-center">
-              <span className="text-gray-500 font-bold text-2xl lg:text-3xl">
+            <div className="flex flex-col items-center justify-center mt-5">
+              <span className="text-2xl font-bold text-gray-500 lg:text-3xl">
                 Verify your email
               </span>
-              <span className="text-left md:text-center mt-5 px-4">
+              <span className="px-4 mt-5 text-left md:text-center">
                 Hai{" "}
                 <span className="capitalize text-primary">
                   {detailRegister.name || "-"},&nbsp;
@@ -215,18 +217,18 @@ export default function SuccessRegister(props) {
                   email will be expire in 24 hours,
                 </span>
               </span>
-              <span className="text-left md:text-center mt-3 px-4">
+              <span className="px-4 mt-3 text-left md:text-center">
                 If your account has been active, this page automatic redirect to
                 Login Page.&nbsp; If you did not receive an email&nbsp;
                 {!shouldCount ? (
                   <span
                     onClick={() => sendVerificationEmail()}
-                    className="text-primary font-semibold cursor-pointer hover:underline hover:text-blue-400"
+                    className="font-semibold cursor-pointer text-primary hover:underline hover:text-blue-400"
                   >
                     Click Here
                   </span>
                 ) : (
-                  <span className="text-primary font-semibold">
+                  <span className="font-semibold text-primary">
                     wait {countDown < 10 ? "0" + countDown : countDown} Seconds
                   </span>
                 )}

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import React, { useEffect, useState } from "react";
 
 function Icon(props) {
@@ -15,6 +16,7 @@ function Icon(props) {
         count++;
       }
     }, 3000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

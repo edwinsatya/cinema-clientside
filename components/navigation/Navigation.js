@@ -1,17 +1,16 @@
-import MainButton from "../buttons/MainButton";
-import DarkMode from "../buttons/DarkMode";
-import IconBurger from "../icons/IconBurger";
-import IconClose from "../icons/IconClose";
-import ButtonLogo from "../buttons/ButtonLogo";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   currentUser as currentUserAtom,
   showDropDownNav as showDropDownNavAtom,
 } from "../../store";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { cinemaAPI } from "../../services/api";
+import ButtonLogo from "../buttons/ButtonLogo";
+import DarkMode from "../buttons/DarkMode";
+import MainButton from "../buttons/MainButton";
+import IconBurger from "../icons/IconBurger";
+import IconClose from "../icons/IconClose";
 
 function MainNavigation() {
   const router = useRouter();
@@ -72,6 +71,7 @@ function MainNavigation() {
 
   useEffect(() => {
     setShowDropDownNav(dropDown);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dropDown]);
 
   return (
@@ -84,7 +84,7 @@ function MainNavigation() {
               : "bg-white dark:bg-black lg:bg-transparent lg:dark:bg-transparent border-b-2 border-black lg:border-transparent dark:border-white lg:dark:border-transparent"
           }  z-40 w-full`}
         >
-          <div className="p-4 md:px-8 lg:px-12 flex justify-between items-center">
+          <div className="flex items-center justify-between p-4 md:px-8 lg:px-12">
             <div className="w-2/12">
               <Link href="/" passHref>
                 <ButtonLogo />
@@ -95,7 +95,7 @@ function MainNavigation() {
                 router.pathname === "/" ? "hidden" : "lg:flex"
               }`}
             >
-              <ul className="flex items-center justify-around text-sm sm:text-base lg:text-lg text-white">
+              <ul className="flex items-center justify-around text-sm text-white sm:text-base lg:text-lg">
                 {listMenu.map((menu, index) => {
                   return (
                     <Link key={index} href={menu.url} passHref>
@@ -168,7 +168,7 @@ function MainNavigation() {
       </div>
       {dropDown && (
         <div className="relative w-full top-16 lg:hidden">
-          <div className="absolute z-50 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 text-black dark:text-white w-full h-screen">
+          <div className="absolute z-50 w-full h-screen text-black bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 dark:text-white">
             <div className="p-4">
               <ul
                 className={`flex flex-col items-center justify-around text-sm sm:text-base lg:text-xl text black dark:text-white`}

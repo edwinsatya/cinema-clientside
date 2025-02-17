@@ -1,15 +1,15 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import IconMovie from "../../components/icons/IconMovie";
+import IconPeople from "../../components/icons/IconPeople";
+import IconTv from "../../components/icons/IconTv";
 import Layout from "../../components/layout/Layout";
 import Card from "../../components/listContent/card/Card";
 import CardPerson from "../../components/listContent/card/CardPerson";
-import IconPeople from "../../components/icons/IconPeople";
-import IconMovie from "../../components/icons/IconMovie";
-import IconTv from "../../components/icons/IconTv";
 import ContentBox from "../../components/listContent/content/ContentBox";
-import headerStyle from "../../styles/header.module.css";
-import { cinemaAPI } from "../../services/api";
 import { MainNavigation } from "../../components/navigation/Navigation";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { cinemaAPI } from "../../services/api";
+import headerStyle from "../../styles/header.module.css";
 
 export async function getStaticProps() {
   const [
@@ -140,6 +140,7 @@ export default function Home(props) {
         person: trendingPersonsWeek,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   useEffect(() => {
@@ -193,13 +194,13 @@ export default function Home(props) {
               style={{ height: "100%", width: "100%", objectFit: "initial" }}
             ></iframe> */}
           </div>
-          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-black via-transparent to-black opacity-50 duration-500"></div>
-          <div className="absolute h-full text-center text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
-            <div className="max-w-xl relative h-auto">
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold mb-4">
+          <div className="absolute top-0 left-0 z-10 w-full h-full transition-all duration-500 transform opacity-50 bg-gradient-to-b from-black via-transparent to-black"></div>
+          <div className="absolute z-10 flex items-center justify-center w-full h-full p-4 text-center text-white transition-colors duration-500 md:px-8 lg:px-12">
+            <div className="relative h-auto max-w-xl">
+              <h1 className="mb-4 text-xl font-semibold sm:text-2xl md:text-3xl lg:text-6xl">
                 Portfolio Trailer movies, TV shows, and more.
               </h1>
-              <h2 className="text-lg font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
+              <h2 className="mt-3 mb-3 text-lg font-medium sm:text-xl lg:text-2xl">
                 Watch anywhere. Watch anytime.
               </h2>
             </div>
@@ -209,11 +210,11 @@ export default function Home(props) {
 
       <hr className="border-b-4 border-gray-500 shadow-2xl" />
 
-      <div className="p-4 sm:p-6 md:p-8 lg-p-10 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white">
+      <div className="p-4 text-black transition-all duration-500 transform bg-gray-100 sm:p-6 md:p-8 lg-p-10 dark:bg-black dark:text-white">
         <div>
           <div>
             {/* button control trending */}
-            <h3 className="text-lg sm:text-xl md:text-2xl font-semibold">
+            <h3 className="text-lg font-semibold sm:text-xl md:text-2xl">
               Trending of the :
             </h3>
           </div>

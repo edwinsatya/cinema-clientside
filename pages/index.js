@@ -1,23 +1,22 @@
 import Image from "next/image";
-import Layout from "../components/layout/Layout";
-import MainButton from "../components/buttons/MainButton";
-import ImgBg from "../public/images/bg-intro.jpeg";
-import BatmanImg from "../public/images/bat-man.png";
-import SpidermanImg from "../public/images/spider-man.png";
-import BabyImg from "../public/images/baby.png";
-import Card from "../components/introduction/card/Card";
-import Accordion from "../components/accordion/Accordion";
-import headerStyle from "../styles/header.module.css";
-import { MainNavigation } from "../components/navigation/Navigation";
-import { useState, useEffect } from "react";
-import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
-import {
-  theme,
-  currentUser as currentUserAtom,
-  preRegister as preRegisterAtom,
-} from "../store";
-import { cinemaAPI } from "../services/api";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import Accordion from "../components/accordion/Accordion";
+import MainButton from "../components/buttons/MainButton";
+import Card from "../components/introduction/card/Card";
+import Layout from "../components/layout/Layout";
+import { MainNavigation } from "../components/navigation/Navigation";
+import BabyImg from "../public/images/baby.png";
+import BatmanImg from "../public/images/bat-man.png";
+import ImgBg from "../public/images/bg-intro.jpeg";
+import SpidermanImg from "../public/images/spider-man.png";
+import { cinemaAPI } from "../services/api";
+import {
+  currentUser as currentUserAtom,
+  theme
+} from "../store";
+import headerStyle from "../styles/header.module.css";
 
 export default function Introduction() {
   const router = useRouter();
@@ -194,6 +193,7 @@ export default function Introduction() {
     setContentCard({
       listContentCard: newArr,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTheme]);
 
   return (
@@ -202,7 +202,7 @@ export default function Introduction() {
         <MainNavigation />
         <div className={`relative w-full ${headerStyle.headerContainer}`}>
           <Image
-            className="bg-fixed top-0 z-0"
+            className="top-0 z-0 bg-fixed"
             src={ImgBg}
             alt="bg-intro"
             layout={"fill"}
@@ -210,24 +210,23 @@ export default function Introduction() {
             quality={100}
             priority={true}
           />
-          <div className="absolute transform transition-all top-0 left-0 w-full h-full z-10 bg-gradient-to-br  from-black  to-black opacity-50 duration-500"></div>
-          <div className="absolute h-full text-center text-white transition-colors duration-500 flex justify-center items-center p-4 md:px-8 lg:px-12 z-10 w-full">
-            <div className="max-w-xl relative h-auto">
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold mb-4">
+          <div className="absolute top-0 left-0 z-10 w-full h-full transition-all duration-500 transform opacity-50 bg-gradient-to-br from-black to-black"></div>
+          <div className="absolute z-10 flex items-center justify-center w-full h-full p-4 text-center text-white transition-colors duration-500 md:px-8 lg:px-12">
+            <div className="relative h-auto max-w-xl">
+              <h1 className="mb-4 text-xl font-semibold sm:text-2xl md:text-3xl lg:text-6xl">
                 Portfolio Trailer movies, TV shows, and more.
               </h1>
-              <h2 className="text-lg font-medium sm:text-xl lg:text-2xl mb-3 mt-3">
+              <h2 className="mt-3 mb-3 text-lg font-medium sm:text-xl lg:text-2xl">
                 Watch anywhere. Watch anytime.
               </h2>
-              <h2 className="text-base font-light sm:text-xl mb-3 mt-5">
+              <h2 className="mt-5 mb-3 text-base font-light sm:text-xl">
                 Ready to watch? Just Enter your name for feature chat.
               </h2>
               {currentUser ? (
                 <div>
                   <MainButton
                     handleClick={() => router.push("/home")}
-                    className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
-      to-primary hover:from-sky-400 hover:to-sky-500"
+                    className="px-2 py-2 mx-auto mt-3 text-xs transform rounded-sm shadow sm:py-3 sm:p-2 sm:text-sm lg:px-4 lg:text-lg lg:mt-0 bg-gradient-to-br from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
                   >
                     Get Start
                   </MainButton>
@@ -242,14 +241,13 @@ export default function Introduction() {
                       value={inputName}
                       onChange={(e) => validationName(e.target.value)}
                       required
-                      className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
+                      className="w-full px-4 py-1 text-gray-500 lg:w-8/12 focus:outline-none focus:ring focus:ring-cyan-500 sm:py-3"
                       type="text"
                     />
                     <div className="w-full lg:w-4/12">
                       <MainButton
                         handleClick={() => handleSubmitName}
-                        className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
-  to-primary hover:from-sky-400 hover:to-sky-500"
+                        className="px-2 py-2 mx-auto mt-3 text-xs transform rounded-sm shadow sm:py-3 sm:p-2 sm:text-sm lg:px-4 lg:text-lg lg:mt-0 bg-gradient-to-br from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
                       >
                         Home
                       </MainButton>
@@ -274,7 +272,7 @@ export default function Introduction() {
       {contentCard.listContentCard.map((content, index) => {
         return (
           <div key={index}>
-            <div className="p-4 md:px-8 lg:px-18 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white w-full flex justify-center">
+            <div className="flex justify-center w-full p-4 text-black transition-all duration-500 transform bg-gray-100 md:px-8 lg:px-18 dark:bg-black dark:text-white">
               <Card type="textFirst" content={content} />
             </div>
 
@@ -283,9 +281,9 @@ export default function Introduction() {
         );
       })}
 
-      <div className="p-4 md:px-8 lg:px-18 transform transition-all duration-500 bg-gray-100 dark:bg-black text-black dark:text-white w-full flex flex-col justify-center items-center">
+      <div className="flex flex-col items-center justify-center w-full p-4 text-black transition-all duration-500 transform bg-gray-100 md:px-8 lg:px-18 dark:bg-black dark:text-white">
         <div className="py-10">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-center">
+          <h1 className="text-3xl font-semibold text-center sm:text-4xl md:text-5xl lg:text-6xl">
             Frequently Asked Questions
           </h1>
         </div>
@@ -302,8 +300,8 @@ export default function Introduction() {
           })}
         </div>
         {!currentUser && (
-          <div className="mt-10 w-full lg:w-8/12">
-            <h2 className="text-base md:text-lg lg:text-2xl font-medium text-center">
+          <div className="w-full mt-10 lg:w-8/12">
+            <h2 className="text-base font-medium text-center md:text-lg lg:text-2xl">
               Ready to watch? Enter your name for feature chat.
             </h2>
 
@@ -316,14 +314,13 @@ export default function Introduction() {
                   value={inputName}
                   onChange={(e) => validationName(e.target.value)}
                   required
-                  className="w-full lg:w-8/12 text-gray-500 focus:outline-none focus:ring focus:ring-cyan-500 px-4 py-1 sm:py-3"
+                  className="w-full px-4 py-1 text-gray-500 lg:w-8/12 focus:outline-none focus:ring focus:ring-cyan-500 sm:py-3"
                   type="text"
                 />
                 <div className="w-full lg:w-4/12">
                   <MainButton
                     handleClick={() => handleSubmitName}
-                    className="px-2 py-2 sm:py-3 text-xs sm:p-2 sm:text-sm lg:px-4 lg:text-lg mx-auto mt-3 lg:mt-0 bg-gradient-to-br rounded-sm shadow transform from-sky-400  
-  to-primary hover:from-sky-400 hover:to-sky-500"
+                    className="px-2 py-2 mx-auto mt-3 text-xs transform rounded-sm shadow sm:py-3 sm:p-2 sm:text-sm lg:px-4 lg:text-lg lg:mt-0 bg-gradient-to-br from-sky-400 to-primary hover:from-sky-400 hover:to-sky-500"
                   >
                     Home
                   </MainButton>

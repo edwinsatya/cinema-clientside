@@ -48,12 +48,13 @@ export default function ContentBox(props) {
     document.getElementById(
       `content-box-${type}-${indexContent}`
     ).scrollLeft = 0;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detail]);
 
   return (
     <div>
       <div className="flex items-center">
-        <h3 className="text-base sm:text-lg md:text-xl font-semibold">
+        <h3 className="text-base font-semibold sm:text-lg md:text-xl">
           {props.title}
         </h3>
         <div className="ml-3">{props.icon}</div>

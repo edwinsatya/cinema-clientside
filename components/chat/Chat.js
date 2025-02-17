@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import HeaderChat from "./HeaderChat";
-import Discussions from "./Discussions";
-import LogoText from "../icons/LogoText";
-import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  listDiscussion as listDiscussionAtom,
   countChatNotRead as countChatNotReadAtom,
+  listDiscussion as listDiscussionAtom,
   openChat as openChatAtom,
 } from "../../store";
+import LogoText from "../icons/LogoText";
+import Discussions from "./Discussions";
+import HeaderChat from "./HeaderChat";
 
 export default function Chat(props) {
   const { countUserOnline } = props;
@@ -24,15 +24,16 @@ export default function Chat(props) {
 
   useEffect(() => {
     setOpenChat(showChat);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showChat]);
 
   if (!showChat) {
     return (
       <div
         onClick={() => handleOpenChat()}
-        className="cursor-pointer fixed rounded-md shadow-lg z-50 bottom-2 right-2 md:bottom-3 md:right-3 lg:bottom-4 lg:right-4 text-black bg-white dark:text-white dark:bg-gray-900 p-3"
+        className="fixed z-50 p-3 text-black bg-white rounded-md shadow-lg cursor-pointer bottom-2 right-2 md:bottom-3 md:right-3 lg:bottom-4 lg:right-4 dark:text-white dark:bg-gray-900"
       >
-        <span className="text-base font-bold flex items-center">
+        <span className="flex items-center text-base font-bold">
           <span
             className={`${
               countChatNotRead ? "flex" : "hidden"
@@ -40,7 +41,7 @@ export default function Chat(props) {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
+              className="w-4 h-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -57,7 +58,7 @@ export default function Chat(props) {
           <span className="mr-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -75,7 +76,7 @@ export default function Chat(props) {
           </span>
           &nbsp;<span className="text-sm">Live Chat</span>
           <span>
-            <div className="h-3 w-3 bg-green-500 mx-1 rounded-full"></div>
+            <div className="w-3 h-3 mx-1 bg-green-500 rounded-full"></div>
           </span>
           <span>{countUserOnline}</span>
         </span>
@@ -83,7 +84,7 @@ export default function Chat(props) {
     );
   } else {
     return (
-      <div className="fixed rounded-none sm:rounded-md shadow-lg z-50 bottom-0 right-0 text-black bg-white dark:text-white dark:bg-gray-900 w-full max-w-sm">
+      <div className="fixed bottom-0 right-0 z-50 w-full max-w-sm text-black bg-white rounded-none shadow-lg sm:rounded-md dark:text-white dark:bg-gray-900">
         <HeaderChat
           countUserOnline={countUserOnline}
           handleShowChat={() => setShowChat(!showChat)}

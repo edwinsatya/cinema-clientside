@@ -1,14 +1,15 @@
-import Layout from "../../../components/layout/Layout";
-import ButtonLogo from "../../../components/buttons/ButtonLogo";
+/* eslint-disable react/no-unknown-property */
+import { css } from "@emotion/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import MoonLoader from "react-spinners/MoonLoader";
 import PuffLoader from "react-spinners/PuffLoader";
 import RingLoader from "react-spinners/RingLoader";
-import MoonLoader from "react-spinners/MoonLoader";
-import { css } from "@emotion/react";
-import { useRouter } from "next/router";
-import { cinemaAPI } from "../../../services/api";
-import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
+import ButtonLogo from "../../../components/buttons/ButtonLogo";
+import Layout from "../../../components/layout/Layout";
+import { cinemaAPI } from "../../../services/api";
 import { currentUser as currentUserAtom } from "../../../store";
 
 const overrideHide = css`
@@ -202,12 +203,13 @@ export default function VerifyOtp() {
       setShouldCount(false);
       setCountDown(60);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countDown]);
 
   return (
     <Layout title="Verification OTP">
       <header className="sticky top-0 z-50">
-        <div className="relative border-b border-gray-200 bg-white p-4 md:px-8 lg:px-12 flex items-center justify-between">
+        <div className="relative flex items-center justify-between p-4 bg-white border-b border-gray-200 md:px-8 lg:px-12">
           <div className="w-2/12">
             <Link href="/" passHref>
               <ButtonLogo />
@@ -215,7 +217,7 @@ export default function VerifyOtp() {
           </div>
           <div>
             <Link href="/login">
-              <a className="text-sm sm:p-2 cursor-pointer sm:text-base lg:text-2xl leading-relaxed font-base hover:underline">
+              <a className="text-sm leading-relaxed cursor-pointer sm:p-2 sm:text-base lg:text-2xl font-base hover:underline">
                 Sign In
               </a>
             </Link>
@@ -224,7 +226,7 @@ export default function VerifyOtp() {
       </header>
 
       <main>
-        <div className="relative h-screen w-full bg-gray-100 flex justify-center items-center">
+        <div className="relative flex items-center justify-center w-full h-screen bg-gray-100">
           <div
             className={`${
               showPopUp ? "flex" : "hidden"
@@ -238,15 +240,15 @@ export default function VerifyOtp() {
                 size={120}
               />
             ) : (
-              <span className="text-primary text-center text-xl">
+              <span className="text-xl text-center text-primary">
                 {popUpMsg}
               </span>
             )}
           </div>
 
-          <div className="flex flex-col lg:max-w-xl justify-center items-center">
+          <div className="flex flex-col items-center justify-center lg:max-w-xl">
             {isLoading ? (
-              <div className="relative h-40 w-auto flex justify-center items-center">
+              <div className="relative flex items-center justify-center w-auto h-40">
                 <RingLoader
                   color={"#185ADB"}
                   loading={true}
@@ -255,9 +257,9 @@ export default function VerifyOtp() {
                 />
               </div>
             ) : (
-              <div className="relative h-40 w-auto flex justify-center items-center">
+              <div className="relative flex items-center justify-center w-auto h-40">
                 <svg
-                  className="h-28 w-28 absolute"
+                  className="absolute h-28 w-28"
                   xmlns="http://www.w3.org/2000/svg"
                   enableBackground="new 0 0 512 512"
                   version="1.1"
@@ -290,18 +292,18 @@ export default function VerifyOtp() {
               </div>
             )}
 
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col items-center justify-center">
               <span
                 style={{ color: `${colorIcon}` }}
                 className={`font-bold text-xl lg:text-2xl`}
               >
                 {status}
               </span>
-              <span className="text-gray-500 font-medium text-center text-sm mt-2">
+              <span className="mt-2 text-sm font-medium text-center text-gray-500">
                 {subStatus}
               </span>
             </div>
-            <div className=" pt-20">
+            <div className="pt-20 ">
               <form onSubmit={handleSubmitOtp}>
                 <div className="relative w-full">
                   <input
@@ -315,12 +317,12 @@ export default function VerifyOtp() {
                   />
                   <span
                     onClick={() => setShowPassword(!showPassword)}
-                    className="text-black cursor-pointer absolute right-4 top-3"
+                    className="absolute text-black cursor-pointer right-4 top-3"
                   >
                     {showPassword ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -335,7 +337,7 @@ export default function VerifyOtp() {
                     ) : (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -366,18 +368,18 @@ export default function VerifyOtp() {
                   {isLoading ? "Verifying" : "Verify"}
                 </button>
               </form>
-              <div className="flex justify-center items-center mt-3">
-                <span className="text-center text-gray-500 font-medium text-sm">
+              <div className="flex items-center justify-center mt-3">
+                <span className="text-sm font-medium text-center text-gray-500">
                   Dont receive verification otp?&nbsp;
                   {!shouldCount ? (
                     <span
                       onClick={() => sendVerificationOtp()}
-                      className="text-primary font-semibold cursor-pointer hover:underline hover:text-blue-400"
+                      className="font-semibold cursor-pointer text-primary hover:underline hover:text-blue-400"
                     >
                       Resend again
                     </span>
                   ) : (
-                    <span className="text-primary font-semibold">
+                    <span className="font-semibold text-primary">
                       wait {countDown < 10 ? "0" + countDown : countDown}{" "}
                       Seconds
                     </span>
